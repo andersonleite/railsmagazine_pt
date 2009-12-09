@@ -1,0 +1,14 @@
+Brincando com ganchos a.k.a. web hooks
+por John Nunemaker
+
+De tudo que eu li e tive experiência, web hooks são ótimos! Eles deixam desenvolvedores extenderem e integrar aplicações web e permitem que usuários recebam eventos e dados em tempo real. Sim, tempo real! Então, o que são web hooks? Vamos começar com exemplos, seguidos de teoria, e então partir para o código.
+
+Exemplos
+
+O melhor exemplo de web hooks, que provavelmente deve ser familiar a você, é o GitHub. O GitHub tem uma aba de serviços no admin de cada repositório que permite a você enviar post-commit hooks para URLs que você especificar. Eles ainda tem um punhado de hooks pré definidos, como Basecamp, Campfire, Email, Fog- Bugz, IRC, Jabber, Lighthouse e Twitter, e até mantém o código aberto.
+
+Outro exemplo que por lhe ser familiar, que está por aí já faz um tempo, é a Notificação Instantânea de Pagamento do PayPal (IPN). O IPN "é a interface do PayPal para manusear em tempo real confirmações de compras e comunicações servidor-a-servidor" de acordo com o website do PayPal. Traduzindo, o PayPal envia uma requisição para uma URL específica toda vez que alguém completa uma transação. Ryan Bates tem alguns screencasts fantásticos sobre o IPN do PayPal em Railscasts.com.
+
+GitHub e Paypal são dois ótimos exemplos, mas e uma aplicação bem conhecida que não usa web hooks e poderia se beneficiar? A primeira que me vem à mente é o Feedburner, um serviço que provê estatísticas sobre quantidade de assinaturas e mais sobre feeds. Ele atualiza esses números diariamente, ainda assim provavelmente há milhares de desktops e aplicações web que requisitam repetidamente a API do Feedburner ao longo do dia.
+
+Imagine se, ao invés de requisitar a API, os desenvolvedores pudessem simplesmente informar uma URL de sua escolha ao Feedburner. Uma vez por dia, quando o Feedburner terminasse seus resumos diários, ele poderia enviar em tempo real requisições para as URLs dos desenvolvedores com as informações sobre o resumo. Sem mais tarefas cron para desenvolvedores e sem mais requisitar a API para atualizações. O Feedburner simplesmente diria: "Hey, nós acabamos de atualizar as estatísticas dos feeds, aqui vão elas". Assim os desenvolvedores poderiam facilmente sincronizar os dados do Feedburner em suas aplicações ou enviar notificações em tempo real para aqueles viciados em estatísticas como eu.
