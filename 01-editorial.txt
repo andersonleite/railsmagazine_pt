@@ -1,16 +1,10 @@
+Editorial 
+by Olimpiu Metiu
+
 Bem-vindos a primeira edição da Rails Magazine, a primeira e única revista gratuita dedicada a comunidade Ruby on Rails!
 
 Se você está interessado em uma compilação de qualidade,
 artigos relevantes, com supervisão editorial e um bom layout, por favor considere olhar a revista constantemente.
-
-
-Long before launch, I was impressed with the level of interest 
-and receptiveness. Rails always had a vibrant and dedicated com- 
-munity, and I hope Rails Magazine will become an appreciated 
-resource for those looking for quality information — at the same 
-time providing global exposure to those interested in getting 
-published.
-
 
 Muito antes do lançamento, eu estava impressionado com o nível de interesse e receptividade.
 Rails sempre teve uma comunidade vibrante e dedicada, e eu espero que a Rails Magazine 
