@@ -1,0 +1,2 @@
+Fazendo a troca de RSpec para Shoulda
+por Dan Pickett
