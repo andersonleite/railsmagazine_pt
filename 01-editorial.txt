@@ -1,0 +1,46 @@
+Bem-vindos a primeira edição da Rails Magazine, a primeira e única revista gratuita dedicada a comunidade Ruby on Rails!
+
+Se você está interessado em uma compilação de qualidade,
+artigos relevantes, com supervisão editorial e um bom layout, por favor considere olhar a revista constantemente.
+
+
+Long before launch, I was impressed with the level of interest 
+and receptiveness. Rails always had a vibrant and dedicated com- 
+munity, and I hope Rails Magazine will become an appreciated 
+resource for those looking for quality information — at the same 
+time providing global exposure to those interested in getting 
+published.
+
+
+Muito antes do lançamento, eu estava impressionado com o nível de interesse e receptividade.
+Rails sempre teve uma comunidade vibrante e dedicada, e eu espero que a Rails Magazine 
+se tornará um ótimo recurso para aqueles que procuram por informação de qualidade - ao mesmo
+tempo oferecendo uma exposição global para os interessados em publicar artigos.
+
+
+
+2009 is shaping up to be a great year for Rails and its practi- 
+tioners.  Continued adoption, 2.3 and 3.0 releases and a global 
+recession should make Ruby and Rails more appealing than ever, 
+as entrepreneurs and enterprises alike are striving to become 
+more agile and cost-effective.
+
+
+Right now Rails Magazine is a one man show, but expect that 
+to change soon.  In fact it is a great opportunity, if you'd like to 
+get involved while we're starting. Please spread the word about 
+us, or get more involved as an author, artist, sponsor or partner.  
+Your feedback and involvement is much appreciated, so please get in touch with us at editor@railsmagazine.com. 
+Discuss: http://railsmagazine.com/1/1
+
+
+
+
+Olimpiu Metiu is a Toronto-based architect and 
+the leader of the Emergent Technologies group at 
+Bell Canada. His work includes many of Canada's 
+largest web sites and intranet portals. As a long- 
+time Rails enthusiast, he founded Rails Magazine as 
+a way to give back to this amazing community. 
+Follow me on Twitter: http://twitter.com/olimpiu 
+Connect on LinkedIn: http://www.linkedin.com/in/ometiu
