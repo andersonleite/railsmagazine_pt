@@ -1,2 +1,7 @@
 Fazendo a troca de RSpec para Shoulda
 por Dan Pickett
+
+Nota: 
+
+Graças a Bryan Liles, agora sabemos a resposta para a pergunta, "Quando devemos testar?". Porém, uma importante questão ainda permanece: "Como devo testar?". Enquanto esta pergunta ainda é muito carregada, existem alguns frameworks disponíveis para nos ajudar. Por um bom tempo, eu fui casado com RSpec. Escrever comportamentos funcionou bem para meu workflow, e comecei a gostar da sintaxe.
+Sem dúvida, fomos feitos um para o outro e iríamos viver para sempre no alegre mundo TDD. No entando, a lua de mel durou pouco. As falhas aleatórias na especificação e os segredos por trás da Spec::Runner levantou algumas dúvidas.
