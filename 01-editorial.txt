@@ -1,5 +1,5 @@
 Editorial 
-by Olimpiu Metiu
+por Olimpiu Metiu
 
 Bem-vindos a primeira edição da Rails Magazine, a primeira e única revista gratuita dedicada a comunidade Ruby on Rails!
 
@@ -8,21 +8,21 @@ artigos relevantes, com supervisão editorial e um bom layout, por favor conside
 
 Muito antes do lançamento, eu estava impressionado com o nível de interesse e receptividade.
 Rails sempre teve uma comunidade vibrante e dedicada, e eu espero que a Rails Magazine 
-se tornará um ótimo recurso para aqueles que procuram por informação de qualidade - ao mesmo
+se torne um ótimo recurso para aqueles que procuram por informação de qualidade - ao mesmo
 tempo oferecendo uma exposição global para os interessados em publicar artigos.
 
 2009 está se moldando com um ótimo ano para o Rails e seus praticantes. Adoção contínua, os releases 2.3 e 3.0 e 
 uma recessão global devem fazer Ruby e Rails serem mais atrentes do que nunca, até porque empresários e 
-empresas estão se esforçando para se tornar mais ageis e com preços mais realistas e efetivos.
+empresas estão se esforçando para se tornar mais ágeis e com preços mais realistas e efetivos.
 
-Nesse momento Rails é uma revista de uma pessoa apenas, mas espere por mudanças logo. De fato é uma ótima oportunidade, 
-se você gostaria de se envolver no projeto enquanto estamos no começo. Por favor faça o marketing boca-a-boca sobre nós,
+Nesse momento Rails é uma revista de uma pessoa apenas, mas espere por mudanças logo. De fato é uma ótima oportunidade
+de se envolver no projeto enquanto estamos no começo. Por favor faça o marketing boca-a-boca sobre nós,
 ou se envolva mais como autor, artista, patrocinadores ou parceiros. 
 Gostaríamos muito do seu feedback e envolvimento, por favor entre em contato através do email editor@railsmagazine.com. 
 Discusão: http://railsmagazine.com/1/1
 
 Olimpiu Metiu é um arquiteto que vive em Toronto e líder do grupo Emergent Technologies em Bell Canada. 
-Seu trabalho inclui muitos dos miores sites e portais de intranet do Canada.
+Seu trabalho inclui muitos dos maiores sites e portais de intranet do Canadá.
 Como um entusiasta Rails há um bom tempo, fundou a Rails Magazine como uma forma de retribuir essa comunidade incrível.
 
 Siga no Twitter: http://twitter.com/olimpiu 
