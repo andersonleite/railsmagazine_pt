@@ -1,7 +1,187 @@
 Fazendo a troca de RSpec para Shoulda
 por Dan Pickett
 
-Nota: 
+Graças a Bryan Liles, agora sabemos a resposta para a pergunta, "Quando devemos testar?". 
+Porém, uma importante questão ainda permanece: "Como devo testar?". 
+Enquanto esta pergunta ainda é muito discutida, existem alguns frameworks disponíveis para nos ajudar. 
+Por um bom tempo, eu fui casado com RSpec. Escrever comportamentos funcionou bem para meu workflow, e comecei a gostar da sintaxe.
+Sem dúvida, fomos feitos um para o outro e iríamos viver felizes para sempre no mundo TDD. No entando, a lua de mel durou pouco. 
+As falhas aleatórias na especificação e os segredos por trás da Spec::Runner levantou algumas dúvidas. Iniciava-se um cado secreto de testes.
+Comecei a usar Shoulda em todos os meus projetos particulares. Macros e assertions customizáveis me afastaram do RSpec. 
+Nos últimos dois meses, todos os meus projetos começaram com Shoulda, e desde então nunca olhei para trás.
 
-Graças a Bryan Liles, agora sabemos a resposta para a pergunta, "Quando devemos testar?". Porém, uma importante questão ainda permanece: "Como devo testar?". Enquanto esta pergunta ainda é muito carregada, existem alguns frameworks disponíveis para nos ajudar. Por um bom tempo, eu fui casado com RSpec. Escrever comportamentos funcionou bem para meu workflow, e comecei a gostar da sintaxe.
-Sem dúvida, fomos feitos um para o outro e iríamos viver para sempre no alegre mundo TDD. No entando, a lua de mel durou pouco. As falhas aleatórias na especificação e os segredos por trás da Spec::Runner levantou algumas dúvidas.
+
+
+
+Why I Made the Switch 
+Prior to discovering Shoulda, my toolkit for testing con-
+sisted of RSpec for behaviors, factory_girl for model generation, 
+autotest to keep the tests running, and Mocha for mocking and 
+stubbing. Together, these tools worked very well for me.
+One weekend, I was coding away on our project for the 2008 
+Rails Rumble. With great TDD rhythm, I was blasting through 
+behaviors and their corresponding implementations. I was writ-
+ing factories and stubbing fnders like it was nobody's business. 
+As I was moving along, I realized I needed an authentication 
+mechanism, and due to the time crunch, I started to integrate 
+RESTful Authentication. Epic failure followed. Valuable time in 
+the 48 hour code-a-thon was lost. Why? RESTful Authentica-
+tion generated a series of Specs using RSpec's native mocking 
+framework. Since I was using Mocha, the generated specs for 
+authentication failed. Afer wasting an hour or two of valuable 
+time, I could not make diferent specs utilize diferent frame-
+works for mocking and stubbing. Why? Spec::Runner can take 
+a confguration option called mock_with. Unfortunately, without 
+a lot of hacking, I could not alter this confguration back and 
+forth for specifc examples. What I came to realize is that using
+diferent mock frameworks in the same test suite isn't easy. In 
+my opinion, this is a fundamental problem with the way RSpec 
+is written. I didn't have time to change RESTful Authentication's 
+generated tests to utilize Mocha, and I needed the coverage for 
+the authentication pieces of my application. In defeat, I had to 
+comment out all my authentication tests and I lost coverage for 
+the authentication portions of my application.  Tis was the fnal 
+straw for Spec::Runner and I.
+
+I Shoulda used Shoulda
+Coming back to Test::Unit equipped with a framework has 
+been great. You can intermingle standard Test::Unit tests with 
+shoulda blocks. You can build your own abstract test classes wit
+helper methods and macros. Generally, it's a lot more comfort-
+able for me to be working with a class structure in my test suite.
+In transitioning some of my model specs to unit tests with 
+Shoulda, ActiveRecord macros for validations decreased line 
+count signifcantly. It was easy to write custom assertions again,
+and I didn't have to add and remove a bunch of fles afer run-
+ning script/generate.
+
+describe Band do
+  it "should have a name" do
+    band = Factory.build(:band, :name => "")
+    band.save.should be_false
+    band.errors.size.should eql(1)
+  end
+  it "should have a unique name" do
+    band = Factory(:band)
+    band_2 = Factory.build(:band, :name => band.name)
+    
+    band_2.save.should be_false
+  end
+  it "could have a list of albums" do
+    band = Factory(:band)
+    album = Factory(:album, :band => band)
+    album_2 = Factory(:album, :band => band)
+    
+    band.albums.size.should eql(2)
+  end
+end
+turns to:
+class BandTest < ActiveSupport::TestCase
+  context "a band" do
+    setup do
+      @band = Factory(:band)
+	end
+    should_require_attribute :name
+    should_require_unique_attribute :name
+    should_have_many :albums
+  end
+end
+
+ActiveRecord::Macros provide a great deal of utility. In 
+designing my models, I've found should_have_db_column and the 
+association macros to be extremely useful prior to generating 
+migrations. should_protect_attribute is also a great utility that 
+helps you to protect foreign keys and other secure attributes 
+from mass assignment.
+
+
+What I Shoulda Known
+Tere's a few things I learned along the way that I wish I 
+knew earlier in my transition.
+I don't usually use Shoulda's macros for my functional tests. 
+Tey generally result in code smells when I want to set expecta-
+tions prior to issuing the request. For example, given the follow-
+ing context:
+  context "when creating a user" do
+    setup do
+      post :create, :user => {:login => "jsmith",
+       :password => "secret", 
+       :password_confirmation => "secret"}
+    end
+    should_respond_with :redirect
+  end
+If I want to add an expectation that the controller will at-
+tempt to save the record, I can't really accomplish it cleanly 
+because the request is issued in the setup block. Generally I 
+just write my own should statements for functional testing. Te 
+example above with the addition of the save expectation would 
+look something like this:
+
+  context "when creating a user" do
+    setup do
+      @user = Factory.build(:user)
+      User.stubs(:new).returns(@user)
+    end
+    should "redirect" do
+      do_create_post
+      assert_response :redirect
+    end
+    should "attempt to save the user" do
+      @user.expects(:save).returns(true)
+      do_create_post
+    end
+  end
+    
+  def do_create_post(user_attrs = {})
+    post :create, :user => {:login => "jsmith", :password => "secret", :password_confirmation => "secret"}.merge(user_attrs)
+  end
+  
+ Also, Shoulda's validates_uniqueness_of requires a record in 
+the table for it to run. Once the test broke, it was easy to fgure 
+out, but it may stump you for a bit.
+Tere's a great project authored by Jeremy McAnally on 
+GitHub called Matchy. It gives you some of the syntactic sugar 
+of RSpec's should statements inside Test::Unit. Tis would have 
+been useful in moving my specs into Test::Unit and Shoulda. 
+Beware, though, I believe the should =~ /regex/ never fails (it's 
+on my todo list to write a patch).
+
+What I Miss
+RSpec served me well for a long time. Now that I've moved 
+on to Shoulda, there's defnitely a few things to miss.
+Te before(:all) block was great in RSpec.  Shoulda's setup 
+block runs for every should statement, where before(:all) will 
+execute once for a given set of examples. Te performance gains 
+in running large test suites with a before(:all) instead of a 
+before(:each) was nice when it was available.
+While it's not really an issue with Shoulda's implementation 
+itself, I miss the ability to run focused examples in TextMate. Te 
+Run Focused Should bundle item in Shoulda's TextMate bundle 
+breaks with a SystemStackError for me. I can run individual 
+examples in the command line, but not being able to run them 
+in my editor can be a bit of a nuisance. In addition, I appreciated 
+the readability of the RSpec Results window in TextMate.
+While core support for testing helpers is getting better with 
+classes like ActionView::TestCase, Helper testing was a bit more 
+intuitive for me in RSpec.  In testing my helpers with Shoulda, it 
+took a hack and a patch to core in order to get *_path and *_url 
+methods working for ActionView::TestCase.
+
+
+What You Should Know
+RSpec and Shoulda are great frameworks built by smart 
+developers. If you're using a framework and you're writing tests 
+before you write implementations, you're on the right track. 
+Each framework has its pros and cons, and my intent here was 
+not to be persuasive about any single framework, but to docu-
+ment my experience in making the switch.
+If you're considering the switch from RSpec to Shoulda or 
+vice versa, consider these elements carefully and what the cost of 
+migrating a test suite entails. Tey both get the job done, and I've 
+opted to leave a few of my projects with an RSpec test suite sim-
+ply because the time investment in migrating them to Shoulda 
+would take too much time and efort. As a developer you should 
+always consider the cost of your eforts relative to their beneft. 
+Talk it over with your team and ensure that everyone is comfort-
+able and competent enough before utilizing a new framework. 
+And don't forget, TATFT.
