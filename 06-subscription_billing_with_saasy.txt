@@ -1,0 +1,270 @@
+Subscription billing with Saasy
+by Alex MacCaw
+
+Software as a service (SaaS) has recently become quite a
+popular business model and, in such a tumultuous financial cli-
+mate, its predictable income is invaluable. However, subscription
+billing can be tricky (and boring) to setup - and there are lots of
+pitfalls along the way. Hopefully this article with help you avoid
+them, and save you a bit of time into the bargain!
+
+To charge Credit Cards you’ll need:
+•	 A corporate bank account
+•	 Merchant account
+•	 Gateway account
+
+Your merchant account is actually a bank account, but not
+one you can access directly. They have agreements with the ma-
+jor banks so they can perform the credit-card transactions. Your
+gateway passes on your customer’s credit cards to the merchant
+account, and additionally some will store those details so you
+can charge the card later.
+
+You shouldn’t attempt to store the card details yourself. If
+you do, you’ll have to be PCI compliant, or suffer huge fines. It’s
+much better to let your gateway handle all of that.
+
+There are Ruby libraries, such as ActiveMerchant, that
+abstract most of the gateways so you can deal with a common
+interface.
+
+However, implementing subscription billing is still a pain.
+Some of the gateways offer their own subscription billing
+mechanisms - but getting notifications when a charge hasn’t gone
+through can be notoriously tricky. A good alternative is to run a
+billing script nightly which goes through all the accounts, checks
+to see if they’re billing cycle is coming to a close, and bills them
+if applicable. That way, you have total control on who you bill,
+and when you bill. Additionally it makes advanced things like
+refunds and discount codes much easier to implement.
+
+This is where Saasy comes in. Saasy is an open source Rails
+app that deals with account creation, user authentication and
+subscription billing. Saasy will also send out all the mailers for
+you, generate invoices, and deal with failed charges.
+
+Saasy uses ActiveMerchant (with a few tweaks) in the back-
+ground, and currently supports the following gateways:
+•	 Braintree
+•	 TrustCommerce
+•	 PaymentExpress
+
+It’s designed as a decoupled component that runs separately
+from your SaaS service (although they share the same DB). This
+kind of architecture is getting more popular, where your app is a
+series of agile decoupled components, which can be shared and
+developed without ending up with an unwieldy mass of code.
+
+Saasy also acts as a Single Sign On (SSO), which you’ll need
+to integrate with to authenticate users. The advantage of this is
+that you don’t need to write (or generate) more authentication
+code - and your users can stay signed in across all your services,
+even if they’re on different domains.
+
+---------------------
+Alex MacCaw is a Prototyping Developer for
+Made by Many (http://madebymany.co.uk), social
+media specialists based in London. He's mainly
+a Ruby developer, but delves into lots of other
+languages and areas concerning application design
+and implementation. His personal site is http://eribium.org.
+---------------------
+
+-Initial setup-
+
+I’m assuming you’ve already got Ruby installed on your
+machine, but if not there are numerous articles online showing
+you how.
+
+Firstly you’ll need to open a terminal and download Saasy. If
+you’re using Git, run this:
+
+git clone git://github.com/maccman/saasy.git
+
+If don’t have Git, you can download a Saasy tarball of the
+github.com site (http://github.com/maccman/saasy).
+
+Rails and the gems Saasy relies upon are all vendorized, so
+you don’t need to worry about installing them.
+
+Then copy the default configuration files to their correct
+locations, like this:
+cp config/database.example.yml config/database.yml
+cp config/application.example.yml config/application.yml
+cp config/subscription.example.yml config/subscription.yml
+
+The default configuration will be fine to start off with, we can
+change it later.
+
+The next step is to load the database schema into a Sqlite db,
+run:
+rake db:schema:load
+
+Now we’re ready to start the server:
+script/server
+
+That’s all there is to setting up Saasy; navigate to http://local-
+host:3000/signup
+
+Fill in the signup form, and use the following dummy credit
+card details:
+•	 Type: Visa
+•	 Number: 4111111111111111
+•	 CVS: 999
+
+So, if the signup validation passed, you’ll be sent to the login
+screen with a prompt to check your inbox. However, since this is
+running in the Rails development environment, that email will
+never be sent - so you’ll have to check the logs which will contain
+the raw email, and navigate to the activation url manually.
+
+Once your account has been activated, and you’ve signed
+in, you’ll be looking at your profile management page. Have an
+explore of the various view, especially the billing one.
+You’ll notice Saasy comes with a default black theme - you’ll have
+to customize this to fit in with your own sites design. Likewise
+with the signup, and plan page.
+
+By default Saasy uses a gateway called Braintree as they allow
+sandbox developing without registering an account with them.
+You can change the gateway in config/subscription.yml. That’s
+also the configuration file where you specify the plans you want,
+their duration and price amonst other things. If you have a look
+at the defaults everything should be fairly self explanatory.
+
+The other configuration file, config/application.yml, specifies
+more application specific settings such as the application name,
+domain and mailing address.
+
+-Integrating Saasy with your SaaS service-
+
+One of the other beneifts Saasy provides you with is a SSO
+(Single Sign On), so you don’t need to repeat authentication code
+in all your apps, and you can stay ‘DRY’. At the moment, Saasy
+uses a custom SSO protocol, since I was keen to keep it as simple
+as possible, with only one round request. This may change to a
+widely recognised SSO protocol if there are lots of calls for it.
+
+I’m assuming that the app you’re integrating with Saasy is
+also a Rails site, if not you’ll have to look closer at the protocol
+to replicate it. Also, the SSO library I wrote also assumes you’ve
+installed the RestfulAuthentication plugin, which you can get it
+off github (http://github.com/technoweenie/restful-authentication/
+tree).
+
+Copy lib/sso.rb from Saasy to your other app. In app/control-
+lers/application.rb, you’ll need to add this configuration:
+include SSO::Client
+sso({
+  :secret => ‘sso_secret’,
+  :salt => ‘sso_salt’,
+  :login_url => saas_site + ‘/login’,
+  :logout_url => saas_site + ‘/logout’,
+  :callback_url => app_site + ‘/sessions/sso’
+})
+
+Obviously you’ll need to replace those values with the real
+ones. The secret and salt should be different, random num-
+bers – you can generate them with a rake task called secret. The
+login_url will need to point to the login url of Saasy, likewise the
+logout_url needs to be set to Saasy’s logout action. The callback_
+url needs to point to an SSO action (which we haven’t made yet),
+on this application.
+
+You’ll need to edit Saasy’s config/application.yml file, so the
+sso_secret and sso_salt match the ones you added to the control-
+ler. These are the shared secrets used to generate checksums for
+the SSO, and so need to be the same.
+
+Create a basic Sessions controller containing the following
+code:
+class SessionsController < ApplicationController
+  def new
+    redirect_to sso_login_url
+  end
+  def destroy
+    logout_killing_session!
+    redirect_to sso_logout_url
+  end
+  def sso
+    head(401) and return unless sso_valid_token?
+    flash[:notice] = “Logged in successfully”
+    redirect_back_or_default(‘/’)
+  end
+end
+
+Those SSO specific methods are provided by including
+Saasy::Client, which we did in application.rb. As you can see,
+there is significantly less code there than you’d normally need
+for authentication (not to mention the User model). There’s still a
+problem with the code though:
+
+Once we’ve authorized the client in the method sso, we still
+don’t know which one it is, so we need to do an additional re-
+quest too Saasy. We’re going to use ActiveResource to do that:
+class RemoteUser < ActiveResource::Base
+  class_inheritable_accessor :headers
+  self.site = ‘saas_site’
+  self.element_name = ‘user’
+  class << self
+    def current_user
+      find(:one, :from => :current)
+    end
+  end
+end
+
+The above is what you’ll need to include in app/models/remote_
+user.rb. The reason I’m using the class name RemoteUser, rather
+than User, is to prevent clobbering of an existing User model (if it
+exists).
+
+Now we can call just User.current_user in the controller, and
+it’ll fetch the current user from Saasy.
+
+Make the SessionsController#sso method look like this:
+def sso
+  head(401) and return unless sso_valid_token?
+  RemoteUser.headers =
+    {‘Authorization’ => sso_header_token}
+  remote_user = RemoteUser.current_user
+  self.current_user = User.find(remote_user.id)
+  flash[:notice] = “Logged in successfully”
+  redirect_back_or_default(‘/’)
+end
+
+You can see we’re setting the headers on RemoteUser, so Saasy
+knows which user we’re talking about. We’re then setting cur-
+rent_user, which is an RestfulAuthentication method, so that us-
+ers id stays in the session, and doesn’t need authentication every
+time they make a request.
+
+If you just want an overview of the complete code, there’s
+some documentation in lib/sso.rb – and code examples too.
+
+And now, I’m afraid, a disclaimer: Saasy is only a few weeks
+old, still alpha and hasn’t yet been used in a production environ-
+ment. That said, things are progressing quickly, and I’m planning
+on using Saasy in my own commercial site, socialmod.com – an
+automated moderation service which is currently in a private
+beta. Hopefully, with the support of the open source community,
+we’ll have a production ready framework soon.
+
+If you’re looking for a more robust and tested solution, try
+the Rails Kits SaaS app (http://railskits.com/saas/) which has
+been around for quite a while.
+
+So, that’s a brief introduction to Saasy, I hope it saved you
+a bit of time reinventing the wheel by writing your own billing
+framework.
+
+-Resources-
+http://www.slash7.com/jumpstart
+http://letsfreckle.com/blog/2008/12/ecommerce-stuff/
+http://www.activemerchant.org/
+http://railskits.com/saas/
+http://particletree.com/notebook/processing-online-credit-card-transactions/
+http://www.37signals.com/svn/posts/753-ask-37signals-how-do-you-process-credit-cards
+http://activereload.net/2007/5/17/dealing-with-subscription-payments
+http://www.setfiremedia.com/blog/7-top-tips-for-coding-with-currency
+
+Discuss: http://railsmagazine.com/1/4
