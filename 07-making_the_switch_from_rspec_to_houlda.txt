@@ -1,27 +1,51 @@
 Fazendo a troca de RSpec para Shoulda
 por Dan Pickett
 
-Graças a Bryan Liles, agora sabemos a resposta para a pergunta, "Quando devemos testar?". 
+Graças a Bryan Liles, agora sabemos a resposta para a pergunta,
+ "Quando devemos testar?". 
 Porém, uma importante questão ainda permanece: "Como devo testar?". 
-Enquanto esta pergunta ainda é muito discutida, existem alguns frameworks disponíveis para nos ajudar. 
-Por um bom tempo, eu fui casado com RSpec. Escrever comportamentos funcionou bem para meu workflow, e comecei a gostar da sintaxe.
-Sem dúvida, fomos feitos um para o outro e iríamos viver felizes para sempre no mundo TDD. No entando, a lua de mel durou pouco. 
-As falhas aleatórias na especificação e os segredos por trás da Spec::Runner levantou algumas dúvidas. Iniciava-se um cado secreto de testes.
-Comecei a usar Shoulda em todos os meus projetos particulares. Macros e assertions customizáveis me afastaram do RSpec. 
-Nos últimos dois meses, todos os meus projetos começaram com Shoulda, e desde então nunca olhei para trás.
+Enquanto esta pergunta ainda é muito discutida, existem alguns 
+frameworks disponíveis para nos ajudar. 
+Por um bom tempo, eu fui casado com RSpec. Escrever comportamentos 
+funcionou bem para meu workflow, e comecei a gostar da sintaxe.
+Sem dúvida, fomos feitos um para o outro e iríamos viver felizes 
+para sempre no mundo TDD. No entando, a lua de mel durou pouco. 
+As falhas aleatórias na especificação e os segredos por trás da 
+Spec::Runner levantou algumas dúvidas. Iniciava-se um caso secreto 
+de testes.
+Comecei a usar Shoulda em todos os meus projetos particulares. 
+Macros e assertions customizáveis me afastaram do RSpec. 
+Nos últimos dois meses, todos os meus projetos começaram com 
+Shoulda, e desde então nunca olhei para trás.
 
 
 
+Porque fiz a troca
 
-Why I Made the Switch 
-Prior to discovering Shoulda, my toolkit for testing con-
-sisted of RSpec for behaviors, factory_girl for model generation, 
-autotest to keep the tests running, and Mocha for mocking and 
-stubbing. Together, these tools worked very well for me.
-One weekend, I was coding away on our project for the 2008 
-Rails Rumble. With great TDD rhythm, I was blasting through 
-behaviors and their corresponding implementations. I was writ-
-ing factories and stubbing fnders like it was nobody's business. 
+Antes de descobrir Shoulda, minhas ferramentas para testes
+consistia de RSpec para comportamentos, factory_girl para
+geração de model, autotest para manter os testes rodando  
+e Mocha para mocking e stubbing. Juntas, essas ferramentas 
+funcionaram muito bem para mim.
+Numa determinada semana, eu estava codificando nosso 
+projeto para o Rails Rumble 2008. Com um bom rítmo TDD, 
+eu estava [passando] pelos comportamnetos e suas 
+implementações correspondentes. Eu estava escrevendo 
+factories e [buscadores] stubbing como se isso fosse 
+[o negócio de ninguém].
+Enquanto continuava, percebi que precisava de um mecanismo 
+de autenticação, e devido ao pouco tempo disponível, comecei
+a integração do RESTful Authentication.
+O que se seguiu foi uma falha total. Meu precioso tempo 
+em 48 horas codificando pesado foi perdido. Porque ?
+O RESTful Authentication gerou uma série de Specs usando 
+o framework nativo de mocking do RSpec. E como eu estava 
+usando Mocha, as specs geradas para a autenticação falharam.
+Depois de perder algumas horas do meu precioso tempo, naum 
+consegui fazer diferentes specs usar diferentes frameworks 
+para mocking e stubbing. Porque? Spec::Runner 
+
+
 As I was moving along, I realized I needed an authentication 
 mechanism, and due to the time crunch, I started to integrate 
 RESTful Authentication. Epic failure followed. Valuable time in 
