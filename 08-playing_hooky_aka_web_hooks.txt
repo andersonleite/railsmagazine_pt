@@ -1,7 +1,7 @@
 Brincando com ganchos a.k.a. web hooks
 por John Nunemaker
 
-De tudo que eu li e tive experiência, web hooks são ótimos! Eles deixam desenvolvedores extenderem e integrar aplicações web e permitem que usuários a recebam eventos e dados em tempo real. Sim, tempo real! Então, o que são web hooks? Vamos começar com exemplos, seguidos de teoria, e então partir para o código.
+De tudo que eu li e tive experiência, web hooks são ótimos! Eles deixam desenvolvedores extenderem e integrar aplicações web e permitem que usuários recebam eventos e dados em tempo real. Sim, tempo real! Então, o que são web hooks? Vamos começar com exemplos, seguidos de teoria, e então partir para o código.
 
 Exemplos
 
