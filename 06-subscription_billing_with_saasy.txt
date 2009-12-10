@@ -1,28 +1,32 @@
-Subscription billing with Saasy
-by Alex MacCaw
+Pagamento de assinaturas com Saasy
+por Alex MacCaw
 
-Software as a service (SaaS) has recently become quite a
-popular business model and, in such a tumultuous financial cli-
-mate, its predictable income is invaluable. However, subscription
-billing can be tricky (and boring) to setup - and there are lots of
-pitfalls along the way. Hopefully this article with help you avoid
-them, and save you a bit of time into the bargain!
+Nos últimos tempos o Software as a Service (SaaS, ou
+software como serviço) se firmou como um modelo de negócios
+muito atrativo, mesmo no atual cenário de insegurança
+financeira. No entando, soluções de pagamento de assinaturas
+(mensais, semestrais, etc.) podem ser compĺicadas (ou mesmo
+tediosas) de se implementar neste modelo - vários imprevistos
+podem aparecer. Este artigo espera te ajudar a evitar esses
+problemas, e quem sabe até adiantar o projeto.
 
-To charge Credit Cards you’ll need:
-•	 A corporate bank account
-•	 Merchant account
-•	 Gateway account
+Para receber pagamentos de cartões de crédito você irá
+precisar de:
+- Uma conta bancária de empresa
+- Uma conta de mercante # TODO: substituir "mercante" por uma palavra mais amigável
+- Uma conta gateway # TODO: verificar tradução
 
-Your merchant account is actually a bank account, but not
-one you can access directly. They have agreements with the ma-
-jor banks so they can perform the credit-card transactions. Your
-gateway passes on your customer’s credit cards to the merchant
-account, and additionally some will store those details so you
-can charge the card later.
+Sua conta de mercante é uma conta bancária normal, mas não é
+possível acessá-la diretamente. Através de acordos, os bancos # TODO: acordos?
+irão realizar as transações com cartões de crédito nela.
+O seu gateway transmite os dados dos cartões de crédito dos
+seus clientes para a conta de mercante e, em alguns casos,
+armazenam esses dados para que você possa fazer novas
+cobranças posteriormente.
 
-You shouldn’t attempt to store the card details yourself. If
-you do, you’ll have to be PCI compliant, or suffer huge fines. It’s
-much better to let your gateway handle all of that.
+Você não deve armazenar esses dados nos seus servidores. Se o
+fizer, deverá seguir rigorosas regras (PCI) ou estará sujeito a # TODO: PCI compliant?
+ser multado. É mais fácil deixar o gateway cuidar disso.
 
 There are Ruby libraries, such as ActiveMerchant, that
 abstract most of the gateways so you can deal with a common
