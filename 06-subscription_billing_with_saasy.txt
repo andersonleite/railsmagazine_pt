@@ -1,14 +1,14 @@
-Pagamento de assinaturas com Saasy
+Cobrança de assinaturas com Saasy
 por Alex MacCaw
 
 Nos últimos tempos o Software as a Service (SaaS, ou
 software como serviço) se firmou como um modelo de negócios
 muito atrativo, mesmo no atual cenário de insegurança
-financeira. No entando, soluções de pagamento de assinaturas
+financeira. No entando, soluções de cobrança de assinaturas
 (mensais, semestrais, etc.) podem ser compĺicadas (ou mesmo
-tediosas) de se implementar neste modelo - vários imprevistos
-podem aparecer. Este artigo espera te ajudar a evitar esses
-problemas, e quem sabe até adiantar o projeto.
+chatas) de se implementar neste modelo - vários imprevistos
+podem aparecer. O objetivo deste artigo é te ajudar a
+evitar esses problemas, e quem sabe até adiantar o projeto.
 
 Para receber pagamentos de cartões de crédito você irá
 precisar de:
@@ -16,7 +16,7 @@ precisar de:
 - Uma conta de mercante # TODO: substituir "mercante" por uma palavra mais amigável
 - Uma conta gateway # TODO: verificar tradução
 
-Sua conta de mercante é uma conta bancária normal, mas não é
+Sua conta de mercante é uma conta bancária comum, mas não é
 possível acessá-la diretamente. Através de acordos, os bancos # TODO: acordos?
 irão realizar as transações com cartões de crédito nela.
 O seu gateway transmite os dados dos cartões de crédito dos
@@ -24,9 +24,10 @@ seus clientes para a conta de mercante e, em alguns casos,
 armazenam esses dados para que você possa fazer novas
 cobranças posteriormente.
 
-Você não deve armazenar esses dados nos seus servidores. Se o
-fizer, deverá seguir rigorosas regras (PCI) ou estará sujeito a # TODO: PCI compliant?
-ser multado. É mais fácil deixar o gateway cuidar disso.
+Você não deve armazenar esses dados nos seus próprios servidores.
+Se o fizer, deverá seguir rigorosas regras (PCI) ou estará # TODO: PCI compliant?
+sujeito a ser multado. É mais fácil deixar o gateway cuidar
+disso.
 
 There are Ruby libraries, such as ActiveMerchant, that
 abstract most of the gateways so you can deal with a common
