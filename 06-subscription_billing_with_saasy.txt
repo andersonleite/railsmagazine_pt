@@ -29,30 +29,33 @@ Se o fizer, deverá seguir rigorosas regras (PCI) ou estará # TODO: PCI complia
 sujeito a ser multado. É mais fácil deixar o gateway cuidar
 disso.
 
-There are Ruby libraries, such as ActiveMerchant, that
-abstract most of the gateways so you can deal with a common
-interface.
+Existem bibliotecas prontas em Ruby, como a ActiveMerchant,
+que abstraem a comunicação com os principais gateways,
+fornecendo uma interface comum para eles.
 
-However, implementing subscription billing is still a pain.
-Some of the gateways offer their own subscription billing
-mechanisms - but getting notifications when a charge hasn’t gone
-through can be notoriously tricky. A good alternative is to run a
-billing script nightly which goes through all the accounts, checks
-to see if they’re billing cycle is coming to a close, and bills them
-if applicable. That way, you have total control on who you bill,
-and when you bill. Additionally it makes advanced things like
-refunds and discount codes much easier to implement.
+Mesmo assim, implementar soluções de cobrança de assinaturas
+é difícil. Alguns gateways tem mecanismos de cobrança de
+assinaturas prontos - mas algumas coisas, como ser notificado
+quando uma cobrança falhou, podem ser bem complicadas de se
+conseguir. Uma boa alternativa é rodar diariamente um script
+que verifica, de assinatura em assinatura, se já está na
+hora de fazer uma nova cobrança, e a faz se for o caso.
+Dessa forma, você tem controle total sobre quem e quando você
+cobra. Além disso, fica muito mais fácil de implementar
+algumas coisas mais complexas depois, como devoluções e
+códigos de desconto.
 
-This is where Saasy comes in. Saasy is an open source Rails
-app that deals with account creation, user authentication and
-subscription billing. Saasy will also send out all the mailers for
-you, generate invoices, and deal with failed charges.
+E é aí que entra o Saasy. O Saasy é um aplicativo opensource
+feito em Rails que administra criação de contas,
+autenticação de usuários e cobrança de assinaturas. Além
+disso, o Saasy também cuida do envio de e-mails, gera
+extratos e trata cobranças que falharam. # TODO: invoices
 
-Saasy uses ActiveMerchant (with a few tweaks) in the back-
-ground, and currently supports the following gateways:
-•	 Braintree
-•	 TrustCommerce
-•	 PaymentExpress
+Internamente o Saasy usa o ActiveMerchant (com alguns ajustes),
+e atualmente suporta os seguintes gateways:
+- Braintree (http://www.braintreepaymentsolutions.com/)
+- TrustCommerce (http://www.trustcommerce.com/)
+- PaymentExpress (http://www.paymentexpress.com/)
 
 It’s designed as a decoupled component that runs separately
 from your SaaS service (although they share the same DB). This
