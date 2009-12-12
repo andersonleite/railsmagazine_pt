@@ -123,7 +123,7 @@ Outra coisa que você deve ter percebido no código de exemplo é que seria muit
 
 Conclusão
 
-Web hooks são o jeito mais simples de adicionar notificações em tempo real para suas aplicações web e elas não são só para HTTP. Como os serviços do GitBub e Astrotrain mostram, você pode enviar hooks utilizando uma variedade de formatos (HTTP, Email, Jabber, IRC).
+Web hooks é o jeito mais simples de adicionar notificações em tempo real para suas aplicações web e elas não são só para HTTP. Como os serviços do GitBub e Astrotrain mostram, você pode enviar hooks utilizando uma variedade de formatos (HTTP, Email, Jabber, IRC).
 
 Há também algumas aplicações bastante interessantes aparecendo, Switchub e AppJet para iniciantes, que lidam exclusivamente com receber uma entrada, processar essa entrada e então gerar uma saída. Imagine um mundo onde aplicações web podem ser concatenadas no mesmo estilo de programas Unix. Isso me deixa empolgado com o futuro! 
 
