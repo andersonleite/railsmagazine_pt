@@ -1,1 +1,14 @@
-teste de permissão
+Primeiros Passos com JRuby e JRuby on Rails
+por Joshua Moore
+
+Série JRuby - Part 1
+
+Introduction
+
+Este é o primeiro de uma série de artigos sobre JRuby e Rails. Esta primeira parte cobrirá os passos básicos para iniciar com JRuby: introdução, instalação, e como se sentir confortável com JRuby. Nós iremos finalizar com precauções e dicas para que usar JRuby se torne um sonho.
+
+Porquê devo me importar?
+
+Antes de começar, porquê escolher JRuby? O que o JRuby tem a oferecer que o MRI Ruby padrão não tem? O tempo a ser gasto aprendendo como usar o JRuby vai valer a pena? As respostas das pessoas provavelmente serão diferentes umas das outras da mesma forma que todo mundo tem um motivo diferente para usar Rails. Um artigo inteiro poderia ser feito apenas abordando o porquê de usar JRuby; entretanto, nos só temos tempo para considerar 4 principais motivos para usá-la neste artigo.
+
+
