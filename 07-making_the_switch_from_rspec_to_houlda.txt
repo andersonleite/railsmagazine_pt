@@ -43,41 +43,35 @@ o framework nativo de mocking do RSpec. E como eu estava
 usando Mocha, as specs geradas para a autenticação falharam.
 Depois de perder algumas horas do meu precioso tempo, naum 
 consegui fazer diferentes specs usar diferentes frameworks 
-para mocking e stubbing. Porque? Spec::Runner 
+para mocking e stubbing. Porque? Spec::Runner possui uma opção
+de configuração chamada mock_with (mockar com). Infelizmente, 
+sem muito [hacking], eu não consegui alterar essa configuração 
+[pra frente e para trás] para exemplos específicos.Cheguei 
+então a conclusão que usar mais de um framework mock para 
+a mesma suíte de estes não era fácil. Na minha opinião, esse 
+é um problema fundamental na forma como o RSpec é escrito. 
+Não tive tempo para alterar os testes gerados pelo RESTful 
+Authentication para usar Mocha, e eu precisava da cobertura 
+para algumas partes de autenticação da minha aplicação.
+Derrotado, tive que comentar todos os meus testes de 
+autenticação e perdi a cobertura em algumas partes de 
+autenticação da minha aplicação. Essa foi a gota d'água 
+entre eu e a Spec::Runner.
 
 
-As I was moving along, I realized I needed an authentication 
-mechanism, and due to the time crunch, I started to integrate 
-RESTful Authentication. Epic failure followed. Valuable time in 
-the 48 hour code-a-thon was lost. Why? RESTful Authentica-
-tion generated a series of Specs using RSpec's native mocking 
-framework. Since I was using Mocha, the generated specs for 
-authentication failed. Afer wasting an hour or two of valuable 
-time, I could not make diferent specs utilize diferent frame-
-works for mocking and stubbing. Why? Spec::Runner can take 
-a confguration option called mock_with. Unfortunately, without 
-a lot of hacking, I could not alter this confguration back and 
-forth for specifc examples. What I came to realize is that using
-diferent mock frameworks in the same test suite isn't easy. In 
-my opinion, this is a fundamental problem with the way RSpec 
-is written. I didn't have time to change RESTful Authentication's 
-generated tests to utilize Mocha, and I needed the coverage for 
-the authentication pieces of my application. In defeat, I had to 
-comment out all my authentication tests and I lost coverage for 
-the authentication portions of my application.  Tis was the fnal 
-straw for Spec::Runner and I.
-
-I Shoulda used Shoulda
-Coming back to Test::Unit equipped with a framework has 
-been great. You can intermingle standard Test::Unit tests with 
-shoulda blocks. You can build your own abstract test classes wit
-helper methods and macros. Generally, it's a lot more comfort-
-able for me to be working with a class structure in my test suite.
-In transitioning some of my model specs to unit tests with 
-Shoulda, ActiveRecord macros for validations decreased line 
-count signifcantly. It was easy to write custom assertions again,
-and I didn't have to add and remove a bunch of fles afer run-
-ning script/generate.
+Eu deveria usar Shoulda
+Voltando para Test::Unit equipado com um framework tem sido 
+ótimo. Você pode mesclar testes Test::Unit padrões com 
+blocos shoulda. Você pode construir suas classes abstrata 
+de testes com métodos helper e macros. Em geral, isso é 
+muito mais confortável para mim trabalhar com uma estrutura 
+de classe em minha suíte de testes. Em transição alguns dos
+meus specs modelos para testes unitários com Shoulda, macros  
+ActiveRecord para validação diminuíram o número de linhas 
+significativamente. Ficou fácil escrever assertions 
+customizadas de novo, e não preciso mais adicionar ou 
+remover um monte de arquivos depois de executar 
+script/generate.
 
 describe Band do
   it "should have a name" do
@@ -99,7 +93,9 @@ describe Band do
     band.albums.size.should eql(2)
   end
 end
-turns to:
+
+ficou apenas:
+
 class BandTest < ActiveSupport::TestCase
   context "a band" do
     setup do
@@ -111,13 +107,21 @@ class BandTest < ActiveSupport::TestCase
   end
 end
 
-ActiveRecord::Macros provide a great deal of utility. In 
-designing my models, I've found should_have_db_column and the 
-association macros to be extremely useful prior to generating 
-migrations. should_protect_attribute is also a great utility that 
-helps you to protect foreign keys and other secure attributes 
-from mass assignment.
+ActiveRecord::Macros fornece muitas utilidades. Achei 
+should_have_db_column e as associações de macros 
+antes de gerar as migrations extremamente úteis na 
+implementação dos meus models. should_protect_atribute 
+também é um grande utilitário que ajuda a proteger 
+chaves estrangeiras e outros atributos de segurança 
+das atribuições em massa. 
 
+
+O que eu deveria saber
+Tem algumas coisas que aprendi durante o processo 
+que eu gostaria de ter descobrido antes.
+Eu geralmente não uso as macros do Shoulda para meus 
+testes funcionais.
+Eles geralmente 
 
 What I Shoulda Known
 Tere's a few things I learned along the way that I wish I 
