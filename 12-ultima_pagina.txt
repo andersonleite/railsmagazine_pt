@@ -1,0 +1,14 @@
+Chamada para matérias
+10 razões para você publicar na Rails Magazine
+
+- Reconhecimento do trabalho - se diferenciar como um expecialista em Rails e autor de artigos.
+- Mostrar suas habilidades. Encontrar novos clientes. Dirigir o tráfego para seu blog ou empresa.
+- Ganhar pontos com a comunidade Ruby on Rails.
+- Passar sua mensagem. Encontrar contribuidores para seus projetos.
+- Ter a bagagem de ser um autor da Rails Magazine.
+- Você percebe uma boa oportunidade quando você encontra uma. Se juntar a equipe editorial é mais fácil nos
+estágios iniciais de publicação.
+- Alcançar um grande público influente na comunidade Ruby on Rails(seja para recrutamento, treinamento, promoções etc).
+- Ver seu trabalho publicado em uma revista profissional.
+- Todos gostamos da idéia de uma revista sobre Rails gratuita e gostaríamos que ela se concretizasse.
+- Se divertir e surpreender seus amigos :)
