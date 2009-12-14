@@ -30,6 +30,6 @@ por Joshua Moore
 
 
 
-Comunidade Pulsando
+Comunidade Pulsando.
 Nós analizamos a resposta a fusão entre Rails/Merb 
 no blog oficial do Rails. Essa nuvem mostra os resultados.
