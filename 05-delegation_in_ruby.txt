@@ -2,7 +2,7 @@ Delegação em Ruby
 ==================
 Por Khaled al Habache
 
-"Separe as partes que podem mudam daquelas que permanecem as mesmas" e "prefira composição à herança" são dois princípios triviais de design quando você começa a projetar no mundo da programação orientada a objetos (OOP). Entretanto, enquanto o primeiro possa parecer óbvio, alguém pode se perguntar porque é preferível utilizar composição ao invés de herança, e essa é uma pergunta lógica, então vamos respondê-la através de um exemplo.
+"Separe as partes que podem mudar daquelas que permanecem as mesmas" e "prefira composição à herança" são dois princípios triviais de design quando você começa a projetar no mundo da programação orientada a objetos (OOP). Entretanto, enquanto o primeiro possa parecer óbvio, alguém pode se perguntar porque é preferível utilizar composição ao invés de herança, e essa é uma pergunta lógica, então vamos respondê-la através de um exemplo.
 
 Vamos supor que temos um robô (representado pela classe Robot) que possui um sensor de calor. Alguém poderia escrever um UML bem simples:
 
