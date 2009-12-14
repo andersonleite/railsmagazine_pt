@@ -2,36 +2,35 @@ Delegação em Ruby
 ==================
 Por Khaled al Habache
 
-"Separe as partes que pode mudar daquelas que mudam" e "prefira composição à herança" são dois princípios de design comuns quando você começa a projetar no mundo da programação orientada a objetos (OOP). Entretanto, e enquanto o primeiro possa parecer óbvio, alguém pode se perguntar porque é preferível utilizar composição ao invés de herança, e essa é uma pergunta lógica, então vamos respondê-la através de um exemplo.
+"Separe as partes que podem mudam daquelas que permanecem as mesmas" e "prefira composição à herança" são dois princípios triviais de design quando você começa a projetar no mundo da programação orientada a objetos (OOP). Entretanto, enquanto o primeiro possa parecer óbvio, alguém pode se perguntar porque é preferível utilizar composição ao invés de herança, e essa é uma pergunta lógica, então vamos respondê-la através de um exemplo.
 
-Vamos supor que temos um robô (representado pela classe Robot) que possui um sensor. Alguém poderia escrever um UML bem simples:
+Vamos supor que temos um robô (representado pela classe Robot) que possui um sensor de calor. Alguém poderia escrever um UML bem simples:
 
 (imagem do UML da classe Robot)
 
-Este design apresenta diversos problemas:
+Este design apresenta diversas desvantagens:
 
 1. Existe uma grande probabilidade de existirem outros tipos de robôs que não possuem sensores de calor (quebra o primeiro princípio de design: separe as partes que podem mudar daquelas que são estáticas).
-2. Sempre que eu quiser alterar qualquer coisa relacionada ao sensor de calor, eu terei que alterar a classe Robot (quebra o primeiro princípio de design).
+2. Sempre que eu quiser alterar qualquer coisa relacionada ao sensor de calor, eu tenho que alterar a classe Robot (quebra o primeiro princípio de design).
 3. Exposição dos métodos do sensor de calor na classe Robot.
 
 Vamos melhorar um pouco essa classe:
 
 (imagem do UML da classe VolcanoRobot)
 
-Bem, este é um design baseado em herança e resolve o primeiro problema, mas ainda não é capaz de resolver os outros dois problemas relacionados ao sensor de calor. Vamos fazer outra melhoria:
+Bem, agora este é um design baseado em herança e ele resolve o primeiro problema, mas ainda não é capaz de resolver os outros dois problemas relacionados ao sensor de calor. Vamos fazer outra melhoria:
 
 (imagem do UML da classe VolcanoRobot composta pelas classes Robot e HeatSensor)
 
-Este é um design típico, baseado em composição ao invés de herança, através do qual você pode resolver os três problemas citados acima. Além disso, nós ganhamos uma coisa nova: Nós podemos agora abstrair o HeatSensor para usos futuros.
+Este é um design típico, baseado em composição ao invés de herança, através do qual nós podemos resolver os três problemas citados acima. Além disso, nós ganhamos uma coisa nova: Agora nós podemos agora abstrair o HeatSensor para usos futuros.
 
-
-== Agora, o que é delegação?
+== Sendo assim, o que é delegação?
 
 Delegação é o processo de delegar funcionalidade para as partes internas.
 
-Se você olhar cuidadosamente para a figura anterior, você notará que a classe VolcanoRobot ainda possui os três métodos relacionados ao sensor; esses são métodos wrapper (invólucro? como traduzir isso? é técnico, eu deixaria assim mesmo...), eles não fazem nada além de chamar os respectivos métodos do sensor. É exatamente isso que delegation é, apenas repassar a funcionalidade para as partes internas (delegates).
+Se você olhar cuidadosamente para a figura anterior, você notará que a classe VolcanoRobot ainda possui os três métodos relacionados ao sensor; esses são métodos wrapper, eles não fazem nada além de chamar os respectivos métodos do sensor. É exatamente isso que delegation é, apenas repassar a funcionalidade para as partes internas (delegates).
 
-Delegação vem em conjunto com composição para prover soluções flexiveis e elegantes como a que temos acima e tanbém serve ao princípio de "separar código que pode mudar daquele que é estático", mas também possui um preço: a necessidade de métodos wrapper e tempo extra de processamento devido às chamadas a estes métodos wrapper. 
+Delegação vem em conjunto com composição para prover soluções flexiveis e elegantes como a que temos acima e também serve ao princípio de "separar código que pode mudar daquele que é estático", mas ele também possui um preço: a necessidade de métodos wrapper e tempo extra de processamento devido às chamadas para estes métodos wrapper. 
 
 == Ruby e delegação
 
@@ -121,7 +120,7 @@ class Robot
 end 
 
 class HeatSensor 
-  #Celsius or Fahrenheit scale 
+  #Escala em Celsius ou Fahrenheit
   def measure(scale="c") 
     t = rand(100) 
     t = scale=="c" ? t : t * (9/5) 
@@ -143,7 +142,7 @@ Bom, como você pode ver essa é uma solução muito mais limpa.
 
 == module SingleForwardable
 
-O module SingleForwardable fornece delegação de métodos específicos para um objeto designado, utilizando os métodos def_delegator e def_delegators. Este module é semelhante ao Forwardable, mas funciona sobre objetos em si, ao invés de sobre as classes que os definem.
+O module SingleForwardable fornece delegação de métodos específicos para um objeto designado, utilizando os métodos def_delegator e def_delegators. Este module é semelhante ao Forwardable, mas funciona sobre objetos em si mesmos, ao invés de sobre as classes que os definem.
 
 require "forwardable" 
 require "date" 
@@ -160,7 +159,7 @@ A biblioteca Delegate é outra opção para prover delegação, eu vou explicar 
 
 == Método DelegateClass
 
-Utilize o método de nível superior DelegateClass, o qual permite que você facilmente configure delegação através de herança. No exemplo a seguir eu quero criar uma nova classe chamada CurrentDate, a qual possui a data atual e alguns métodos extra, ao mesmo tempo estou delegando a objetos de data normais:
+Utilize o método de nível superior DelegateClass, o qual permite que você facilmente configure delegação através de herança. No exemplo a seguir eu quero criar uma nova classe chamada CurrentDate, a qual possui a data atual e alguns métodos extras e ao mesmo tempo estou delegando a objetos de data normais:
 
 require "delegate" 
 require "date" 
@@ -169,8 +168,8 @@ require "date"
 class CurrentDate < DelegateClass(Date) 
   def initialize 
     @date = Date.today 
-    # Pass the object to be delegated to the superclass. 
-    super(@date) 
+    # Passa o objeto para ser delegado para a superclasse
+    super(@date)
   end 
 
   def to_s 
@@ -212,9 +211,9 @@ Como você pode ver nós criamos dois objetos e então delegamos a eles conseque
 
 == E o Rails?
 
-O Rails adiciona uma nova funcionalidade chamada "delegate", a qual fornece um métod de classe delegate para expor facilmente os métodos de objetos internos como se fossem seus. Passe um ou mais métodos (especificados como strings ou symbols) e o nome do objeto alvo através da opção :to (também ium symbol ou uma string). Pelo menos um método e a opção :to são obrigatórios.
+O Rails adiciona uma nova funcionalidade chamada "delegate", a qual fornece um método de classe delegate para expor facilmente os métodos de objetos internos como se fossem seus. Passe um ou mais métodos (especificados como strings ou symbols) e o nome do objeto alvo através da opção :to (também um symbol ou uma string). Pelo menos um método e a opção :to são obrigatórios.
 
-Vá para o seu terminal e crie um projeto de teste, então faça cd para dentro do projeto e inicie o console do Rails:
+Vá para o seu terminal e crie um projeto de teste, então faça cd para dentro da pasta do projeto e inicie o console do Rails:
 
 $ rails dummy 
 …... 
@@ -278,6 +277,4 @@ end
 2. O que é delegação e porque ela é usada. 
 3. Biblioteca Ruby Forwardable 
 4. Biblioteca Ruby Delegate  
-5. Método delegate do Rails 
-    
-
+5. Método delegate do Rails
