@@ -1,24 +1,23 @@
 Estendendo o Rails através de plugins
 por John Yerhot
 
-    Enquanto Rails é um framework pragmático, o projeto não pretende incluir todos os recursos possíveis. Há muitas razões que o Core Team Rails não optar por incluir uma nova feature - muito instável, muito obscura, ou simplesmente não fazem parte do escopo do core. De fato, existem casos em que recursos tenham sido retirados do Rails e transformados em um plugin! Por exemplo, in_place_edit e auto_complete_for foram removidos de Rails na versão 2.0. 
+    O Rails foi desenvolvido pensando em ser um framework completo, mas apesar disso ele não pode incluir todas as funcionalidades possiveis. Há muitas razões pelas quais o Core Team do Rails opta por não incluir uma nova funcionalidade - ela pode ser muito instável, muito obscura, ou simplesmente não faz parte do escopo do framework. De fato, existem casos em que as funcionalidades foram retiradas do Rails e transformadas em plugins! Por exemplo, o in_place_edit e o auto_complete_for foram removidos de Rails na versão 2.0. 
 
-Para ajudar os desenvolvedores que estão procurando adicionar, substituir ou modificar features, Rails foi construído com uma infra-estrutura altamente extensível. A maioria das modificações e acréscimos vêm como plugins. Enquanto muitos plugins estendem uma das principais classes de Rails, como ActionView::Base ou ActiveRecord::Base, você está livre para criar suas próprias classes ou módulos. Além disso, os plugins podem ter as suas próprias tarefas Rake e testes. Essencialmente, os plugins são bibliotecas especificas do rails.
+Para ajudar os desenvolvedores que queiram adicionar, substituir ou modificar funcionalidades, o Rails foi construído com uma infra-estrutura altamente extensível. A maioria das modificações e acréscimos vêm como plugins. Enquanto muitos deles estendem uma das principais classes de Rails, como ActionView::Base ou ActiveRecord::Base, você está livre para criar suas próprias classes ou módulos. Além disso, eles podem ter as suas próprias tarefas Rake e testes. Essencialmente, os plugins são bibliotecas completas e independentes especificas do Rails.
 
-Uma das melhores maneiras de utilizar plugins é reutilização de código de projeto em projeto. Robby Russell tem um excelente exemplo de sua equipe, Planet Argon, de suas aplicações saiu o Flash Message Conductor. O trato do flash no rails era inadequada para suas aplicações, assim eles reescreveram muito de aplicação para aplicação adaptando o tratamento para seu negócio em um plugin. A equipe criou um plugin que adicionou helpers para adicionar mensagens, erros e avisos em flash utilizando render_flash_messages um método novo para renderiza-los em uma view. Usando Flash Message Conductor em suas aplicações, Planet Argon tem uma melhor implementação em flash, uma interface comum e de uma forma muito DRY e elegante.
+Um dos melhores usos dos plugins é para reutilização de código que você em vários projetos. Robby Russell tem um excelente exemplo utilizado por sua equipe na Planet Argon, o Flash Message Conductor. Dado que o tratamento das mensagens flash Rails era inadequada para suas projetos, eles notaram que reescreviam muito do código de flash de uma aplicação para a outra. A equipe criou um plugin que adicionava helpers para adicionar mensagens, erros e avisos flash e um método chamado render_flash_messages para renderiza-los nas views. Usando Flash Message Conductor em suas aplicações, a Planet Argon tem uma melhor implementação de mensagens flash, uma interface comum e de uma forma muito DRY e elegante.
 
-Para este artigo, vamos construir uma simples funcionalidade que irá em um plugin.
-Adicionar um método de cotação para nossos modelos. Nosso objetivo é um funcionalidade muito simples.
+Para este artigo, vamos construir um plugin simples que irá adicionar um método de citações aos nossos modelos. Nosso objetivo é um funcionalidade muito simples.
 
 a = Usuario.new
-a.frase
+a.citacao
 => "Se ele sangra, podemos mata-lo."
 
-Vamos criar uma tarefa Rake para gerar um arquivo YAML com frases de objetos Usuário, carregar o YAML e usar os dados para nossas frases. Este é um exemplo de plugin bem trivial, meu objetivo não é ensinar como escrever um plugin grande e complexo, mas ensinar o necessário para começar, Vamos lá!
+Vamos criar uma tarefa Rake para gerar um arquivo YAML com as frases, carregá-lo e usar os dados para nossas citações. Apesar de ser um exemplo trivial, meu objetivo não é ensinar como escrever um plugin grande e complexo, mas ensinar o necessário para começar. Vamos lá!
 
-Rails nos oferece um gerador para a criação de plugins.
+O Rails nos oferece um gerador para a criação de plugins.
 
-   script/generate plugin frases
+   script/generate plugin citacoes
 
    Isto irá criar um plugin vazio em seu vendor/plugin com a seguinte estrutura:
 
@@ -26,16 +25,16 @@ Rails nos oferece um gerador para a criação de plugins.
 
  - init.rb     - Carregado na execução do rails. Arquivo responsável por carregar seus arquivos do diretório lib.
  - install.rb  - Executado quando você instalar o plugin usando 'script/plugin install comando'.
- - lib/        - Diretório automaticamente adicionado em PATH do rails ao carregar.
- - MIT-LICENSE - Seu plugin deve incluir uma licença, ou MIT.
+ - lib/        - Diretório automaticamente adicionado ao path usado pelo Rails para carregar as classes.
+ - MIT-LICENSE - Seu plugin deve incluir uma licença, como a MIT ou outra qualquer.
  - Rakefile    - Principais definições Rake para o seu plugin.
- - README      - Um pequeno resumo do seu plugin, a sua utilização e quaisquer outras notas irá aqui.
- - tasks/      - As tarefas Rake personalizadas podem ir aqui.
+ - README      - Um pequeno resumo do seu plugin, a sua utilização e quaisquer outras notas devem ser colocadas aqui.
+ - tasks/      - As tarefas Rake personalizadas podem ir aqui. Iremos criar uma para nosso plugin.
  - test/       - Os testes de seu plugin devem estar aqui. Quando os testes são executados em um plugin o Rails não é carregado.
 
 John Yerhot vive em Northern, Minnesota, com sua esposa e cachorro, onde ele escreve aplicações rails para K-12 Sistemas de Educação. Ele é mantenedor do blog http://blog.john.yerhot.org, contato john@yerhot.org.
 
-Antes de irmos adiante, devemos criar um plano de como exatamente nosso plugin frases deve funcionar. Primeiro, devemos criar uma tarefa Rake que cria o nosso arquivo YAML cheio de frases. Depois que nossa tarefa Rake estiver concluída iremos criar um init.rb, nele carregaremos frase.rb do diretório lib, frase.rb será responsável por carregar frases.yml em um Array de frases. Vamos criar um novo Módulo, Frase::ClassMethods para a definição de nossos novos métodos, e, adicionar esses métodos a ActiveRecord::Base à medida que estejam disponíveis nos modelos. 
+Antes de continuarmos, devemos planejar como nosso plugin frases deve funcionar. Primeiro, devemos criar uma tarefa Rake que cria o nosso arquivo YAML cheio de frases. Depois que ela estiver concluída criaremos um arquivo init.rb que terá um require de citacao.rb do diretório lib e carregar as frases de citacoes.yml em uma Array. Vamos criar um novo Módulo, Citacao::ClassMethods para a definição de nossos novos métodos, e adicionaremos esses métodos ao ActiveRecord::Base para que estejam disponíveis nos modelos.
 
 
                                              continuação da página 3
@@ -44,24 +43,24 @@ Estendendo o Rails através de plugins
 Continuação da página 3
 
 
-     Também vamos supor que você tenha uma aplicação vazia com um Model usuário.
-     Primeiro, vamos olhar para nossa tarefa tasks/frase_tarefa.rake. Precisamos
-primeiro criar um name_space o nosso plugin, e adicionar uma tarefa de configuração.
-     namespace :frase  do
-       desc "Cria arquivo YAML de frases no diretório config"
+     Também vamos assumir que você tem uma aplicação vazia com um Model usuário.
+     Primeiro, vamos ver o que faz nossa tarefa tasks/citacao_tarefa.rake. Precisamos
+primeiro criar um novo namespace para o nosso plugin, e adicionar uma tarefa de configuração.
+     namespace :citacao  do
+       desc "Cria arquivo YAML de citações no diretório config"
        task(:setup) do
 
        end
      end
 
-     Nossa tarefa só precisa criar um arquivo YAML, por isso vamos adicionar um método que cria o arquivo YAML usando uma biblioteca ruby para tratamento de Arquivos.
+     Nossa tarefa só precisa criar um arquivo YAML, por isso vamos adicionar um método que cria o arquivo YAML usando a biblioteca File do Ruby para tratamento de arquivos.
 
-     namespace :frase do
-       desc "Cria arquivo YAML de frases no diretório config"
+     namespace :citacao  do
+       desc "Cria arquivo YAML de citações no diretório config"
        task(:setup) do
-         puts "Criando #{RAILS_ROOT}/config/frases.yml"
-         frases = File.new("#{RAILS_ROOT}/config/frases.yml", "w")
-         frases.puts(
+         puts "Criando #{RAILS_ROOT}/config/citacoes.yml"
+         citacoes = File.new("#{RAILS_ROOT}/config/frases.yml", "w")
+         citacoes.puts(
            "0: Venha comigo se quiser viver! \n1: Se ele sangra,
 podemos mata-lo.\n2: Não é um tumor!"
          )
@@ -69,76 +68,75 @@ podemos mata-lo.\n2: Não é um tumor!"
      end
 
 
-     Tente executar a tarefa e você deve ver um arquivo YAML gerado no diretório config/.
+     Tente executar a tarefa e você deverá ver um arquivo YAML gerado no diretório config/.
 
-     rake frase:setup
+     rake citacao:setup
 
-     Em seguida, vamos deixar o nosso arquivo init.rb em ordem. Como mencionado antes, este é carregado na inicialização do Rails. Em nosso caso vamos adicionar métodos ao ActiveRecord::Base e fazer o require do 'frase.rb' de lib.
+     Em seguida, vamos deixar o nosso arquivo init.rb em ordem. Como mencionado antes, ele é carregado na inicialização do Rails. No nosso caso fazer o require do 'citacao.rb' do diretório lib e adicionar métodos ao ActiveRecord::Base.
 
-     require "frase.rb"
-     ActiveRecord::Base.send :include, Frase::ClassMethods
+     require "citacao.rb"
+     ActiveRecord::Base.send :include, Citacao::ClassMethods
 
-     Ótimo. Vamos começar a parte divertida! Abra lib/frase.rb. A verdadeira mágica vai acontecer aqui. Em um plugin maior, provavelmente usaríamos diferentes arquivos para diferentes classes ou módulos, mas para nosso caso um único arquivo, frase.rb, é o suficiente para o nosso único método.
+     Ótimo. Vamos começar a parte divertida! Abra lib/citacao.rb. A verdadeira mágica vai acontecer aqui. Em um plugin maior, provavelmente usaríamos arquivos diferentes para classes ou módulos diferentes, mas para nosso caso um único arquivo, citacao.rb, é o suficiente para o nosso único método.
 
-     # Frases
-     module Frase
+     # Citacoes
+     module Citacao
        module ClassMethods
-         # retorna uma frase  escolhida aleatoriamente de frases.yml
+         # retorna uma citação escolhida aleatoriamente de citacoes.yml
 
 Estendendo o Rails através de plugins
 Continuação da página 3
 
                                              continuação da página 15
                                                                    
-          def frase
-           frases = YAML.load_file("#{RAILS_ROOT}/config/frases.yml")
-           frases[rand(frases.length)]
+          def citacao
+           citacoes = YAML.load_file("#{RAILS_ROOT}/config/frases.yml")
+           citacoes[rand(citacoes.length)]
           end
        end
      end
 
-     Este deve ser bastante auto-explicativo. Cada vez que chamamos o métododo frase, o nosso arquivo frases.yml é lido, e é feito uma escolha aleatória de frases toda vez.
+     O código deve ser bastante auto-explicativo. Cada vez que chamamos o métododo citacao, o nosso arquivo frases.yml é lido, e uma citação aleatória é retornada. Vamos fazer um teste:
 
      $ ruby script/console                                        
      Loading development environment (Rails 2.2.2)
      >> a = Usuario.new
      => #<Usuario id: nil, nome: nil, created_at: nil, updated_at: nil>
-     >> a.frase
+     >> a.citacao
      => "Se ele sangra, podemos mata-lo."
-     >> a.frase
+     >> a.citacao
      => "Venha comigo se quiser viver!"
      >>
 
-     Está funcionando! Finalmente, vamos completar o arquivo README, nele deve ter passo a passo até a utilização do frase.
+     Está funcionando! Por fim, vamos completar o arquivo README e mostra-lo durante a instalação:
 
      README
-     Frases
+     Citações
      =====
-     Exibe as frases de Arnold em seus models!
-     Depois da instação, rode:
+     Exibe citações do Arnold em seus models!
+     Depois da instalação, rode:
 
-     rake frase:setup
+     rake citacao:setup
 
      Exemplos
      =======
      a = Usuario.new
-     a.frase => "Vai pro helicóptero!"
+     a.citacao => "Vai pro helicóptero!"
      Copyright (c) 2009 John Yerhot, released under the MIT license
 
-     E em install.rb teremos o README exibido na instalação.
+     E em install.rb faremos o README ser exibido na instalação.
 
-     install.rb
-
+     # install.rb
      puts IO.read(File.join(File.dirname(__FILE__), 'README'))
 
-     Para sua conveniência eu criei um repositório para o plugin no Github. Comece removendo o diretório do plugin vendor/plugins/frases/, depois instale o plugin a partir do GitHub.
+     Prontinho. Para sua conveniência criei um repositório para o plugin no Github. Comece removendo o diretório do plugin vendor/plugins/citacoes/, depois instale o plugin a partir do GitHub.
      script/plugin install git@github.com:johnyerhot/arnold_quotes.git
 
 
-     Se tudo correr bem, o plugin irá instalar e você deve ver o conteúdo do README exibido. Se você tiver problemas, verificar se você tem mesmo o Git instalado.
-     Plugins são uma ótima maneira de adicionar features a sua aplicação Rails de maneira concisa, organizada e elegante. Ainda temos que cobrir com testes o código, fundamental.
+     Se tudo correr bem, o plugin será instalado e você deve ver o conteúdo do README exibido. Se você tiver problemas, verifique se você tem mesmo o Git instalado.
+     Plugins são uma ótima maneira de adicionar funcionalidades a sua aplicação Rails de maneira concisa, organizada e elegante. Ainda há muitas coisas para falar, sendo que os teste dos plugins são fundamentais.
 
-     Para ler sugiro Advanced Rails de Brad Ediger, tem um capítulo inteiro dedicado ao desenvolvimento de plugins incluindo testes. Outro guia esta disponível em rails.info. Como sempre, uma das melhores maneiras de se ver como um plugin é desenvolvido, tente estudar o código de alguns dos mais populares plugins tais como Restful-Authentication ou Paperclip. A maioria pode ser encontrada no Github.
+     Para saber mais sobre o assunto, sugiro ler Advanced Rails escrito pelo Brad Ediger, tem um capítulo inteiro dedicado ao desenvolvimento de plugins incluindo testes. Outro guia aprofundado esta disponível em rails.info. Como sempre, uma das melhores maneiras de se aprender é vendo como um plugin mais complexo é desenvolvido, tente estudar o código de alguns dos plugins mais populares, como o Restful-Authentication ou o Paperclip. A maioria pode ser encontrada no Github.
 
   Recursos
 
