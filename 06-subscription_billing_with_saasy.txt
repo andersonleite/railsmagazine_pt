@@ -57,11 +57,12 @@ e atualmente suporta os seguintes gateways:
 - TrustCommerce (http://www.trustcommerce.com/)
 - PaymentExpress (http://www.paymentexpress.com/)
 
-It’s designed as a decoupled component that runs separately
-from your SaaS service (although they share the same DB). This
-kind of architecture is getting more popular, where your app is a
-series of agile decoupled components, which can be shared and
-developed without ending up with an unwieldy mass of code.
+Ele foi feito para ser um componente independente do seu
+serviço SaaS (mas compartilhando a base de dados). Esse tipo
+de arquitetura está se tornando popular: o aplicativo é um
+conjunto de componentes desacoplados, que podem ser
+reutilizados e desenvolvidos sem se tornar um monte de código
+bagunçado.
 
 Saasy also acts as a Single Sign On (SSO), which you’ll need
 to integrate with to authenticate users. The advantage of this is
