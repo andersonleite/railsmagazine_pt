@@ -57,68 +57,70 @@ e atualmente suporta os seguintes gateways:
 - TrustCommerce (http://www.trustcommerce.com/)
 - PaymentExpress (http://www.paymentexpress.com/)
 
-It’s designed as a decoupled component that runs separately
-from your SaaS service (although they share the same DB). This
-kind of architecture is getting more popular, where your app is a
-series of agile decoupled components, which can be shared and
-developed without ending up with an unwieldy mass of code.
+Ele foi feito para ser um componente independente do seu
+serviço SaaS (mas compartilhando a base de dados). Esse tipo
+de arquitetura está se tornando popular: o aplicativo é um
+conjunto de componentes desacoplados, que podem ser
+reutilizados e desenvolvidos sem se tornar um monte de código
+bagunçado.
 
-Saasy also acts as a Single Sign On (SSO), which you’ll need
-to integrate with to authenticate users. The advantage of this is
-that you don’t need to write (or generate) more authentication
-code - and your users can stay signed in across all your services,
-even if they’re on different domains.
+O Saasy também funciona como um Single Sign On (SSO), que será
+necessário para autenticar os usuários. A vantagem disso é que
+você não precisará escrever (ou gerar) mais código de
+autenticação - e seus usuários podem permanecer logados em
+todos os seus serviços, até mesmo se estiverem em domínios
+diferentes.
 
 ---------------------
-Alex MacCaw is a Prototyping Developer for
-Made by Many (http://madebymany.co.uk), social
-media specialists based in London. He's mainly
-a Ruby developer, but delves into lots of other
-languages and areas concerning application design
-and implementation. His personal site is http://eribium.org.
+Alex MacCaw é um Desenvolvedor de Protótipos na # TODO: desenvolvedor de protótipos!?
+Made by Many (http://madebymany.co.uk), empresa de londres
+especializada em mídia social. Trabalha principalmente com
+desenvolvimento em Ruby, mas meche com diversas outras
+linguagens e áreas abrangendo design e implementação de # TODO: áreas?
+aplicativos. Seu website pessoal é o http://eribium.org.
 ---------------------
 
--Initial setup-
+-Instalação-
 
-I’m assuming you’ve already got Ruby installed on your
-machine, but if not there are numerous articles online showing
-you how.
+Estou considerando que você já tem o Ruby instalado no seu
+sistema, mas se não tiver existem vários artigos pela internet
+que mostram como instalá-lo.
 
-Firstly you’ll need to open a terminal and download Saasy. If
-you’re using Git, run this:
+Primeiro, abra um terminal e baixe o Saasy. Se você usa o Git,
+execute:
 
 git clone git://github.com/maccman/saasy.git
 
-If don’t have Git, you can download a Saasy tarball of the
-github.com site (http://github.com/maccman/saasy).
+Se você não usa o Git, baixe o pacote no GitHub
+(http://github.com/maccman/saasy).
 
-Rails and the gems Saasy relies upon are all vendorized, so
-you don’t need to worry about installing them.
+O Rails e todas as outras gems de que o Saasy depende estão
+vendorizadas, então você não precisa se procupar em instalar # TODO: vendorizadas?
+elas.
 
-Then copy the default configuration files to their correct
-locations, like this:
+A seguir, copie os arquivos de configuração padrões para
+o lugar correto, assim:
 cp config/database.example.yml config/database.yml
 cp config/application.example.yml config/application.yml
 cp config/subscription.example.yml config/subscription.yml
 
-The default configuration will be fine to start off with, we can
-change it later.
+As configurações padrões são o suficiente para começarmos,
+depois nós iremos ajustá-las.
 
-The next step is to load the database schema into a Sqlite db,
-run:
+O próximo passo é criar o banco de dados Sqlite. Execute:
 rake db:schema:load
 
-Now we’re ready to start the server:
+Agora podemos iniciar o servidor:
 script/server
 
-That’s all there is to setting up Saasy; navigate to http://local-
-host:3000/signup
+Agora já estamos com tudo configurado; navegue até
+http://localhost:3000/signup
 
-Fill in the signup form, and use the following dummy credit
-card details:
-•	 Type: Visa
-•	 Number: 4111111111111111
-•	 CVS: 999
+Preencha o formulário de cadastro, e use os seguintes dados
+de testes nos campos de cartão de crédito:
+- Type: Visa
+- Number: 4111111111111111
+- CVS: 999
 
 So, if the signup validation passed, you’ll be sent to the login
 screen with a prompt to check your inbox. However, since this is
