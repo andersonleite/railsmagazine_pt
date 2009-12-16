@@ -1,1 +1,62 @@
-Este artigo será traduzido por vinibaggio
+Rails: Análise de Performance
+por Terry Heath
+
+Introdução
+===========
+
+Um dos meus apectos favoritos de desenvolvimento é trabalhar com performance. A atividade, associada com a instrumentação e ferramentas de medida de performance acaba transformando-se bem em análise científica.
+
+Usabilidade e aparência são sempre assuntos subjetivos e, na melhor das hipóteses, tem regras que mesmo assim não muito bem definidas. Ao contrário, medidas de performance são muito mais precisas.
+
+Eu vou dar uma idéia de como abordar análise de performance e as ferramentas necessárias para as diferentes partes que compoem uma aplicação. Eu não entrei em nada muito místico porque isso iria transformar esse artigo em um livro de capa dura de 2 quilos da Barnes & Noble.
+
+
+=-=-=
+Terry Heath é um desenvolvedor Rails que trabalh em Austin, no Texas. Ele mantém um blog que fala algumas vezes sobre Rails em terrbear.org
+
+=-=-=
+
+Medida
+=========
+
+Números e não sensações
+---------------------
+
+Antes de começar a ler sobre performance e receber a tarefa de otimizar alguma coisa, eu normalmente iria otimizar algo que não "parecia" rápido. Algumas vezes isso pode ser uma boa maneira para determinar se algo precisa ser otimizado, não é uma boa medida de otimização.
+
+Depois de trabalhar duro em otimização, você vai querer ver melhorias. Você vai querer tanto que se deixar levar pelo seu julgamento, você vai ver melhorias, mesmo se você tornou as coisas piores. Por essa razão, é importante avaliar performance numericamente através de instrumentação (profiling) e a medida de performance (benchmarking), e não sensações.
+
+Uma outra razão para usar ferramentas e não sensações é por que elas te permitem isolar o que é realmente lento. Acontecem diversas coisas durante uma requisição via web e um exemplo é uma requisição enviada ao Apache, que é repassada para o Mongrel, que por sua vez ativa alguma ação Ruby, finalmente voltando ao cliente. Você pode ver algo no código mais interno à sua aplicação e falar "Eu sei que isso é lento, vou melhorar". Infelizmente, sem uma medida de base, você (1) não sabe o quanto sua melhoria vai de fato ajudar e (2), você não sabe ao certo se aquele código realmente precisa ser melhorado.
+
+Números justificam tudo. Sem eles, é difícil para explicar aos seus colegas o que exatamente você tem feito durante a semana toda.
+
+
+Estatística I
+--------------
+Eu tive a sorte de ter aulas de estatística durante a faculdade e tive a sorte de ser uma nota 10 fácil para mim. Infelizmente, eu não lembro muito além disso disso. Eu acho que você está na mesma situação.
+
+=-=-=-=-=-=-
+Para aguçar sua memória...
+
+Média: x' =  1/n Sum(i=1, n, xi)
+Desvio padrão: sigma = Sqrt(E((X-E(X)))^2)
+
+(nota ao revisor: acho que vale a pena aprofundar os conhecimentos aqui, acho que nem todo mundo lembra o que é uma variável aleatória...)
+
+=--=-=-=-=-=-
+
+Embora eu acho que isso é ensinado como um axioma ou algo assim sobre tamanho de amostras, em conversas casuais já ouvi esse conceito ser referido como "lei dos pequenos números". Essensialmente, se você não tem amostras suficientes, você não pode ter certeza sobre o que você está medindo. Você talvez esteja medindo o tempo do garbage collector do Ruby quando você quer de fato ver quanto tempo uma expressão regular está tomando. Isso não só iria levar a resultados falsos como pode desviar a sua atenção nos esforços de otimização. Resumindo, quanto mais executar os testes, melhor.
+
+Enquanto se estiver tomando medidas estatísticas, é importante reduzir fatores
+
+
+
+
+
+
+
+
+
+
+
+
