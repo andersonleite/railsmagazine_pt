@@ -1,7 +1,7 @@
 Editorial
 por Olimpiu Metiu 
 
-Extendendo Rails através de plugins
+Estendendo Rails através de plugins
 por John Yerhot
 
 Recebendo E-Mail com Rails
