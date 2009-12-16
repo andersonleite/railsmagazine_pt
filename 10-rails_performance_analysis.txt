@@ -45,11 +45,22 @@ Desvio padrão: sigma = Sqrt(E((X-E(X)))^2)
 
 =--=-=-=-=-=-
 
-Embora eu acho que isso é ensinado como um axioma ou algo assim sobre tamanho de amostras, em conversas casuais já ouvi esse conceito ser referido como "lei dos pequenos números". Essensialmente, se você não tem amostras suficientes, você não pode ter certeza sobre o que você está medindo. Você talvez esteja medindo o tempo do garbage collector do Ruby quando você quer de fato ver quanto tempo uma expressão regular está tomando. Isso não só iria levar a resultados falsos como pode desviar a sua atenção nos esforços de otimização. Resumindo, quanto mais executar os testes, melhor.
+Embora eu acho que isso é ensinado como um axioma ou algo assim sobre tamanho de amostras, em conversas casuais já ouvi esse conceito ser referido como "lei dos pequenos números". Essensialmente, se você não tem amostras suficientes, você não pode ter certeza sobre o que você está medindo. Você talvez esteja medindo o tempo do garbage collector do Ruby quando você quer de fato ver quanto tempo um match em expressão regular está tomando. Isso não só iria levar a resultados falsos como pode desviar a sua atenção nos esforços de otimização. Resumindo, quanto mais executar os testes, melhor.
 
-Enquanto se estiver tomando medidas estatísticas, é importante reduzir fatores
+Enquanto se estiver tomando medidas estatísticas, é importante reduzir fatores que podem prejudicar a análise. Qualquer coisa que possa interferir com os números que você está coletando pode afetar seus dados. Se você executar seus benchmarks localmente, feche outras aplicações em execução. Reforçando, é difícil saber se o que você está medindo é realmente o match de expressão regular se seu iTunes está passando o Senhor dos Anéis e jogando Tower Defense no Firefox. Talvez colocar uma torre de água no jogo consuma alguma CPU, influenciando no processo Ruby. O timer não irá saber e nem você.
 
+Se você está testando a vazão do servidor, garanta que você está testando o mais próximo da máquina que puder. Se você tem um servidor espelho que fica a alguns metros de você, melhor, pois você não está medindo velocidade de roteadores e nem buracos negros na internet.
 
+Por último, quando apresentar suas medidas, calcule o desvio padrão e a média. Isso é extremamente importante. O desvio padrão indica o quanto as medidas desviam da média. Um desvio padrão deve cobrir cerca de 70% dos casos e um segundo desvio padrão deve cobrir 90% dos casos. Embora não haja nenhuma implementação embutida no Ruby para cálculo de desvio padrão, eu providenciei um em [0].
+
+Se você tem uma requisição que está tomando metade de um segundo, você pode pensar "que bom, nossa aplicação é tão rápida!", mas se você comparar essa informação com o desvio padrão que digamos seja 12 segundos, você pode ter certeza que muitas pessoas estão esperando muito mais que meio segundo. Esse comportamento pode revelar que algum código de backend está travando ou um "race condition" que apenas uma média não iria mostrar.
+
+Rails
+-----------
+
+É importante notar que todas as três áreas mencionadas (backend, frontend e configuração de servidores) podem afetar signifcamente a performance. Por sorte, tanto o backend e frontend Rails podem ser diagnosticado e instrumentado individualmente, então não temos que empurrar dominós nos nossos ajustes.
+
+Configuração e ajuste de servidores, por exemplo o número de instâncias mongrel para executar em um servidor, não podem ser feitos por si só. Como o processamento de backend pode aumentar o consumo de memória para uma instância ....
 
 
 
