@@ -3,46 +3,46 @@ por Jason Seifer
 
 Introdução
 
-Receber emails é uma ótima maneira de adicionar funcionalidades a sua aplicação. No entanto, esta é uma area que não é muito bem documentada com o Rails. Certo, nós temos a documentação do ActionMailer, mas como isso funciona atualmente em produção e quais são as preocupações? Eu tive que enfrentar esse problema recentemente e nenhuma solução que estava "no estado natural" funcionaria com os requisitos que eu tinha para esta aplicação. Neste Artigo, Vamos dar uma olhada em algumas opções e e nos aprofundar em um método que não recebeu muita cobertura.
+Receber emails é uma ótima maneira de adicionar funcionalidades a sua aplicação. No entanto, esta é uma área que não é muito bem documentada em Rails. Certo, nós temos a documentação do ActionMailer, mas como isso funciona atualmente em produção e quais são as preocupações? Eu tive que enfrentar esse problema recentemente e nenhuma solução que estava "no estado natural" funcionaria com os requisitos que eu tinha para esta aplicação. Neste artigo, vamos olhar algumas opções e nos aprofundar em um método que nunca recebeu muita cobertura.
 
-John Nunemaker, no blog Rails Tips, postou uma solução para este problema usando o Gmail com IMAP para receber e-mail no Rails[1]. Ele usa um script para conectar a um servidor IMAP a cada minuto ou algo assim e pesquisar por novos e-mails. O ambiente Rails é carregado e se há novas mensagens em espera, estas são processadas usando um modelo do ActiveRecord. Ele usa bibliotecas "Daemons" para manter o script em execução, executar comandos de start/stop e manter um arquivo pid.
+John Nunemaker, no blog Rails Tips, postou uma solução para este problema usando o Gmail com IMAP para receber e-mail no Rails[1]. Ele usa um script para conectar-se à um servidor IMAP a cada minuto, ou algo assim e, pesquisar por novos e-mails. O ambiente Rails é carregado e se há novas mensagens em espera, estas são processadas usando um modelo do ActiveRecord. Ele usa bibliotecas "Daemons" para manter o script em execução, executar comandos de start/stop e manter um arquivo pid.
 
 Esta é uma maneira perfeitamente válida e funcional de processar e-mails. A aplicação que eu estava trabalhando, porém, tinha que ser capaz de manipular e processar e-mails no menor tempo possível. As pessoas provavelmente enviariam coisas por email de seus telefones móveis e gostariam de consultá-las logo após o upload. Nesse caso, pesquisar a cada X minutos não era uma solução viável, então eu tinha que pensar em algo a mais.
 
-Também é importante notar que esta pesquisa por e-mail deve levar em conta a sua base de usuários e tamanho. Vamos dizer que temos uma aplicação com 10.000 usuários ativos. Vamos dizer também que, durante os horários de pico, todos eles decidam enviar e-mails para nossa aplicação. Finalmente, vamos dizer que eles estão enviando uma média de 5 e-mails cada. Com estes números hipotéticos, isso seria algo em torno de 833 e-mails por minuto. Se o seu servidor IMAP está sendo pesquisado a cada três minutos, isto vai nos deixar com cerca de 3.332 e-mails para fazer download e processar a cada vez.
+Também é importante notar que esta pesquisa por e-mail deve levar em conta a sua base de usuários e tamanho. Vamos supor que temos uma aplicação com 10.000 usuários ativos. Vamos supor também que, durante os horários de pico, todos eles decidam enviar e-mails para nossa aplicação. Finalmente, vamos dizer que eles estão enviando uma média de 5 e-mails cada. Com estes números hipotéticos, isso seria algo em torno de 833 e-mails por minuto. Se o seu servidor IMAP está sendo pesquisado a cada três minutos, isto vai nos deixar com cerca de 3.332 e-mails para fazer download e processar a cada vez.
 
 ------------------------------------------------------
-Jason Seifer é um desenvolvedor web e metade do Rails Envy. Ele atualmente vive no sul da Flórida, onde desenvolve aplicações web, produz o podcast semanal Rails Envy, e ocasionalmente estrela em vídeos bobos na Internet . Ele gosta de longas caminhadas na praia, scotch e poesia. Você pode encontrar mais informações sobre ele pela web em http://railsenvy.com, em  seu blog pessoal na http://jasonseifer.com, e no o Twitter como 'jseifer'.
+Jason Seifer é um desenvolvedor web e metade do Rails Envy. Ele atualmente vive no sul da Flórida, onde desenvolve aplicações web, produz o podcast semanal Rails Envy, e ocasionalmente estrela em vídeos bobos na Internet . Ele gosta de longas caminhadas na praia, scotch e poesia. Você pode encontrar mais informações sobre ele pela web em http://railsenvy.com, em seu blog pessoal na http://jasonseifer.com, e no o Twitter como 'jseifer'.
 -------------------------------------------------------
 
 Configurando o seu servidor de e-mail
 
-E-mail em si é um problema que tem sido amplamente resolvido. Há uma grande variedade de servidores de email disponíveis, mas este artigo vai dar uma olhada no Postfix. Postfix é mais facilmente instalado usando o gerenciador de pacotes da sua distribuição e pode já estar instalado se você tiver um VPS. Eu prefiro o Ubuntu Server então este artigo ira focar nesta distribuição. Esteja ciente de que a localização de alguns arquivos de configuração podem variar dependendo da sua distribuição. Então vamos começar.
+E-mail em si é um problema que tem sido amplamente resolvido. Existe uma grande variedade de servidores de email disponíveis, mas este artigo vai dar uma olhada no Postfix. Postfix é mais facilmente instalado usando o gerenciador de pacotes da sua distribuição e pode já estar instalado se você tiver um VPS (Virtual Private Server). Eu prefiro o Ubuntu Server então este artigo está focado nesta distribuição. Esteja ciente de que a localização de alguns arquivos de configuração podem variar dependendo da sua distribuição. Então, vamos começar.
 
-Primeiro temos de adicionar ou alterar alguns registros DNS. As instruções de como fazer isso vai variar dependendo da forma como você tem o seu DNS hospedado. Eu pessoalmente uso DNS Made Easy e recomendo aos meus clientes caso precisem de hospedagem de DNS. DNS Made Easy tem preços e quotas bem razoáveis. Independentemente do seu host você precisa criar os seguintes registos:
+Primeiro temos de adicionar ou alterar alguns registros DNS. As instruções de como fazer isso vai variar dependendo da forma como você tem o seu DNS hospedado. Eu, pessoalmente, uso o DNS Made Easy e recomendo aos meus clientes também, caso eles precisem de hospedagem de DNS. DNS Made Easy tem preços e quotas bem razoáveis. Independentemente do seu host você precisa criar os seguintes registos:
 
-  * Um registro "A" que tem o seu nome de domínio apenas. 
+  * Um registro "A" que tenha apenas o seu nome de domínio. 
   * Um registro "A" que é apenas "mail". 
   * Um registro "MX" definido para o nível 10 e que aponta para "mail".
   * Opcional: Um registro "SPF".
   
   
-Ok, Eu esta mentindo. O registro SPF não é realmente opcional. Ele vai ser um registro TXT e deve ser algo assim:
+Ok, eu estou mentindo. O registro SPF não é realmente opcional. Ele vai ser um registro TXT e deve ser algo assim:
 
   v=spf1  mx  -all
   
-Existem diversas variações que você pode usar com registros SPF, mas passar por eles seria fora do escopo deste artigo. Faça uma pesquisa e escolha a combinação certa para a sua configuração.
+Existem diversas variações que você pode usar com registros SPF, mas passar por eles está fora do escopo deste artigo. Faça uma pesquisa e escolha a combinação certa para a sua configuração.
 
-Agora, a primeira coisa que você vai precisar fazer é descobrir qual o endereço que você quer para receber os e-mails. Este vai ser o seu endereço pega-tudo. Neste caso vamos escolher "killer-robot", pois só is já irá para manter os spammers afastados[2]. Quero dizer, quem ira enviar spams para um robô assassino?
+Agora, a primeira coisa que você vai precisar fazer é descobrir qual o endereço que você quer que receba os e-mails. Este vai ser o seu endereço pega-tudo. Neste caso vamos escolher "killer-robot", pois só is já irá para manter os spammers afastados[2]. Quero dizer, quem enviará spams para um robô assassino?
 
-Lendo tutoriais na web ou até mesmo procurando em alguns livros, iram dizer que é possível dizer ao postfix para encaminhar os e-mails, simplesmente usando pipe no arquivo /etc/aliases. Você pode ser tentado a fazer algo parecido com canalizar tudo para um script Ruby:
+Lendo tutoriais na web ou até mesmo procurando em alguns livros, você verá que é possível dizer ao postfix para encaminhar os e-mails, simplesmente usando pipe no arquivo /etc/aliases. Você pode ser tentado a fazer algo parecido com canalizar tudo para um script Ruby:
 
 # /etc/aliases
 ...
 killerrobot: "|/usr/bin/ruby /var/www/apps/myapp/current/lib/mail_receiver.rb"
 *: killerrobot
 
-Isto, infelizmente, não vai funcionar. Se você fizer desta forma, todos os seus scripts vão executar como root. Esto não é o que você quer e pode ser uma preocupação de segurança. A maneira correta de fazer isso é com um filtro postmap. Abra o arquivo /etc/postfix/master.cf. A primeira linha depois de todos os comentários deve ter o seguinte aspecto:
+Isto, infelizmente, não funcionará. Se você fizer desta forma, todos os seus scripts executarão como root. Isto não é o que você quer e pode ser uma preocupação de segurança. A maneira correta de fazer isso é com um filtro postmap. Abra o arquivo /etc/postfix/master.cf. A primeira linha depois de todos os comentários deve ter o seguinte aspecto:
 
 # /etc/postfix/master.cf 
 smtp  inet  n  -  -  -  -  smtpd
@@ -61,13 +61,13 @@ smtp  inet  n  -  -  -  -  smtpd -o content_filter=myapp_filter:...
 myapp_filter unix - n n - -	pipe
   flags=Xhq user=deploy argv=/usr/bin/ruby /var/www/apps/myapp/current/lib/mail_receiver.rb
 
-O parâmetro "X" em “flags=Xhq” diz ao postfix que um comando externo realiza entrega final. Isso vai mudar o status da mensagem de "retransmitido" com a "entregue". O "h" define os destinatários e os domínios para minúsculas, e os "q" coloca entre aspas espaços em branco e outros caracteres especiais. Agora, recarregue o postfix executando o comando  sudo postfix reload. Neste ponto, você deve ter um servidor de e-mails básico configurado para receber e-mails e redireciona-los para o script mail_receiver.rb.
+O parâmetro "X" em “flags=Xhq” diz ao postfix que um comando externo realiza a entrega final. Isso vai mudar o status da mensagem de "retransmitido" para "entregue". O "h" define os destinatários e os domínios para minúsculas, e os "q" coloca entre aspas espaços em branco e outros caracteres especiais. Agora, recarregue o postfix executando o comando sudo postfix reload. Neste ponto, você deve ter um servidor de e-mails básico configurado para receber e-mails e redireciona-los para o script mail_receiver.rb.
 
 Manuseio do Email
 
-Nós vamos colocar todos os nossos e-mails que chegam em uma fila de mensagens e analisá-los com a gem "mms2r". Neste artigo eu vou usar o beanstalkd[3] mas você pode substituir-lo pela sua fila de mensagens favorita para esta parte da arquitetura. Eu vou assumir que uma fila de mensagens já está instalada e funcionando e que você tem as gems "tmail" a "e "mms2r" instaladas.
+Nós vamos colocar todos os e-mails recebidos em uma fila de mensagens e analisá-los com a gem "mms2r". Neste artigo eu vou usar o beanstalkd[3] mas você pode substituir-lo pela sua fila de mensagens favorita nesta esta parte da arquitetura. Eu vou assumir que uma fila de mensagens já está instalada, funcionando e que você tem as gems "tmail" a "e "mms2r" instaladas.
 
-Queremos que o nosso script mail_receiver seja super magro. Ele irá realizar apenas uma função: colocar os e-mails recebidos em uma fila. Vamos processar a fila mais tarde, mas por agora só queremos obtê-la, e lidar com quaisquer anexos. Queremos que ele seja super magro, porque se nós estamos recebendo muitos e-mails não queremos que esse script gere um uso intesivo de memória ou leve um longo tempo para iniciar ou executar. Ele será algo parecido com isto:
+Queremos que o nosso script mail_receiver seja super magro. Ele realizará apenas uma função: colocar os e-mails recebidos em uma fila. Vamos processar a fila mais tarde, por enquanto só queremos obtê-la, e lidar com quaisquer anexos. Queremos que ele seja super magro pois, se recebermos muitos e-mails não queremos que esse script gere um uso intesivo de memória ou leve um longo tempo para iniciar ou executar. Ele será algo parecido com isto:
 
   #!/usr/bin/env ruby 
   require 'rubygems' 
@@ -88,11 +88,11 @@ Queremos que o nosso script mail_receiver seja super magro. Ele irá realizar ap
   end
 
 
-O que estamos fazendo aqui é pegar a mensagem de e-mail da entrada padrão e analisá-lo, colocando-o em um objeto tmail. Tmail é uma incrível biblioteca que cuida da maior parte da formatação para nós. Ele nos permite fazer coisas como referência para mensagens de e-mail como objetos e usar coisas como mail.to, mail.from, etc. Se tivermos anexos, eles estão indo bem também. 
+O que estamos fazendo aqui é pegar a mensagem de e-mail da entrada padrão e analisá-lo, colocando-o em um objeto Tmail. Tmail é uma biblioteca incrível que cuida da maior parte da formatação para nós. Ele nos permite fazer coisas como referência para mensagens de e-mail como objetos e usar coisas como mail.to, mail.from, etc. Se tivermos anexos, eles também funcionarão.
 
-MMS2R é uma espantosa peça de software. Ele funciona tanto para e-mails quanto, como o nome indica, para mensagens MMS. O que o torna tão surpreendente? Existem dezenas de diferentes formatos no qual um anexo pode chegar no e-mail e MMS. Operadoras de telefonia diferentes cada uma tem sua própria maneira de fazer anexos MMS, cada um deles um pouco diferente. MMS2R alivia o problema de tentar analisar todos esses formatos diferentes e faz tudo para você. Desta forma podemos chamar MMS2R::Media.new(mail) e pronto.
+MMS2R é uma espantosa peça de software. Ele funciona tanto para e-mails quanto, como o nome indica, para mensagens MMS. O que o torna tão surpreendente? Existem dezenas de diferentes formatos no qual um anexo pode chegar no e-mail e MMS. Cada operadora de telefonia tem seu próprio jeito de montar anexos MMS, diferente uns dos outros. MMS2R alivia o problema de tentar analisar todos esses formatos diferentes e faz tudo por você. Desta forma, podemos chamar MMS2R::Media.new(mail) e pronto.
 
-Para o propósito da nossa aplicação exemplo, o usuário pode aplicar tags nas fotos para upload, colocando as diferentes tags no assunto. Enviamos isto, como mais uma opção no hash para beanstalkd. Para cada usuário é atribuído um identificador único na sua conta que lhes permitem enviar e-mail para a aplicação, por exemplo aslkdf32@myapp.com. Capturamos o primeiro receptor (mail.to) porque isso irá chegar como um array. Extraimos o domínio e o enviamos como o campo "to". Finalmente, a mídia local temporária no disco que analisamos usando o MMS2R é acionada na fila como a opção :attachment. Nosso e-mail está na fila.
+Para o propósito da nossa aplicação exemplo, o usuário pode colocar tags em fotos para upload colocando as diferentes tags no assunto. Enviamos isso como mais uma opção no hash para beanstalkd. Para cada usuário é atribuído um identificador único em sua conta que lhes permitem enviar e-mail para a aplicação, por exemplo aslkdf32@myapp.com. Capturamos o primeiro receptor (mail.to) porque isso chegará como um array. Extraimos o domínio e o enviamos como o campo "to". Finalmente, a mídia local temporariamente armazenada em disco que analisamos usando o MMS2R é acionada na fila como a opção :attachment. Nosso e-mail está na fila.
 
 
 Processamento da fila
@@ -130,7 +130,7 @@ Agora que temos o nosso e-mail na fila, precisamos tirá-lo. Para esta parte, n�
     end 
   end
   
-A primeira linha carrega o ambiente Rails assim temos acesso a todos os nossos modelos ActiveRecord. Nós queremos manter a nosso código DRY e utilizar apenas um método de processamento de anexo, encaminhamento de mensagens, ou algo parecido. Se estivéssemos usando attachment_fu ou paperclip, nós manteriamos esse código no modelo. Você pode até querer fazer em uma classe separada, como um apresentador. Neste caso, a classe EmailProcessor encontra o usuário basedo no atributo reception_email e depois executa o método do_stuff para processar a mensagem. Seria algo parecido com isto:
+A primeira linha carrega o ambiente Rails, desta forma, temos acesso a todos os modelos ActiveRecord. Queremos manter a nosso código DRY e utilizar apenas um método de processamento de anexos, roteamento de mensagens, ou algo parecido. Se estivéssemos usando attachment_fu ou paperclip, mantereíamos esse código no modelo. Você pode até querer fazer em uma classe separada, como um apresentador. Neste caso, a classe EmailProcessor encontra o usuário basedo no atributo reception_email e então executa o método do_stuff para processar a mensagem. Seria algo parecido com isto:
 
 
   require 'local_file' 
@@ -161,7 +161,7 @@ A primeira linha carrega o ambiente Rails assim temos acesso a todos os nossos m
   
 Isto utiliza a classe LocalFile de Ben Rubenstein[4]
   
-Nós não terminamos ainda. Precisamos fazer o mail_processor executar como uma daemon em vez de apenas executar "ruby mail_processor.rb" quando quizermos roda-lo. Vamos usar a biblioteca daemons para isso. Isto irá cuidar da criação dos arquivos PID e nos permitir executar ruby mail_processor_control.rb start e ruby mail_processor_control.rb stop. Também estamos usando o arquivo daemons_extension do Rapleaf que realmente dá feedback ao parar a daemon. O script em si é extremamente simples e vai no diretório lib com seu script mail_processor.rb:
+Nós não terminamos ainda. Precisamos fazer o mail_processor executar como uma daemon em vez de apenas executar "ruby mail_processor.rb" quando quisermos rodá-lo. Vamos usar a biblioteca daemons para isso. Isto cuidará do criação dos arquivos PID e nos permitir executar ruby mail_processor_control.rb start e ruby mail_processor_control.rb stop. Também estamos usando o arquivo daemons_extension do Rapleaf que realmente apresenta feedback ao parar a daemon. O script em si é extremamente simples e vai no diretório lib com seu script mail_processor.rb:
 
 
   require 'rubygems'
@@ -182,19 +182,19 @@ Nós não terminamos ainda. Precisamos fazer o mail_processor executar como uma 
   Daemons.run(File.join(File.dirname(__FILE__), 'processor.rb'), options)
   
   
-Agora é só começar isso executando "ruby mail_processor_control.rb start" e seu daemon estará instalado e funcionando. É isso! Você está recebendo e-mail para sua aplicação Rails.
+Agora é só iniciar isto executando "ruby mail_processor_control.rb start" e o daemon estará instalado e funcionando. É isto! Você está recebendo e-mail da sua aplicação Rails.
 
 Considerações
 
-Dependendo da configuração, você pode querer usar uma fila de mensagem diferente do beanstalkd. Eu pessoalmente considero beanstalkd confiável, mas sua arquitetura pode pedir por algo a mais. Por exemplo, você pode querer colocar a fila de mensagens em outro servidor. Se você fizer isto, então você não teria acesso ao armazenamento temporário do qual o MMS2R faz uso por padrão para salvar os anexos. Nesse caso, você poderia usar uma fila e colocar os anexos diretamente na fila, em S3, etc.
+Dependendo da configuração, você pode querer usar uma fila de mensagem diferente do beanstalkd. Eu pessoalmente considero beanstalkd confiável, mas sua arquitetura pode pedir por algo mais. Por exemplo, você pode querer colocar a fila de mensagens em outro servidor. Se você fizer isto, não teria acesso ao armazenamento temporário do qual o MMS2R faz uso por padrão para salvar os anexos. Neste caso, você poderia usar uma fila e colocar os anexos diretamente na fila, em S3, etc.
 
-Algumas pessoas relataram problemas com a biblioteca daemons e onde a daemon apenas travava e parava de responder. Eu nunca passei por isso e eu tive uma configuração similar em execução durante meses. Você também vai querer colocar o seu mail_processor_control sob algum tipo de supervisão de processo, usando monitores de processos como monit ou god.
+Algumas pessoas relataram problemas com a biblioteca daemons e tiveram suas daemons travadas ou de responder. Eu nunca passei por isso e, tive uma configuração similar em execução durante meses. Você também vai querer colocar o seu mail_processor_control sob algum tipo de supervisão de processo, usando monitores de processos como monit ou god.
 
-Você pode estar se perguntando por que não usar ActionMailer para lidar com os e-mails recebidos, uma vez que ele faz isso? A resposta é que se você fizer isso da maneira como foi descrita, por exemplo, no Rails wiki, ele irá rodar um novo processo Rails para cada e-mail que recebido. Sob qualquer carga significativa, isto ira falhar[5]. Outra desvantagem para essa abordagem é que, se houver uma falha, você perde o e-mail. Com este tipo de arquitetura, ele permanece na fila e você pode processá-lo mais tarde.
+Você pode estar se perguntando por que não usar o ActionMailer para lidar com os e-mails recebidos, uma vez que ele faz isso? A resposta é que se você fizer isso da maneira como foi descrita, por exemplo, no Rails wiki, ele executará um novo processo Rails para cada e-mail que recebido. Sob qualquer carga significativa, isto falhará[5]. Outra desvantagem para essa abordagem é que, se houver uma falha, você perderá o e-mail. Com este tipo de arquitetura, ele permanece na fila e você pode processá-lo mais tarde.
 
 Conclusão
 
-Este é um bom começo para manipulação de e-mail na sua aplicação. Ser capaz de processar e-mail é uma ótima maneira de melhorar a sua aplicação e dar a seus usuários acesso móvel. Com telefones capazes de enviar e-mails se tornando onipresentes, os usuários não precisam mais estar em frente a um computador para usar a sua aplicação. Lembre-se que uma aplicação que pode ser usada em qualquer lugar é uma aplicação que irá ser usada em qualquer lugar.
+Este é um bom começo para manipulação de e-mail na sua aplicação. Ser capaz de processar e-mail é uma ótima maneira de melhorar a sua aplicação e dar a seus usuários acesso móvel. Com telefones capazes de enviar e-mails se tornando onipresentes, os usuários não precisam estar em frente ao computador para usar sua aplicação. Lembre-se: uma aplicação que pode ser usada em qualquer lugar é uma aplicação que será usada em qualquer lugar.
 
 
 
