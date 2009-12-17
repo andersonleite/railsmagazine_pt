@@ -4,7 +4,7 @@ por Terry Heath
 Introdução
 ===========
 
-Um dos meus apectos favoritos de desenvolvimento é trabalhar com performance. A atividade, associada com a instrumentação e ferramentas de medida de performance acaba transformando-se bem em análise científica.
+Um dos meus apectos favoritos de desenvolvimento é trabalhar com performance. A atividade, associada com profiling e ferramentas de benchmark acaba transformando-se bem em análise científica.
 
 Usabilidade e aparência são sempre assuntos subjetivos e, na melhor das hipóteses, tem regras que mesmo assim não muito bem definidas. Ao contrário, medidas de performance são muito mais precisas.
 
@@ -60,14 +60,109 @@ Rails
 
 É importante notar que todas as três áreas mencionadas (backend, frontend e configuração de servidores) podem afetar signifcamente a performance. Por sorte, tanto o backend e frontend Rails podem ser diagnosticado e instrumentado individualmente, então não temos que empurrar dominós nos nossos ajustes.
 
-Configuração e ajuste de servidores, por exemplo o número de instâncias mongrel para executar em um servidor, não podem ser feitos por si só. Como o processamento de backend pode aumentar o consumo de memória para uma instância ....
+Configuração e ajuste de servidores, por exemplo o número de instâncias mongrel para executar em um servidor, não podem ser feitos por si só. Como o processamento de backend pode aumentar tanto o consumo de memória quanto o tempo que uma instância mongrel demora para desbloquear o processo, as coisas do lado Rails precisam ser ajustadas antes.
+
+Onde procurar?
+-------------
+
+A primeira tarefa é descobrir o que precisa ser otimizado. Um bom lugar para começar são os logs de produção, já que eles irão mostrar onde as pessoas vão e quanto tempo o servidor toma para responder.
+
+Existe uma ferramenta chamada PL Analyzer [1], parte da suite Rails Analyzer, mas não funciona "out-of-the-box" no OSX, no qual eu trabalho. Ele também trabalha com um conjunto separado de dados, então eu uso um programa que fiz há um tempo atrás chamado logpwnr [2] para converter os dados.
+
+O logpwnr irá gerar medidas completas de todas as actions usadas em sua aplicação. Se você tem vários servidores de produção, você precisará concatenar todos os logs antes de transformá-los com o logpwnr. Rode ele assim:
+
+./logpwnr.rb production.log > output.csv
+
+Assim você irá ter um CSV que você pode importar em qualquer planilha.
 
 
+tabela:
+
+name -> nome
+hits -> vis.
+action avg -> méd. action
+action avg stddev -> méd. desvp action
+render avg -> méd. render
+render avg stddev -> méd. desvp render
+db avg -> méd. bd
+db avg stddev -> méd. desvp bd
+
+Aqui podemos começar a procurar pelo que é mais usado e depois ver qual das actions pode ser uma candidata a ser otimizada, usando o tempo total de requisição (não exibido na tabela, mas é a soma das médias de bd, action e render). Tente avaliar os números no contexto do uso. Pode haver actions terrivelmente lentas em sua applicação, mas usadas apenas 5 vezes em alguns meses. Otimizar actions raramente usadas não valem o esforço até que todas as actions populares estiverem mais velozes.
+
+Para baixo na toca do coelho
+
+(nota ao revisor: eu não tenho Alice no País das maravilhas em portugues, 
+então usei o título do capítulo mais comum pelo Google, se você encontrar um nome melhor para o capítulo,
+fique a vontade)
+------------------------------
+
+Uma vez encontrada a action que parece boa para ser otimizada, podemos pensar em como atacar o problema usando o RubyProf. O Rubyprof é parcialmente mantido por Charlie Savage [3], que fez um dos melhores guias rápidos para acelerar Rails[4]. Ele também fez um guia fantástico de instalação do RubyProf [5].
+
+Um problema é que se você está usando Rails <= 1.1.6, você terá que fazer aliases de métodos por conta própria ou especificar alias_method_chain no plugin. Eu prefiro o último e apenas coloquei essee trecho do código do Rails [6] no topo do plugin.
+
+Novamente, é importante mensurar novamente todas as alterações que você fez para justificar seus refactorings e como direcionar seus esforços de otimização, mas se for para levar apenas algumas coisas de conhecimento para si, Charlie disponibiliza as seguintes guidelines para performance de backend:
+
+* Não use ActiveRecord#attributes - O ActiveRecord já clona todos os atributos associados com o objeto toda vez que ele é acessado;
+* Acerte seus ActiveRecord :includes - Includes muito agressivos podem gerar joins desnecessários no banco de dados, enquanto a falta deles pode resultar em um aumento no número de queries no banco.
+* Não verifique hora e data de templates (cache_template_loading = true)
+(nota ao revisor: eu infelizmente não entendi esse ponto!!)
+* Não use url_for - buscar pela tabela de rotas todas as vezes é lento
+* Não deixe o Rails interpretar data e hora - A classe Date do Ruby (e os monkeypatches do Rails em cima dele) é dolorosamente lenta.
+* Não transforme chaves em símbolos (local_assigns_support_string_keys = true)
+
+E algumas sugestões minhas:
+* Sempre use if's em cláusulas de debug, exemplo "logger.debug (em Controller#new) if logger.debug?" - isso é importante para evitar chamadas desnecessárias ao método to_s e também faz "curto circuito" em outros métodos em um ambiente de produção; não comente as cláusulas logger, já que elas são úteis para, você sabe, debuggar.
+
+* Evite helpers inúteis do Rails (a tag HTML <img> é mais rápido e tão fácil quanto o helper image_tag)
+* Evite cópias inúteis de objetos (como gsub) quando você pode usar alternativas que alteram o próprio objeto (gsub!)
 
 
+Otimizaçã de frontend
+=-=-=-=-=-=-=-=-=-=-
+
+Uma ferramenta fantástica para determinar tempo de carga de uma página web é o YSlow [7], uma ferramenta da Yahoo como um addon ao Firebug [8]. YSlow pontua sua página através de diversos critérios e faz recomendações de como melhorar seu site.
+
+Um site extremamente veloz no backend com uma pontuação terrível no YSlow vai ser geralmente visto como pesado pelos usuários.
+
+Uma das coisas mais fáceis para ser feitas é comprimir seus arquivos Javascript e CSS. Se você usa uma ferramenta como o asset packager [9], você pode ter seus javascripts e css's em ambiente de produção concatenados e "minificados", necessitando apenas 2 downloads pelos seus usuários. Esse é um grande ganho porquê você não só diminui consumo de banda como o número de downloads necessários para ver uma página. Muitos browsers vem preparados para fazer apenas 2 downloads de arquivos por vez de um servidor, então menos downloads é sempre bom.
+
+O YSlow em sua essência olha para elementos da página que travam o download de páginas e maneiras de como acelerar o tempo de downloads. Para esse fim, alguns ajustes no Apache podem render bons frutos.
+
+Ajustes do Apache
+-----------------
+
+A maioria dos browsers populares aceitam conteúdo compactados com gzip. Então zipe tudo usando o mod_deflate [10] do Apache. Além disso, arquivos estáticos podem ter data de expiração bem no futuro. Você pode simplesmente colocar:
+
+ExpiresDefault "access plus 10 years" 
+
+em sua configuração do Apache e então todos os seus arquivos estáticos vão conter esse cabeçalho HTTP. No trabalho, encontramos um problema com o cabeçalho Expires-Default e o IE7 que até requisições processadas pelo Mongrel estavam sendo armazenadas em cache, então precisamos deixar as coisas mais claras, tirando a cláusula ExpiresDefault com:
+
+ExpiresByType image/gif "access 10 years"
+ExpiresByType image/jpg "access 10 years"
+ExpiresByType image/png "access 10 years"
+ExpiresByType text/css "access 10 years"
+ExpiresByType text/javascript "access 10 years"
+
+Um perigo com essa abordagem é que caching pode causar problemas se você atualizar suas imagens ou CSS ou javascripts. O Asset packager resolve isso com seus CSSs e javascripts e você pode usar a mesma técnica com suas imagens - mudar o nome do arquivo cada vez que os arquivos forem alterados. Um número de revisão SVN ou Git resolve muito bem.
+
+Por fim, a configuração de ETags pode ser ajustada no Apache. Mais especificamente, pode ser desativado. Isso é bem importante quando seu site se torna grande o suficiente para tomar diversos servidores de conteúdo estático. O mecanismo de hashing padrão de ETags é dependente da máquina, então arquivos em diferentes servidores irão ter ETags diferentes. Isso gera invalidação desnecessária de cache e invalida o processamento feito pelo servidor para gerar o ETag. Para desligá-lo no Apache, basta:
+
+FileETag none
+
+no seu httpd.conf
+
+Na ponta do Rails, entretanto, ETags são muito mais úteis. O Rails tem um mecanismo embutido para ETags que é confiável e consistente em diversas máquinas e no Rails 2.2 o código foi simplificado. Você pode definir condições para expiração e fazer uma action inteiramente assim:
+
+if stale?(:last_modified => @user.updated_at, :etag => @user)
+	<código>
+end
+	
+E o <código> não será executado até que a data é alterada ou o ETag o indique.
+
+Depois de fazer essas mudanças, trabalhe com o YSlow e veja o que consegue melhorar. O YSlow tem links excelentes que explica tanto os problemas de sua página e também de como resolvê-los.
 
 
+Servidor/Ajustes no HTTP
+-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-
-
-
+Parece que o Phusion Passenger
