@@ -165,4 +165,60 @@ Depois de fazer essas mudanças, trabalhe com o YSlow e veja o que consegue melho
 Servidor/Ajustes no HTTP
 -=-=-=-=-=-=-=-=-=-=-=-=-=
 
-Parece que o Phusion Passenger
+Parece que o Phusion Passenger não tem o mesmo problema com ajustes como o Mongrel, mas se você precisar fazer proxy com múltiplos Apaches ou experimentar como se comporta seu servidor em alto tráfego, essa seção será bem útil.
+
+Eu não sei como a maioria das pessoas configuram várias máquinas com Mongrels, mas descobrimos recentemente em uma das nossas aplicações, que nós havíamos configurado mal. Tínhamos algo do tipo:
+
+Ignore o fato de que há apenas duas setas (deveriam ser seis) saindo das caixas do Apache; isso é preguiça minha. O problema aqui é que nós tínhamos uma instância Apache delegando para outras 4 instâncias que por sua vez passava a requisição para o Mongrel ou servia conteúdo estático.
+
+A análise com httperf[12] (daqui a poucos parágrafos!) mostrou que, para requisições pequenas, a diferença foi despresível, mas quando o número de requisições por segundo começou a acumular, Apaches que delegam para outros Apaches desnecessariamente logo se tornaram gargalo. Fazendo proxy diretamente do Apache balanceador de carga para instâncias Mongrel mostrou uma melhoria de 25% em alto tráfego (500 reqs/s por 10 segundos).
+
+Como um lembrete rápido, o Mongrel executava como uma thread sincronizada até o Rails 2.2. Isso significa que, para o Rails, uma instância Mongrel só poderia responder 1 única requisição por vez e quando essa instância está processando a requisição, ela acaba bloqueando todas as outras requisições chegando a ela. Isso leva a uma solução óbvia de escalabilidade (até um certo ponto): mais Mongrels!
+
+Mas mesmo antes de pensar no número correto de Mongrels por máquina, você tem que garantir que você não está usando o Mongrel para coisas que ele não deveria. O Mongrel não é nem de perto tão bom quanto o Apache para servir arquivos estáticos, então tenha certeza que sua pasta public esteja sendo servida diretamente pelo Apache, anterior a qualquer intervenção. Coloque isso no seu arquivo vhost (assumindo que todas as suas regras de Rewrite estejam correntas):
+
+<Directory "/your/apps/public/directory">
+	Option FollowSymLinks
+	AllowOverride None
+	Order allow,deny
+	Allow from all
+</Directory>
+
+# Rewrite index parar checar por arquivos estáticos
+RewriteRule ^/$ /index.html [QSA]
+
+# Rewrite para checar por páginas em cache do Rails
+RewriteRule ^([^.]+)$ $1.html [QSA]
+
+RewriteRule ".*(images|stylesheets|javascripts)/?(.*)" "$0" [L]
+
+E então depois de reiniciar o Apache, seus arquivos estáticos vão ser servidos pelo Apache. Agora é hora de ajustar instâncias Mongrel.
+
+
+Conheça o httperf
+-=-=-=-=-=-=-=-=-=-
+
+Então, enquanto muitas dessas coisas devem ser feitas com cuidado ou em período de manutenção, esse último teste parece pode ser feito durante o dia. Isso seria muito errado. Se você conseguir marretar bem seu servidor, você pode derrubar tudo (e falo por experiência quando usei inocentemente o httperf o servidor de produção há uns anos atrás). Faça testes em períodos de pouco tráfego.
+
+Essa é basicamente uma recaptulação de um post em um mailing list [13] incrivelmente esclarecedor do Zed Shaw (de fama do Mongrel e "Rails is a Ghetto").
+
+Primeiramente, encontre uma máquina perto (tanto na rede quanto em proximidade) do servidor que você quer testar, mas não a mesma máquina (testar a interface loopback não ajudam muito).
+
+O próximo passo, você vai querer testar arquivos estáticos naquela máquina. A boa notícia é que se você seguiu por esse guia, todos os seus arquivos estáticos estão sendo servidos pelo Apache. Isso te dá um ponto de partida de melhor caso, no qual você pode testar seus Mongrels.
+
+Comece executando um comando tipo:
+httperf --hog --server=<seu servidor> --uri=<seu recurso, como /happy.jpg> --num-conns
+
+Você terá alguma saída do programa mas o que você deve prestar atenção antes é a duração do teste. O Zed recomenda 10 segundos, que funciona bem para um caso de teste abrangente contra um servidor de arquivos estáticos e muitas requisições. Em um servidor "parrudo" da produção que temos, tive algo assim com num-conns de 1200.
+
+Depois de encontrar o número mágico, tente executar apenas uma requisição (--num-conns 1) contra uma action (--url <action>) em sua aplicação Rails que possa dar uma idéia de como sua aplicação funciona. Você não quereria executar na action mais lenta e executar conteúdo estático não vai ajudar em nada. Tenha certeza de encontrar uma página que não precise de login, já que isso irá resultar em redirects inúteis.
+
+Se apenas uma requisição foi muito lenta, então você provavelmente tem uma configuração incorreta para os Mongrels ou alguma coisa está bem errada. Essa execução deveria ser pelo menos tão rápida quanto as coisas em desenvolvimento localmente e provavelmente muito mais rápido. Se sua simples requisição Rails está mais rápida que uma requisição estática, então o conteúdo estático provavelmente não está estático - o Apache é mais veloz que o Mongrel, isso é fato. 
+
+Depois que uma requisição simples pareca bem, tente executar com --num-conns igual ao seu número mágico encontrado anteriormente, com 10 segundos de execução, para o seu servidor de conteúdo estático e coloque --rate para num-conns/10. Isso idealmente irá te dar testes com 10 segundos de duração, apesar de que na prática é um pouco mais que isso. Então execute novamente. É importante que os caches sejam feitos e que todos os Mongrels são levantados antes de executar um teste de performance. Nunca use números de um teste executado pela primeira vez.
+
+Agora tente adicionar uma instância do Mongrel, reinicie as coisas e execute o teste novamente. Se você encontrou melhorias no tempo geral to teste, você está progredindo.
+
+Existe um número ideal de instâncias Mongrel em um processador e você irá encontrá-lo facilmente. Aumentando o número de Mongrels por um. Assim que você alcançar o ápice, você deverá então encontrar uma queda drástica de performance. Eu já vi essa queda ser algo próximo a 25%, apenas adicionando um Mongrel. Quando você encontrar esse número, reduza um Mongrel e você tem o número ideal para sua aplicação e servidor atual.
+
+Se você seguir os links, você provavelmente irá ver (tanto quantitativamente quanto qualitativamente) ganhos bem notáveis de performance.
