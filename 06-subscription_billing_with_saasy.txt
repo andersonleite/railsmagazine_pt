@@ -122,7 +122,7 @@ de testes nos campos de cartão de crédito:
 - Number: 4111111111111111
 - CVS: 999
 
-Agora, se o cadastro foi bem sucedido, você será redirecionado
+Se o cadastro for bem sucedido, você será redirecionado
 para a tela de login com uma solicitação para verificar seu email.
 Como estamos rodando o Saasy em ambiente de desenvolvimento,
 o e-mail nunca vai chegar - então você terá que encontrar o link
@@ -253,14 +253,14 @@ e possamos recuperá-lo a cada requisição.
 Se você quiser apenas dar uma olhada no código completo, procure o
 arquivo lib/sso.rb - lá tem documentação e exemplos de código.
 
-Agora, um aviso: Saasy tem apenas algumas semanas de vida, está em
+Agora, um aviso: o Saasy tem apenas algumas semanas de vida, está em
 fase alpha e ainda não foi usado em ambiente de produção. Apesar
 disso, ele está evoluindo rapidamente, e eu pretendo usá-lo no meu
 site comercial, socialmod.com - um serviço de moderação automática # TODO: moderação automática?
-que está em beta fechado por enquanto. Acredito que, com a ajuda
+que por enquanto está em beta fechado. Acredito que, com a ajuda
 da comunidade open source, teremos uma versão estável em breve.
 
-Se você está procurando uma solução mais robusta e testada, dê uma # TODO: testada ou madura?
+Se você está procurando uma solução mais robusta e madura, dê uma
 olhada no aplicativo SaaS do Rails Kits (http://railskits.com/saas/),
 Ele já tem um bom tempo de casa.
 
