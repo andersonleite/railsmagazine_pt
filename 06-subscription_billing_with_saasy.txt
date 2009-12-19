@@ -91,7 +91,7 @@ execute:
 
 git clone git://github.com/maccman/saasy.git
 
-Se você não usa o Git, baixe o pacote no GitHub
+Se você não usa o Git, baixe o pacote no github
 (http://github.com/maccman/saasy).
 
 O Rails e todas as outras gems de que o Saasy depende estão
@@ -150,22 +150,23 @@ e endereço e-mail.
 
 -Integrando o Saasy com o seu serviço SaaS-
 
-One of the other beneifts Saasy provides you with is a SSO
-(Single Sign On), so you don’t need to repeat authentication code
-in all your apps, and you can stay ‘DRY’. At the moment, Saasy
-uses a custom SSO protocol, since I was keen to keep it as simple
-as possible, with only one round request. This may change to a
-widely recognised SSO protocol if there are lots of calls for it.
+O Saasy tem outro um benefício: Single Sign On (SSO). Isso
+significa que você não precisa repetir a autenticação em
+todas as suas aplicações. Atualmente o Saasy usa um protocolo
+próprio de SSO, pois dessa forma ele ficou bem mais simples. # TODO: round request?
+Se muitos usuários pedirem, esse protocolo poderá ser
+substituído por outro mais maduro.
 
-I’m assuming that the app you’re integrating with Saasy is
-also a Rails site, if not you’ll have to look closer at the protocol
-to replicate it. Also, the SSO library I wrote also assumes you’ve
-installed the RestfulAuthentication plugin, which you can get it
-off github (http://github.com/technoweenie/restful-authentication/
+Estou assumindo que o aplicativo ao qual você está integrando
+o Saasy também é feito em Rails. Se não for, você terá que
+reimplementar o protocolo. Além disso, a biblioteca de SSO
+precisa do plugin RestfulAuthentication, que você pode baixar
+no github (http://github.com/technoweenie/restful-authentication/
 tree).
 
-Copy lib/sso.rb from Saasy to your other app. In app/control-
-lers/application.rb, you’ll need to add this configuration:
+Copie o arquivo lib/sso.rb do Saasy para sua outra aplicação.
+Adicione a seguinte configuração no seu
+app/controllers/application.rb:
 include SSO::Client
 sso({
   :secret => ‘sso_secret’,
@@ -175,21 +176,20 @@ sso({
   :callback_url => app_site + ‘/sessions/sso’
 })
 
-Obviously you’ll need to replace those values with the real
-ones. The secret and salt should be different, random num-
-bers – you can generate them with a rake task called secret. The
-login_url will need to point to the login url of Saasy, likewise the
-logout_url needs to be set to Saasy’s logout action. The callback_
-url needs to point to an SSO action (which we haven’t made yet),
-on this application.
+Obviamente você precisará substituir esses valores com os seus.
+O :secret e o :salt devem ser diferentes, aleatórios - você pode
+gerar eles com a tarefa 'secret' no rake. O :login_url deve
+apontar para a url de login do Saasy, assim como o :logout_url
+deve apontar para a de logout. O :callback_url deve apontar para
+uma action de SSO (que vamos criar adiante) da aplicação.
 
-You’ll need to edit Saasy’s config/application.yml file, so the
-sso_secret and sso_salt match the ones you added to the control-
-ler. These are the shared secrets used to generate checksums for
-the SSO, and so need to be the same.
+Você precisará atualizar o config/application.yml com o
+:sso_secret e o :sso_salt que você configurou no controller.
+Essas senhas são compartilhadas para gerar checksums para o SSO,
+então precisam estar iguais nos dois lugares.
 
-Create a basic Sessions controller containing the following
-code:
+Crie uma controller simples chamada Sessions com o seguinte
+código:
 class SessionsController < ApplicationController
   def new
     redirect_to sso_login_url
