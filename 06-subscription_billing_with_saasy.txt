@@ -14,7 +14,7 @@ Para receber pagamentos de cartões de crédito você irá
 precisar de:
 - Uma conta bancária de empresa
 - Uma conta de mercante # TODO: substituir "mercante" por uma palavra mais amigável
-- Um gateway de pagamentos
+- Uma conta em um gateway de pagamentos
 
 Sua conta de mercante é uma conta bancária comum, mas não é
 possível acessá-la diretamente. Através de acordos, os bancos # TODO: acordos?
