@@ -17,17 +17,17 @@ precisar de:
 - Uma conta em um gateway de pagamentos
 
 Sua conta de mercante é uma conta bancária comum, mas não é
-possível acessá-la diretamente. Através de acordos, os bancos # TODO: acordos?
+possível acessá-la diretamente. Através de acordos, os bancos # TODO: Através de acordos?
 irão realizar as transações com cartões de crédito nela.
 O seu gateway transmite os dados dos cartões de crédito dos
 seus clientes para a conta de mercante e, em alguns casos,
 armazenam esses dados para que você possa fazer novas
 cobranças posteriormente.
 
-Você não deve armazenar esses dados nos seus próprios servidores.
-Se o fizer, deverá seguir rigorosas regras (PCI) ou estará # TODO: PCI compliant?
-sujeito a ser multado. É mais fácil deixar o gateway cuidar
-disso.
+Você não deve armazenar esses dados nos seus servidores.
+Se o fizer, deverá seguir as rigorosas regras PCI (Payment Card
+Industry Data Security Standard) ou estará sujeito a ser multado.
+É mais fácil deixar o gateway cuidar disso.
 
 Existem bibliotecas prontas em Ruby, como a ActiveMerchant,
 que abstraem a comunicação com os principais gateways,
@@ -49,7 +49,7 @@ E é aí que entra o Saasy. O Saasy é um aplicativo opensource
 feito em Rails que administra criação de contas,
 autenticação de usuários e cobrança de assinaturas. Além
 disso, o Saasy também cuida do envio de e-mails, gera
-extratos e trata cobranças que falharam. # TODO: invoices
+extratos e trata cobranças que falharam.
 
 Internamente o Saasy usa o ActiveMerchant (com alguns ajustes),
 e atualmente suporta os seguintes gateways:
@@ -75,8 +75,8 @@ diferentes.
 Alex MacCaw é um Desenvolvedor de Protótipos na # TODO: desenvolvedor de protótipos!?
 Made by Many (http://madebymany.co.uk), empresa de londres
 especializada em mídia social. Trabalha principalmente com
-desenvolvimento em Ruby, mas meche com diversas outras
-linguagens e áreas abrangendo design e implementação de # TODO: áreas?
+desenvolvimento em Ruby, mas tem contato com diversas outras
+linguagens e áreas abrangendo design e implementação de
 aplicativos. Seu website pessoal é o http://eribium.org.
 ---------------------
 
@@ -130,7 +130,7 @@ de ativação manualmente nos logs de envio de e-mail.
 
 Depois que seu cadastro for ativado e você fizer login, você será
 levado para a página de configuração do seu perfil. Explore as
-várias seções do Saasy, dando uma atenção especial para a de # TODO: seções?
+várias sessões do Saasy, dando uma atenção especial para a de # TODO: sessões?
 cobrança (Billing).
 O tema padrão do Saasy é preto - você terá que customizar o
 layout para que ele fique de acordo com a identidade visual
@@ -145,7 +145,7 @@ preço, etc. Você pode basear suas configurações nas de exemplo
 - elas são bem fáceis de entender.
 
 O outro arquivo de configuração, config/application.yml, guarda
-configurações mais específicas do sistema, como o nome, domínio # TODO: sistema ou aplicação?
+configurações mais específicas da aplicação, como o nome, domínio
 e endereço e-mail.
 
 -Integrando o Saasy com o seu serviço SaaS-
@@ -153,9 +153,9 @@ e endereço e-mail.
 O Saasy tem outro um benefício: Single Sign On (SSO). Isso
 significa que você não precisa repetir a autenticação em
 todas as suas aplicações. Atualmente o Saasy usa um protocolo
-próprio de SSO, pois dessa forma ele ficou bem mais simples. # TODO: round request?
-Se muitos usuários pedirem, esse protocolo poderá ser
-substituído por outro mais maduro.
+próprio de SSO, pois dessa forma ficou bem mais simples de
+implementar. Se muitos usuários pedirem, esse protocolo poderá
+ser substituído por outro mais maduro.
 
 Estou assumindo que o aplicativo ao qual você está integrando
 o Saasy também é feito em Rails. Se não for, você terá que
