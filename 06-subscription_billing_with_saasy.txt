@@ -14,7 +14,7 @@ Para receber pagamentos de cartões de crédito você irá
 precisar de:
 - Uma conta bancária de empresa
 - Uma conta de mercante # TODO: substituir "mercante" por uma palavra mais amigável
-- Uma conta gateway # TODO: verificar tradução
+- Um gateway de pagamentos
 
 Sua conta de mercante é uma conta bancária comum, mas não é
 possível acessá-la diretamente. Através de acordos, os bancos # TODO: acordos?
@@ -122,31 +122,33 @@ de testes nos campos de cartão de crédito:
 - Number: 4111111111111111
 - CVS: 999
 
-So, if the signup validation passed, you’ll be sent to the login
-screen with a prompt to check your inbox. However, since this is
-running in the Rails development environment, that email will
-never be sent - so you’ll have to check the logs which will contain
-the raw email, and navigate to the activation url manually.
+Agora, se o cadastro foi bem sucedido, você será redirecionado
+para a tela de login com uma solicitação para verificar seu email.
+Como estamos rodando o Saasy em ambiente de desenvolvimento,
+o e-mail nunca vai chegar - então você terá que encontrar o link
+de ativação manualmente nos logs de envio de e-mail.
 
-Once your account has been activated, and you’ve signed
-in, you’ll be looking at your profile management page. Have an
-explore of the various view, especially the billing one.
-You’ll notice Saasy comes with a default black theme - you’ll have
-to customize this to fit in with your own sites design. Likewise
-with the signup, and plan page.
+Depois que seu cadastro for ativado e você fizer login, você será
+levado para a página de configuração do seu perfil. Explore as
+várias seções do Saasy, dando uma atenção especial para a de # TODO: seções?
+cobrança (Billing).
+O tema padrão do Saasy é preto - você terá que customizar o
+layout para que ele fique de acordo com a identidade visual
+dos seus sites, incluindo as telas de cadastro e de planos.
 
-By default Saasy uses a gateway called Braintree as they allow
-sandbox developing without registering an account with them.
-You can change the gateway in config/subscription.yml. That’s
-also the configuration file where you specify the plans you want,
-their duration and price amonst other things. If you have a look
-at the defaults everything should be fairly self explanatory.
+Por padrão o Saasy usa um gateway chamado Braintree, pois ele
+tem uma sandbox de desenvolvimento que pode ser usada sem se
+cadastrar. Você pode trocar o gateway no arquivo
+config/subscription.yml. É nesse arquivo também que você deve
+configurar os planos e suas características, como duração,
+preço, etc. Você pode basear suas configurações nas de exemplo
+- elas são bem fáceis de entender.
 
-The other configuration file, config/application.yml, specifies
-more application specific settings such as the application name,
-domain and mailing address.
+O outro arquivo de configuração, config/application.yml, guarda
+configurações mais específicas do sistema, como o nome, domínio # TODO: sistema ou aplicação?
+e endereço e-mail.
 
--Integrating Saasy with your SaaS service-
+-Integrando o Saasy com o seu serviço SaaS-
 
 One of the other beneifts Saasy provides you with is a SSO
 (Single Sign On), so you don’t need to repeat authentication code
