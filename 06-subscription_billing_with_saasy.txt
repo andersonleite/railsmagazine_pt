@@ -176,7 +176,7 @@ sso({
   :callback_url => app_site + ‘/sessions/sso’
 })
 
-Obviamente você precisará substituir esses valores com os seus.
+Obviamente você precisará substituir esses dados com os seus.
 O :secret e o :salt devem ser diferentes, aleatórios - você pode
 gerar eles com a tarefa 'secret' no rake. O :login_url deve
 apontar para a url de login do Saasy, assim como o :logout_url
@@ -205,15 +205,16 @@ class SessionsController < ApplicationController
   end
 end
 
-Those SSO specific methods are provided by including
-Saasy::Client, which we did in application.rb. As you can see,
-there is significantly less code there than you’d normally need
-for authentication (not to mention the User model). There’s still a
-problem with the code though:
+Esses métodos específicos de SSO são fornecidos pela classe
+Saasy::Client, que adicionamos no application.rb. Como você
+pode ver, tem muito menos código do que normalmente se escreve
+para autenticação de usuários (sem contar a própria model User).
+Mas ainda falta uma coisa:
 
-Once we’ve authorized the client in the method sso, we still
-don’t know which one it is, so we need to do an additional re-
-quest too Saasy. We’re going to use ActiveResource to do that:
+Quando autenticamos um usuário no método sso, nós ainda não
+temos como saber que usuário está logado, então precisamos
+solicitar isso para o Saasy. Vamos usar o ActiveResource para
+isso:
 class RemoteUser < ActiveResource::Base
   class_inheritable_accessor :headers
   self.site = ‘saas_site’
@@ -225,15 +226,14 @@ class RemoteUser < ActiveResource::Base
   end
 end
 
-The above is what you’ll need to include in app/models/remote_
-user.rb. The reason I’m using the class name RemoteUser, rather
-than User, is to prevent clobbering of an existing User model (if it
-exists).
+Adicione este código no model app/models/remote_user.rb. Eu
+usei o nome RemoteUser, ao invés de User, para que ela não conflite
+caso já exista uma classe chamada User.
 
-Now we can call just User.current_user in the controller, and
-it’ll fetch the current user from Saasy.
+Agora podemos recuperar o usuário que está logado apenas chamando
+o método User.remote_user na controller.
 
-Make the SessionsController#sso method look like this:
+Modifique o método SessionsController#sso para:
 def sso
   head(401) and return unless sso_valid_token?
   RemoteUser.headers =
@@ -244,32 +244,31 @@ def sso
   redirect_back_or_default(‘/’)
 end
 
-You can see we’re setting the headers on RemoteUser, so Saasy
-knows which user we’re talking about. We’re then setting cur-
-rent_user, which is an RestfulAuthentication method, so that us-
-ers id stays in the session, and doesn’t need authentication every
-time they make a request.
+Como você pode ver, estamos definindo o cabeçalho na model
+RemoteUser para que o Saasy saiba de qual usuário estamos tratando.
+Depois nós chamamos o self.current_user=, que é um método do
+RestfulAuthentication, para que o usuário fique gravado na sessão
+e possamos recuperá-lo a cada requisição.
 
-If you just want an overview of the complete code, there’s
-some documentation in lib/sso.rb – and code examples too.
+Se você quiser apenas dar uma olhada no código completo, procure o
+arquivo lib/sso.rb - lá tem documentação e exemplos de código.
 
-And now, I’m afraid, a disclaimer: Saasy is only a few weeks
-old, still alpha and hasn’t yet been used in a production environ-
-ment. That said, things are progressing quickly, and I’m planning
-on using Saasy in my own commercial site, socialmod.com – an
-automated moderation service which is currently in a private
-beta. Hopefully, with the support of the open source community,
-we’ll have a production ready framework soon.
+Agora, um aviso: Saasy tem apenas algumas semanas de vida, está em
+fase alpha e ainda não foi usado em ambiente de produção. Apesar
+disso, ele está evoluindo rapidamente, e eu pretendo usá-lo no meu
+site comercial, socialmod.com - um serviço de moderação automática # TODO: moderação automática?
+que está em beta fechado por enquanto. Acredito que, com a ajuda
+da comunidade open source, teremos uma versão estável em breve.
 
-If you’re looking for a more robust and tested solution, try
-the Rails Kits SaaS app (http://railskits.com/saas/) which has
-been around for quite a while.
+Se você está procurando uma solução mais robusta e testada, dê uma # TODO: testada ou madura?
+olhada no aplicativo SaaS do Rails Kits (http://railskits.com/saas/),
+Ele já tem um bom tempo de casa.
 
-So, that’s a brief introduction to Saasy, I hope it saved you
-a bit of time reinventing the wheel by writing your own billing
-framework.
+Essa foi uma breve introdução ao Saasy. Espero ter te ajudado a
+economizar tempo e a não reinventar a roda implementando a
+cobrança do zero.
 
--Resources-
+-Referências-
 http://www.slash7.com/jumpstart
 http://letsfreckle.com/blog/2008/12/ecommerce-stuff/
 http://www.activemerchant.org/
@@ -279,4 +278,4 @@ http://www.37signals.com/svn/posts/753-ask-37signals-how-do-you-process-credit-c
 http://activereload.net/2007/5/17/dealing-with-subscription-payments
 http://www.setfiremedia.com/blog/7-top-tips-for-coding-with-currency
 
-Discuss: http://railsmagazine.com/1/4
+Tópico no fórum: http://railsmagazine.com/1/4
