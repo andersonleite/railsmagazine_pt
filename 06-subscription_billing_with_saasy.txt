@@ -13,7 +13,7 @@ evitar esses problemas, e quem sabe até adiantar o projeto.
 Para receber pagamentos de cartões de crédito você irá
 precisar de:
 - Uma conta bancária de empresa
-- Uma conta de mercante # TODO: substituir "mercante" por uma palavra mais amigável
+- Uma conta de mercante # TODO: mercante?
 - Uma conta em um gateway de pagamentos
 
 Sua conta de mercante é uma conta bancária comum, mas não é
@@ -95,8 +95,8 @@ Se você não usa o Git, baixe o pacote no github
 (http://github.com/maccman/saasy).
 
 O Rails e todas as outras gems de que o Saasy depende estão
-vendorizadas, então você não precisa se procupar em instalar # TODO: vendorizadas?
-elas.
+congeladas dentro do projeto, então você não precisa se
+procupar em instalar elas.
 
 A seguir, copie os arquivos de configuração padrões para
 o lugar correto, assim:
