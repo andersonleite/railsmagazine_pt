@@ -1,4 +1,4 @@
-Fazendo a troca de RSpec para Shoulda
+Trocando o RSpec pelo Shoulda
 por Dan Pickett
 
 Nota: Algumas destas informações não se aplicam mais devido aos

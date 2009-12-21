@@ -1,4 +1,4 @@
-Rails: Análise de Performance
+Análise de Performance no Rails
 por Terry Heath
 
 Introdução

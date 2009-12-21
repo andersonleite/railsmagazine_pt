@@ -1,7 +1,7 @@
 Editorial
 por Olimpiu Metiu 
 
-Estendendo Rails através de plugins
+Estendendo o Rails através de plugins
 por John Yerhot
 
 Recebendo E-Mail com Rails
@@ -13,7 +13,7 @@ por Khaled al Habache
 Cobrança de assinaturas com Saasy
 por Alex MacCaw
 
-Fazendo a troca de RSpec para Shoulda
+Trocando o RSpec pelo Shoulda
 por Dan Pickett
 
 Web hooks
@@ -22,7 +22,7 @@ por John Nunemaker
 Adhearsion
 Por Jason Goecke e Jay Phillips
 
-Análise de Performance Rails
+Análise de Performance no Rails
 por Terry Heath
 
 Primeiros Passos com JRuby e JRuby on Rails
@@ -31,5 +31,5 @@ por Joshua Moore
 
 
 Comunidade Pulsando.
-Nós analizamos a resposta a fusão entre Rails/Merb 
+Nós analizamos as respostas à fusão entre Rails e Merb 
 no blog oficial do Rails. Essa nuvem mostra os resultados.
