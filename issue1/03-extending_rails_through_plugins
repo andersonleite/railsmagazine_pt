@@ -1,0 +1,147 @@
+Estendendo o Rails através de plugins
+por John Yerhot
+
+    O Rails foi desenvolvido pensando em ser um framework completo, mas apesar disso ele não pode incluir todas as funcionalidades possíveis. Há muitas razões pelas quais o Core Team do Rails opta por não incluir uma nova funcionalidade - ela pode ser muito instável, muito obscura, ou simplesmente não faz parte do escopo do framework. De fato, existem casos em que as funcionalidades foram retiradas do Rails e transformadas em plugins! Por exemplo, o in_place_edit e o auto_complete_for foram removidos de Rails na versão 2.0. 
+
+Para ajudar os desenvolvedores que queiram adicionar, substituir ou modificar funcionalidades, o Rails foi construído com uma infra-estrutura altamente extensível. A maioria das modificações e acréscimos vêm como plugins. Enquanto muitos deles estendem uma das principais classes de Rails, como ActionView::Base ou ActiveRecord::Base, você está livre para criar suas próprias classes ou módulos. Além disso, eles podem ter as suas próprias tarefas Rake e testes. Essencialmente, os plugins são bibliotecas completas e independentes especificas do Rails.
+
+Um dos melhores usos dos plugins é para reutilização de código que você em vários projetos. Robby Russell tem um excelente exemplo utilizado por sua equipe na Planet Argon, o Flash Message Conductor. Dado que o tratamento das mensagens com escopo flash do  Rails eram inadequadas para suas projetos, eles notaram que reescreviam muito do código de flash de uma aplicação para a outra. A equipe criou um plugin que adicionava helpers para adicionar mensagens, erros e avisos flash e um método chamado render_flash_messages para renderizá-los nas views. Por usar o Flash Message Conductor em suas aplicações, a Planet Argon tem uma melhor implementação de mensagens flash, uma interface comum e de uma forma muito DRY e elegante.
+
+Para este artigo, vamos construir um plugin simples que irá adicionar um método de citações aos nossos modelos. Nosso objetivo é um funcionalidade muito simples.
+
+a = Usuario.new
+a.citacao
+=> "Se ele sangra, podemos matá-lo."
+
+Vamos criar uma tarefa Rake para gerar um arquivo YAML com as frases, carregá-lo e usar os dados para nossas citações. Apesar de ser um exemplo trivial, meu objetivo não é ensinar como escrever um plugin grande e complexo, mas ensinar o necessário para começar. Vamos lá!
+
+O Rails nos oferece um gerador para a criação de plugins.
+
+   script/generate plugin citacoes
+
+   Isto irá criar um plugin vazio em seu vendor/plugin com a seguinte estrutura:
+
+<Imagem da estruta>
+
+ - init.rb     - Carregado na execução do rails. Arquivo responsável por carregar seus arquivos do diretório lib.
+ - install.rb  - Executado quando você instalar o plugin usando 'script/plugin install comando'.
+ - lib/        - Diretório automaticamente adicionado ao path usado pelo Rails para carregar as classes.
+ - MIT-LICENSE - Seu plugin deve incluir uma licença, como a MIT ou outra qualquer.
+ - Rakefile    - Principais definições Rake para o seu plugin.
+ - README      - Um pequeno resumo do seu plugin, a sua utilização e quaisquer outras notas devem ser colocadas aqui.
+ - tasks/      - As tarefas Rake personalizadas podem ir aqui. Iremos criar uma para nosso plugin.
+ - test/       - Os testes de seu plugin devem estar aqui. Quando os testes são executados em um plugin o Rails não é carregado.
+
+John Yerhot vive em Northern, Minnesota, com sua esposa e cachorro, onde ele escreve aplicações Rails para a K-12 Sistemas de Educação. Ele é mantenedor do blog http://blog.john.yerhot.org, contato john@yerhot.org.
+
+Antes de continuarmos, devemos planejar como nosso plugin de citações deve funcionar. Primeiro, devemos criar uma tarefa Rake que cria o nosso arquivo YAML cheio de frases. Depois que ela estiver concluída criaremos um arquivo init.rb que terá um require de citacao.rb do diretório lib e carregar as frases de citacoes.yml em uma Array. Vamos criar um novo Módulo, Citacao::ClassMethods para a definição de nossos novos métodos, e adicionaremos esses métodos ao ActiveRecord::Base para que estejam disponíveis nos modelos.
+
+
+                                             continuação da página 3
+
+Estendendo o Rails através de plugins
+Continuação da página 3
+
+
+     Também vamos assumir que você tem uma aplicação vazia com um Model usuário.
+     Primeiro, vamos ver o que faz nossa tarefa tasks/citacao_tarefa.rake. Precisamos
+primeiro criar um novo namespace para o nosso plugin, e adicionar uma tarefa de configuração.
+     namespace :citacao  do
+       desc "Cria arquivo YAML de citações no diretório config"
+       task(:setup) do
+
+       end
+     end
+
+     Nossa tarefa só precisa criar um arquivo YAML, por isso vamos adicionar um método que cria o arquivo YAML usando a biblioteca File do Ruby para tratamento de arquivos.
+
+     namespace :citacao  do
+       desc "Cria arquivo YAML de citações no diretório config"
+       task(:setup) do
+         puts "Criando #{RAILS_ROOT}/config/citacoes.yml"
+         citacoes = File.new("#{RAILS_ROOT}/config/frases.yml", "w")
+         citacoes.puts(
+           "0: Venha comigo se quiser viver! \n1: Se ele sangra,
+podemos mata-lo.\n2: Não é um tumor!"
+         )
+       end
+     end
+
+
+     Tente executar a tarefa e você deverá ver um arquivo YAML gerado no diretório config/.
+
+     rake citacao:setup
+
+     Em seguida, vamos deixar o nosso arquivo init.rb em ordem. Como mencionado antes, ele é carregado na inicialização do Rails. No nosso caso fazer o require do 'citacao.rb' do diretório lib e adicionar métodos ao ActiveRecord::Base.
+
+     require "citacao.rb"
+     ActiveRecord::Base.send :include, Citacao::ClassMethods
+
+     Ótimo. Vamos começar a parte divertida! Abra lib/citacao.rb. A verdadeira mágica vai acontecer aqui. Em um plugin maior, provavelmente usaríamos arquivos diferentes para classes ou módulos diferentes, mas para nosso caso um único arquivo, citacao.rb, é o suficiente para o nosso único método.
+
+     # Citacoes
+     module Citacao
+       module ClassMethods
+         # retorna uma citação escolhida aleatoriamente de citacoes.yml
+
+Estendendo o Rails através de plugins
+Continuação da página 3
+
+                                             continuação da página 15
+                                                                   
+          def citacao
+           citacoes = YAML.load_file("#{RAILS_ROOT}/config/frases.yml")
+           citacoes[rand(citacoes.length)]
+          end
+       end
+     end
+
+     O código deve ser bastante auto-explicativo. Cada vez que chamamos o métododo citacao, o nosso arquivo frases.yml é lido, e uma citação aleatória é retornada. Vamos fazer um teste:
+
+     $ ruby script/console                                        
+     Loading development environment (Rails 2.2.2)
+     >> a = Usuario.new
+     => #<Usuario id: nil, nome: nil, created_at: nil, updated_at: nil>
+     >> a.citacao
+     => "Se ele sangra, podemos mata-lo."
+     >> a.citacao
+     => "Venha comigo se quiser viver!"
+     >>
+
+     Está funcionando! Por fim, vamos completar o arquivo README e mostrá-lo durante a instalação:
+
+     README
+     Citações
+     =====
+     Exibe citações do Arnold em seus models!
+     Depois da instalação, rode:
+
+     rake citacao:setup
+
+     Exemplos
+     =======
+     a = Usuario.new
+     a.citacao => "Vai pro helicóptero!"
+     Copyright (c) 2009 John Yerhot, released under the MIT license
+
+     E em install.rb faremos o README ser exibido na instalação.
+
+     # install.rb
+     puts IO.read(File.join(File.dirname(__FILE__), 'README'))
+
+     Prontinho. Para sua conveniência criei um repositório para o plugin no Github. Comece removendo o diretório do plugin vendor/plugins/citacoes/, depois instale o plugin a partir do GitHub.
+     script/plugin install git@github.com:johnyerhot/arnold_quotes.git
+
+
+     Se tudo correr bem, o plugin será instalado e você deve ver o conteúdo do README exibido. Se você tiver problemas, verifique se você tem mesmo o Git instalado.
+     Plugins são uma ótima maneira de adicionar funcionalidades a sua aplicação Rails de maneira concisa, organizada e elegante. Ainda há muita coisa para falar, sendo que os teste dos plugins são fundamentais.
+
+     Para saber mais sobre o assunto, sugiro ler Advanced Rails escrito pelo Brad Ediger, tem um capítulo inteiro dedicado ao desenvolvimento de plugins incluindo testes. Outro guia aprofundado esta disponível em rails.info. Como sempre, uma das melhores maneiras de se aprender é vendo como um plugin mais complexo é desenvolvido, tente estudar o código de alguns dos plugins mais populares, como o Restful-Authentication ou o Paperclip. A maioria pode ser encontrada no Github.
+
+  Recursos
+
+  1 http://www.robbyonrails.com/articles/2008/08/29/flash-message-conductor
+  2 http://github.com/johnyerhot/arnold_quotes/tree/master
+  3 http://www.amazon.com/Advanced-Rails-Brad-Ediger/dp/0596510322/ref=pd_bbs_sr_1?ie=UTF8&s=books&qid=1231179379&sr=8-1
+  4 http://guides.rails.info/creating_plugins.html
+  Discuta: http://railsmagazine.com/1/10

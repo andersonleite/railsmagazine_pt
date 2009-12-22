@@ -1,0 +1,280 @@
+Delegação em Ruby
+==================
+Por Khaled al Habache
+
+"Separe as partes que podem mudar daquelas que permanecem as mesmas" e "prefira composição à herança" são dois princípios triviais de design quando você começa a projetar no mundo da programação orientada a objetos (OOP). Entretanto, enquanto o primeiro possa parecer óbvio, alguém pode se perguntar porque é preferível utilizar composição ao invés de herança, e essa é uma pergunta lógica, então vamos respondê-la através de um exemplo.
+
+Vamos supor que temos um robô (representado pela classe Robot) que possui um sensor de calor. Alguém poderia escrever um UML bem simples:
+
+(imagem do UML da classe Robot)
+
+Este design apresenta diversas desvantagens:
+
+1. Existe uma grande probabilidade de existirem outros tipos de robôs que não possuem sensores de calor (quebra o primeiro princípio de design: separe as partes que podem mudar daquelas que são estáticas).
+2. Sempre que eu quiser alterar qualquer coisa relacionada ao sensor de calor, eu tenho que alterar a classe Robot (quebra o primeiro princípio de design).
+3. Exposição dos métodos do sensor de calor na classe Robot.
+
+Vamos melhorar um pouco essa classe:
+
+(imagem do UML da classe VolcanoRobot)
+
+Bem, agora este é um design baseado em herança e ele resolve o primeiro problema, mas ainda não é capaz de resolver os outros dois problemas relacionados ao sensor de calor. Vamos fazer outra melhoria:
+
+(imagem do UML da classe VolcanoRobot composta pelas classes Robot e HeatSensor)
+
+Este é um design típico, baseado em composição ao invés de herança, através do qual nós podemos resolver os três problemas citados acima. Além disso, nós ganhamos uma coisa nova: Agora nós podemos agora abstrair o HeatSensor para usos futuros.
+
+== Sendo assim, o que é delegação?
+
+Delegação é o processo de delegar funcionalidade para as partes internas.
+
+Se você olhar cuidadosamente para a figura anterior, você notará que a classe VolcanoRobot ainda possui os três métodos relacionados ao sensor; esses são métodos wrapper, eles não fazem nada além de chamar os respectivos métodos do sensor. É exatamente isso que delegation é, apenas repassar a funcionalidade para as partes internas (delegates).
+
+Delegação vem em conjunto com composição para prover soluções flexiveis e elegantes como a que temos acima e também serve ao princípio de "separar código que pode mudar daquele que é estático", mas ele também possui um preço: a necessidade de métodos wrapper e tempo extra de processamento devido às chamadas para estes métodos wrapper. 
+
+== Ruby e delegação
+
+Agora vamos dar uma olhada em um exemplo de código:
+
+Nós temos um robô com múltiplas utilidades que possui um braço e um sensor de calor. O robô realiza diversos trabalhos, como empacotar caixas, empilhá-las e medir o calor.
+
+Nós iremos utilizar composição e delegação da seguinte forma:
+
+class Robot 
+  def initialize 
+    @heat_sensor = HeatSensor.new
+    @arm = RobotArm.new
+  end
+
+  def measure_heat(scale="c")
+    @heat_sensor.measure(scale) 
+  end
+
+  def stack(boxes_number=1) 
+    @arm.stack(boxes_number)
+  end
+
+  def package 
+    @arm.package 
+  end 
+end
+
+class HeatSensor 
+  # Escala Celsius ou Fahrenheit
+  def measure(scale="c") 
+    t = rand(100) 
+    t = scale=="c" ? t : t * (9/5) 
+    puts "Heat is #{t}° #{scale.upcase}" 
+  end 
+end 
+
+class RobotArm 
+  def stack(boxes_number=1) 
+    puts "Stacking #{boxes_number} box(es)" 
+  end 
+
+  def package 
+    puts "Packaging" 
+  end 
+end 
+  
+robo = Robot.new #=>#<Robot:0xb75131e8 @arm=#<RobotArm:0xb75131ac>, @heat_sensor=#<HeatSensor:0xb75131c0>> 
+robo.stack 2 #=>Stacking 2 box(es) 
+robo.package #=>Packaging 
+robo.measure_heat #=> Heat is 59° C 
+
+
+Como você pode ver, eu tenho três métodos wrapper (stack, package e measure_heat) na classe Robot que não estão fazendo nada além de chamar os respetivos métodos dos objetos internos.
+
+Isso é algo ruim, principalmente quando existem muitos objetos internos.
+
+Entretanto existem duas bibliotecas em Ruby para nos socorrer: Forwardable and Delegate. Vamos dar uma olhada em cada uma delas.
+
+== Biblioteca Forwardable
+
+Forwardable é um biblioteca que suporta delegation, possuindo dois modules: Forwardable e SingleForwardable.
+
+== module Forwardable
+
+O module Forwardable fornece delegation de métodos específicos para um objeto designado, utilizando os métodos def_delegator e def_delegators.
+
+def_delegator(obj, method, alias = method): Define um método que delega para obj. Caso alias seja fornecido, este é usado como o nome do método delegado.
+
+def_delegators(obj, *methods): Atalho para definir múltiplos métodos delegadores, mas sem a possibilidade de utilizar um nome diferente.
+
+Vamos refatorar nosso robô de exemplo para utilizar o module Forwardable:
+
+require 'forwardable'
+
+class Robot 
+  # Extender provê métodos de classe 
+  extend Forwardable 
+  # Utilização de def_delegators 
+  def_delegators :@arm,:package,:stack 
+  # Utilização de def_delegator 
+  def_delegator :@heat_sensor, :measure ,:measure_heat 
+  def initialize 
+    @heat_sensor = HeatSensor.new 
+    @arm = RobotArm.new 
+  end 
+end 
+
+class HeatSensor 
+  #Escala em Celsius ou Fahrenheit
+  def measure(scale="c") 
+    t = rand(100) 
+    t = scale=="c" ? t : t * (9/5) 
+    puts "Heat is #{t}° #{scale.upcase}" 
+ end 
+end 
+
+class RobotArm 
+  def stack(boxes_number=1) 
+    puts "Stacking #{boxes_number} box(es)" 
+  end 
+
+  def package 
+    puts "Packaging" 
+  end 
+end
+
+Bom, como você pode ver essa é uma solução muito mais limpa.
+
+== module SingleForwardable
+
+O module SingleForwardable fornece delegação de métodos específicos para um objeto designado, utilizando os métodos def_delegator e def_delegators. Este module é semelhante ao Forwardable, mas funciona sobre objetos em si mesmos, ao invés de sobre as classes que os definem.
+
+require "forwardable" 
+require "date" 
+date = Date.today #=> #<Date: 4909665/2,0,2299161> 
+# Preparando o objeto para a delegação
+date.extend SingleForwardable #=> #<Date: 4909665/2,0,2299161> 
+# Adicionando delegação ao Time.now 
+date.def_delegator :Time, "now","with_time" 
+puts date.with_time #=>Thu Jan 01 23:03:04 +0200 2009 
+
+== Biblioteca Delegate
+
+A biblioteca Delegate é outra opção para prover delegação, eu vou explicar duas formas de usá-la.
+
+== Método DelegateClass
+
+Utilize o método de nível superior DelegateClass, o qual permite que você facilmente configure delegação através de herança. No exemplo a seguir eu quero criar uma nova classe chamada CurrentDate, a qual possui a data atual e alguns métodos extras e ao mesmo tempo estou delegando a objetos de data normais:
+
+require "delegate" 
+require "date" 
+
+# Repare na definição da classe
+class CurrentDate < DelegateClass(Date) 
+  def initialize 
+    @date = Date.today 
+    # Passa o objeto para ser delegado para a superclasse
+    super(@date)
+  end 
+
+  def to_s 
+    @date.strftime "%Y/%m/%d" 
+  end 
+
+  def with_time 
+    Time.now 
+  end 
+end 
+
+cdate = CurrentDate.new 
+# Repare como a delegação funciona
+# Ao invés de usar cdate.date.day e definir 
+# attr_accessor para a data, eu uso c.day 
+puts cdate.day #=>1 
+puts cdate.month #=>1 
+puts cdate.year #=>2009 
+# Testando os métodos adicionados
+# to_s 
+puts cdate #=> 2009/01/01 
+puts cdate.with_time #=> Thu Jan 01 23:22:20 +0200 2009 
+
+== Classe SimpleDelegator
+
+Utilize essa classe para delegar a um objeto que pode ser alterado:
+
+require "delegate" 
+require "date" 
+today = Date.today #=> #<Date: 4909665/2,0,2299161> 
+yesterday = today - 1 #=> #<Date: 4909663/2,0,2299161> 
+date = SimpleDelegator.new(today) #=> #<Date: 4909665/2,0,2299161> 
+puts date #=>2009-01-01 
+# Utilize __setobj__ para mudar o delegate 
+date.__setobj__(yesterday)#=> #<Date: 4909663/2,0,2299161> 
+puts date #=>2008-12-31 
+
+Como você pode ver nós criamos dois objetos e então delegamos a eles consequentemente.
+
+== E o Rails?
+
+O Rails adiciona uma nova funcionalidade chamada "delegate", a qual fornece um método de classe delegate para expor facilmente os métodos de objetos internos como se fossem seus. Passe um ou mais métodos (especificados como strings ou symbols) e o nome do objeto alvo através da opção :to (também um symbol ou uma string). Pelo menos um método e a opção :to são obrigatórios.
+
+Vá para o seu terminal e crie um projeto de teste, então faça cd para dentro da pasta do projeto e inicie o console do Rails:
+
+$ rails dummy 
+…... 
+$ cd dummy 
+$ruby script/console 
+Loading development environment (Rails 2.2.2) 
+>> Person = Struct.new(:name, :address) 
+=> Person 
+>> class Invoice < Struct.new(:client) 
+>>   delegate :name, :address, :to => :client 
+>> end 
+=> [:name, :address] 
+>> john_doe = Person.new("John Doe", "Vimmersvej 13") 
+=> #<struct Person name="John Doe", address="Vimmersvej 13"> 
+>> invoice = Invoice.new(john_doe) 
+=> #<struct Invoice client=#<struct Person name="John Doe", 
+address="Vimmersvej 13">> 
+>> invoice.name 
+=> John Doe 
+>> invoice.address 
+=>Vimmersvej 13
+
+Eu recomendo fortemente que você dê uma olhada nos exemplos fornecidos na documentação da API do Rails, para ver como isso também pode ser feito de forma efetiva com o ActiveRecord.
+
+Antes de terminar este artigo eu quero compartilhar com você o código do método delegate da documentação da API do Rails. Eu vou adicionar alguns comentários ao código para explicar o que está acontecendo:
+
+class Module 
+  # Método delegate
+  # Ele recebe um array de argumentos que contém os 
+  # métodos que serão delegados e um hash de opção 
+  def delegate(*methods) 
+    # Remove o hash de opções do array de argumentos
+    options = methods.pop 
+    # Verifica a disponibilidade do hash de opções 
+    # e mais especificamente a opção :to 
+    # Lança um erro caso qualquer um deles não esteja definido 
+    unless options.is_a?(Hash) && to = options[:to] 
+      raise ArgumentError, "Delegation needs a target. Suply an options hash with a :to key as the last argument (e.g. delegate :hello, :to => :greeter)." 
+    end 
+
+    # Certifica-se que a opção :to segue as regras de sintaxe 
+    # para nomes de métodos
+    if options[:prefix] == true && options[:to].to_s =~ /^[^a-z_]/ 
+      raise ArgumentError, "Can only automatically set the delegation prefix when delegating to a method." 
+    end 
+
+    # Define o valor do prefixo real 
+    prefix = options[:prefix] && "#{options[:prefix] == true ? to : options[:prefix]}_" 
+    # Aqui está a mágica do Ruby :) 
+    # Técnicas de reflexão são usadas aqui: 
+    # module_eval é usado para adicionar novos métodos em tempo de execução, os quais
+    # expõem os métodos dos objetos internos 
+    methods.each do |method| 
+      module_eval("def #{prefix}#{method}(*args, &block)\n#{to}.__send__(#{method.inspect}, *args, &block)\nend\n", "(__DELEGATION__)", 1) 
+    end 
+  end 
+end
+
+É isso para este artigo, nós cobrimos 5 pontos:
+1. Composição vs herança.
+2. O que é delegação e porque ela é usada. 
+3. Biblioteca Ruby Forwardable 
+4. Biblioteca Ruby Delegate  
+5. Método delegate do Rails

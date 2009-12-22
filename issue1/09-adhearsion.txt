@@ -1,0 +1,121 @@
+Adhearsion
+Por Jason Goecke e Jay Phillips
+
+O que é Adhearsion?
+
+Atualmente o desenvolvimento para telefonia tem alguns problemas significativos. Tende a ser fragmentado, árduo e requer uma curva íngreme de aprendizado de protocolos proprietários, jargões e APIs limitadas. Estes problemas são aumentados pelo uso de sistemas proprietários e modelos de negócios inflexíveis da indústria de telecomunicações. Isto acaba prevenindo a indústria de telecomunicações de manter-se atualizada com novidades acontecendo em outros lugares, especialmente com o desenvolvimento para web atual.
+
+O Adhearsion é uma nova forma de escrever aplicativos de voz em Ruby.  É um framework completamente open-source escrito em Ruby, não apenas uma API ou biblioteca, que disponibiliza todos os recursos necessários para o desenvolvimento de aplicativos de voz. Por exemplo, alguém poderia construir um aplicativo com Adheasion e com uma interface em Rails para gerir uma equipe internacional de suporte técnico. Ou talvez você queira utilizar uma ligação telefônica como um sistema CAPTCHA (confirmando o número de telefone ao mesmo tempo). Ou talvez você esteja voltando do supermercado carregando suas compras e queira abrir sua porta ligando para sua casa e digitando um código. Como um aplicativo em Adhearsion é fundamentalmente um aplicativo em Ruby que trabalha com voz, não existem limites para o que pode ser feito.
+
+Hoje o Adhearsion trabalha em conjunto com o sistema de telefonia open source Asterisk, mantendo o Asterisk como a principal plataforma de transferências telefônicas enquanto disponibiliza uma camada de aplicação sobre ele. A última versão do Adhearsion vem com uma arquitetura de componentes que facilita o desenvolvimento de plug-ins que podem ser compartilhados com a comunidade.
+
+O que é o Asterisk?
+
+O Asterisk é um motor com ferramentas de telefonia open-source. Com respeito ao Adhearsion, o Asterisk disponibiliza suporte para conversão entre codecs de áudio, protocolos de telefonia, e provê abstrações de baixo-nível de funcionalidades de telefonia. O Asterisk pode ser moldado em várias aplicações, de um sistema PBX de escritório, a um servidor de ligações em conferência até sistemas de correio de voz. Normalmente existe uma curva íngreme de aprendizado para começar a desenvolver aplicativos com Asterisk. Existem também, em vários aspectos, problemas no design do motor que fazem com que o uso de um framework de desenvolvimento seja mais apropriado para escalabilidade e estabilidade.
+
+A última versão do Adhearsion vem com uma série de melhorias. Estas incluem uma nova arquitetura de componentes que facilita o desenvolvimento de plug-ins que podem ser compartilhados com a comunidade. Um completo retrabalho sobre a forma como o Adhearsion interage com o Asterisk Manager API(um protocolo usado para receber eventos e enviar diversos comandos) que usa uma thread pool dinâmica, assim como Ragel para para criar maquinas de estado que parseam o protocolo eficientemente possibilitando ótima escalabilidade. O Adhearsion segue um caminho excitante que vai rapidamente evoluindo o framework com recursos adicionais e suporte para mais motores de telefonia.
+
+Hello, World!
+
+Vamos pular direto para a ação e escrever o nosso primeiro aplicativo Hello World. Instale a gem do Adhearsion com o simples comando
+
+$sudo gem install adhearsion
+
+Agora que você tem o Adhearsion instalado você tem o comando ‘ahn’ que é utilizado para gerar, parar e iniciar aplicações assim como criar, ativar e desativar componentes. Você pode ver as informações sobre o seu uso com o comando
+
+$ahn –help
+
+Vamos criar nosso primeiro aplicativo digitando
+
+$ahn create ~/meu_primeiro_app
+
+Isto é similar a geração de uma aplicação em Rails com o comando “rails”. Você verá o programa imprimindo uma lista de arquivos que acabou de criar na pasta meu_primeiro_app. O próximo passo é conectar nosso aplicativo para usar o Adhearsion Sandbox que está disponível para desenvolvedores iniciantes. O Sandbox permite que você mantenha o foco no Adhearsion, sem ter que se preocupar com a configuração do sistema de telefonia por baixo, deixando você rodando com o mínimo de fricção possível. Para isso você precisa se cadastrar para uma conta gratuita no site:
+
+http://new.adhearsion.com/getting_started
+
+Esta conta é necessária para usar o Sandbox pois chamadas recebidas necessitam de uma forma de achar você individualmente. Depois que você cadastrou sua conta, o próximo passo é ativar o componente do Sandbox disponibilizado pelo Adhearsion como padrão do seu diretório meu_primeiro_app:
+
+$ahn enable component sandbox
+
+Uma vez feito isto, você deve editar o arquivo ~/meu_primeiro_app/components/sandbox/sandbox.yml e insira as suas credenciais criadas anteriormente:
+
+username: seu_username
+password: seu_password
+
+Estamos quase lá! Vamos iniciar a aplicação agora digitando
+
+$ahn start .
+
+O próximo passo é modificar o arquivo ~/meu_primeiro_app/dialplan.rb, que é o arquivo que contem o DSL que lida com todas as chamadas de entrada com métodos de  controle em tempo real de chamadas. Quando você abre o arquivo deverá ver algo como:
+
+adhearsion {
+	simon_game
+}
+
+Adicione isto no final do arquivo dialplan.rb:
+
+sandbox { 
+play “hello-world”
+}
+
+Quando o Sandbox recebe uma ligação, o controle dela será direcionado para a aplicação do Adhearsion em seu sistema. Os contextos em dialplan.rb(“adhearsion” e “sandbox” no exemplo acima) especificam os vários pontos de entrada por onde podem chegar as ligações e, por padrão, o Sandbox começa executando o contexto ‘sandbox’. A string “hello-world” é uma referência a um arquivo de audio padrão no Asterisk do Sandbox que será tocado para você quando você ligar.
+
+O próximo passo é configurar o aplicativo de Voz sobre IP (VoIP) no seu computador (também chamado de “softphone”). Existem diversos softphones gratuitos para escolher, mas nós recomendamos usar o Gizmo5 (http://www.gizmo5.com) devido ao bom trabalho que faz lidando com questões de firewall além de funcionar em Windows, OSX e Linux.  Você também precisará cadastrar uma conta gratuita  (último cadastro, nós prometemos) que na verdade é bastante útil pois os servidores da Gizmo irão ajudar a evitar problemas de firewall. Uma vez que o Gizmo esteja instalado e configurado, tudo que você precisa fazer é ligar para sua conta do Sandbox. Para isto, simplesmente informe o seguinte no campo de texto na parte de cima da janela principal do Gizmo5:
+
+seu_username@sandbox.adhearsion.com
+
+ É isso! Se tudo deu certo você deve ouvir agora uma voz feminina dizer “Hello, world!”. Vamos tentar montar um aplicativo mais sofisticado usando Rails agora.
+
+Integração com Rails
+
+Mesmo que o Adhearsion seja um framework que funciona sozinho, ele pode ser facilmente integrado com o Rails para ampliar a lógica de negócio colocada nos modelos do Rails. Como o Adhearsion e o Rails rodam cada um em sua instância do interpretador, é necessária uma forma de comunicação entre os estados compartilhados dos aplicativos quando necessário além dos modelos. Para isto, o Adhearsion suporta o Distributed Ruby (DRb),  o Stomp message queue assim como um grupo de APIs RESTful por padrão.
+
+Para carregar o modelos Rails e o ambiente do banco de dados na aplicação do Adhearsion que você criou anteriormente, você precisa modificar o arquivo config/startup.rb da seguinte forma:
+
+config.enable_rails :path => ‘gui’, :env => :development
+
+Na linha acima o :path é simplesmente o caminho para o seu diretorio Rails, que pode ser um caminho absoluto ou um link simbólico, e obviamente o :env é qual o ambiente do database.yml você deseja utilizar. Rails e o Adhearsion rodarão em processos separados com seus prórpios interpretadores Ruby, mas agora ambas as aplicações compartilham os mesmos modelos.
+
+Agora vamos ver como podemos ampliar isto. Digamos que você tenha uma aplicação Rails que possibilita usuários a logar e escutar arquivos de áudio gravados especialmente para o seu website de podcasts. Você poderia ter um modelo que seria parecido com este:
+
+class User < ActiveRecord::Base 
+validates_presence_of :password 
+validates_uniqueness_of :password 
+has_many :podcasts, :order => “created_at desc”
+end
+class Podcast 
+belongs_to :user
+end
+
+Agora, no mesmo dialplan.rb que modificamos no exemplo  Hello World acima, podemos inserir o seguinte:
+
+podcast_content { 
+password = input 5, 
+:play => ‘please-enter-your-pin-number’, 
+:timeout => 5.seconds 
+user = User.find_by_password(password) 
+if user 
+play ”{user.id}/#{user.podcasts.first.id}” 
+else 
+play ‘vm-invalidpassword’ 
+play ‘goodbye’ 
+end 
+
+hangup
+}
+
+No exemplo acima mostramos a habilidade de fazer uma pergunta ao usuário e receber os dígitos pressionados no telefone no método input, onde :play representa o arquivo de áudio que faz a pergunta e :timeout é o tempo em segundos que o usuário tem para responde-la.
+
+Este é um cenário mínimo, mas dá um gostinho de como o Adhearsion amplia os modelos, não apenas em um aplicativo Rails, mas em qualquer coisa que possa se beneficiar do uso do ActiveRecord, ou qualquer outra forma de acesso a estados compartilhados.  Você poderia estar usando CouchDB, DRb, um message queue, interfaces XML-RPC, uma biblioteca LDAP ou qualquer outra tecnologia orientada a integração.
+
+Conclusão
+
+O Adhearsion é um framework poderoso que integra voz à web moderna. Cobrimos apenas um pouco das capacidades aqui mas ainda há muito mais para explorar. O Adhearsion pode ser utilizado para gerar ligações externas, ampliar o uso de motores Texto-para-Voz (TTS) e Reconhecimento Automático de Voz (ASR), disponibiliza capacidades avançadas para call centers, possibilita aplicativos e serviços web de voz consistentes, a lista é infinita. O limite na verdade é a sua imaginação.
+
+Historicamente achar um desenvolvedor que consegue cruzar os domínios de web e voz é um caso raro. Isto não precisa mais ser verdade para a comunidade Rails. O verdadeiro potencial do Adhearsion está em possibilitar um desenvolvedor Rails a ampliar suas capacidades além da web para incluir voz com mínima dificuldade. Você pode não apenas incluir isto em suas próprias aplicações, mas também nas de seus clientes. Com a sua nova habilidade de incluir todas as formas de comunicação, você tem a oportunidade de se tornar um líder de idéias e criar mais oportunidades em seus trabalhos atuais e futuros.
+
+São bem vindos todos que se juntarem a nós e começarem a adicionar soluções inovadoras de voz em suas aplicações web. Você encontrará mais exemplos visitando o Projeto Adhearsion (http://adhearsion.com) onde encontrará a documentação da API (http://api.adhearsion.com) e o wiki (http://docs.adhearsion.com).
+
+Jay Phillips tem uma posição interessante como programador Ruby e hacker de telefonia ao mesmo tempo. O seu interesse nestas duas áreas o levou a criar o framework Adhearsion para ajudar a trazer a cultura Ruby para a ortodoxa indústria de telecomunicações e solucionar alguns dos seus duradores problemas com softwares open-source.
+
+Jason Goecke tem uma longa história com telefonia. Sua perspectiva singular foi construída através da sua experiência extensiva em negócios em todo o mundo e sua profundidade técnica. Sua paixão por ruptura se manifesta através de seu apoio a telefonia open-source, tendo nas suas últimas contribuições o compromisso ao projeto Adhearsion.

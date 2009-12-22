@@ -1,0 +1,130 @@
+Web hooks
+por John Nunemaker
+
+Por tudo que li e experimentei, web hooks são ótimos! Eles deixam desenvolvedores extenderem e integrar aplicações web facilmente e permitem que usuários recebam eventos e dados em tempo real. Sim, tempo real! Então, o que são web hooks? Vamos começar com exemplos, seguidos de teoria, e então partir para o código.
+
+Exemplos
+
+O melhor exemplo de web hooks, que provavelmente deve ser familiar a você, é o GitHub. Ele tem uma aba de serviços no admin de cada repositório que permite a você enviar hooks após commits para URLs que você especificar. Eles ainda tem alguns hooks pré definidos, como Basecamp, Campfire, Email, Fog- Bugz, IRC, Jabber, Lighthouse e Twitter, e até abriram o código-fonte.
+
+Outro exemplo que talvez você conheça, e que já existe faz um bom tempo, é a Notificação Instantânea de Pagamento do PayPal (IPN). O IPN "é a interface do PayPal para manusear em tempo real confirmações de compras e comunicações servidor-a-servidor" de acordo com o website do PayPal. Traduzindo, o PayPal envia uma requisição para uma URL específica toda vez que alguém completa uma transação. Ryan Bates tem alguns screencasts fantásticos sobre o IPN do PayPal em Railscasts.com.
+
+GitHub e Paypal são dois ótimos exemplos, mas que tal uma aplicação bem conhecida que não usa web hooks e poderia se beneficiar deles? A primeira que me vem à mente é o Feedburner, um serviço que provê estatísticas sobre quantidade de assinaturas e mais sobre feeds. Ele atualiza esses números diariamente, ainda assim provavelmente há milhares de desktops e aplicações web que requisitam repetidamente a API do Feedburner ao longo do dia.
+
+Imagine se, ao invés de requisitar a API, os desenvolvedores pudessem simplesmente informar uma URL de sua escolha ao Feedburner. Uma vez por dia, quando o Feedburner terminasse seus resumos diários, ele poderia enviar em tempo real requisições para as URLs dos desenvolvedores com as informações sobre o resumo. Sem mais tarefas cron para desenvolvedores e sem mais requisições para a API pedindo atualizações. O Feedburner simplesmente diria: "Hey, nós acabamos de atualizar as estatísticas dos feeds, aqui vão elas". Assim os desenvolvedores poderiam facilmente sincronizar os dados do Feedburner em suas aplicações ou enviar notificações em tempo real para viciados em estatísticas como eu.
+
+Cansado de escrever código e configurar infra estrutura para receber e-mail em sua applicação? Rick Olson (também conhecido como technoweenie) com certeza estava. Foi por isso que ele criou o Astrotrain, uma micro aplicação que envia hooks em forma de requisições Post HTTP ou mensagem Jabber toda vez que um e-mail é recebido. Uma instância do Astrotrain enriquece a funcionalidade de e-mail do Lighthouse e do Tender, duas aplicações populares em que Rick trabalhou.
+
+As possibilidades com web hooks são infinitas e esses exemplos são só a ponta do iceberg. Agora que provamos que empresas "reais" estão usando web hooks, não sei quanto a você, mas estou convencido de que isso não é apenas uma novidade maluca. Que tal nós aprofundarmos um pouco mais com alguma teoria?
+
+Teoria
+
+Tempo atrás, quando eu comecei a pesquisar sobre web hooks, teve um gráfico que realmente fez com que as coisas fizessem sentido para mim. Ele compara um programa unix a uma aplicação web. Para dar os devidos créditos, a forma original desse gráfico veio de uma apresentação do Jeff Lindsay, que foi quem, até aonde sei, cunhou o termo "web hooks".
+
+(figura)
+
+Programa vs Webapp
+
+Como a figura acima ilustra, uma API está para uma aplicação web, assim como STDIN está para um programa unix. Ambos ajudam a obter dados de entrada, mas e quanto a passar eles adiante? Claro, você consegue fazer a saída dos dados através de uma API, mas isso através de polling, o que não é realmente tempo real. Eu explicarei mais sobre isso em um segundo, mas confie em mim quando eu digo que polling é ruim.
+
+Programas unix, por outro lado, tem STDOUT, que permite concatenar comandos (ex: gem list | grep rails). Cada programa unix completa uma tarefa simples específica, que sozinha não é tão especial, mas a soma delas juntas é maior do que as partes. O que aplicações web tem que lhes permite esse tipo encadeamento em tempo real? 
+
+Hoje em dia, a maioria das aplicações web tem feeds e/ou algum tipo de API que permite você a puxar (poll) atualizações, mas essa não é a resposta.
+
+Por que nós deveríamos pedir informações? A aplicação sabe quando ela tem dados novos, por que não podemos somente dizer a ela para nos enviar os dados logo de cara? Eu aprendo melhor visualmente, então vamos dar uma olhada rápida na diferença entre polling e pushing.
+
+Polling vs Pushing
+
+(figura)
+
+Empurrando (pushing) os dados adiante quando um evento acontece, a aplicação web não tem mais que agir como um pai durante uma longa viagem de carro, constantemente dizendo a nós, os desenvolvedores, "Ainda não!". Também, nós paramos de agir como crianças irritantes, continuamente perguntando: "Já chegou?". Muito bom. Push é melhor que pull.
+
+Como conseguimos empurrar os dados?
+
+Agora sabemos que push é melhor que pull, mas como colocar isso em prática? Uma forma popular de empurrar dados em tempo real é através de XMPP (Extensible Messaging and Presence Protocol, ex: Jabber). XMPP é ótimo, mas ele é peso pesado. Você precisará de outro servidor e aprender outro protocolo.
+
+Não seria legal se pudéssemos usar um protocolo que já conhecemos? Aí entram os web hooks. Web hooks, em sua forma mais simples, são push sobre http. Abaixo está um exemplo do web hook mais simples que você consegue criar usando Ruby.
+
+(código)
+
+Se você consegue adicionar algo como o código acima em sua aplicação, você consegue implementar web hooks. Já tivemos exemplos e teoria suficiente, vamos fazer um pouco de código!
+
+Código
+
+Para a parte de código desse artigo, nós vamos construir uma aplicação que envia web hooks e uma segunda que recebe e processa esses hooks. Para ajudar a entender o processo, vamos dar uma olhada em mais um esquema.
+
+(figura)
+
+Agora que já entendemos o que vamos criar, vamos gerar as duas aplicações e alguns scaffolds para ajudar a atingirmos o objetivo rapidamente.
+
+(código)
+
+Nesse ponto, temos as duas aplicações. webhook_sender tem widgets, que tem apenas um nome (name), e webhook_receiver tem messages com um corpo (body) para armazenar o conteúdos das mensagens. Vamos começar com a aplicação webhook_sender, implementando a funcionalidade de enviar uma requisição HTTP (web hook) toda vez que um widget é modificado.
+
+Enviando Hooks
+
+Nós poderíamos usar os callbacks do ActiveRecord para essa funcionalidade, mas na verdade o Rails tem um mecanismo embutido para esse tipo de coisa chamado observers. Se você não tem familiaridade com observers, eles são classes que respondem a callbacks de ciclo de vida, create, update e destroy, para citar apenas alguns, para implementar comportamentos no estilo de gatilhos por fora da classe original (o model Widget).
+
+(código)
+
+Agora inicie seu editor favorito e abra o arquivo app/models/widget_observer.rb. Tudo que temos que fazer é criar nome de métodos que são similares aos callbacks do ActiveRecord que queremos utilizar nos hooks.
+
+(código)
+
+A última coisa antes de iniciar nossa aplicação de envio é contar pro Rails que nosso WidgetObserver deveria sempre estar executando. Abra o config/environment.rb e adicione a linha a seguir:
+
+(código)
+
+Nossa aplicação agora está sempre ciente de nosso WidgetObserver e pronta para começar a enviar web hooks. Vamos iniciá-la!
+
+(código)
+
+Recebendo Hooks
+
+Agora que nosso enviador está pronto e executando, vamos dar forma a nossa aplicação de recebimento. Primeiro, vamos precisar de um controller para receber o hook enviado. Abra uma nova aba no terminal (ou janela) e execute os seguintes comandos.
+
+(código)
+
+A seguir, vamos precisar de uma action nesse controller para receber a mensagem hook e processá-la. Abra app/controllers/hooks_controller.rb e altere-o para o seguinte:
+
+(código)
+
+Como o Rails vem com proteção contra Cross-Site Request Forgery (CSRF), precisamos dizer ao controller para pular essa parte, caso contrário nós receberemos erros de tokens de autenticação inválidos ao receber o hook.
+
+Na action create, nós criamos a mensagem e então renderizamos "nada". Lembre-se que nossa aplicação de envio não se importa se nós recebemos ou não a mensagem, ela apenas envia a mensagem, sendo assim :nothing é uma resposta perfeitamente apropriada. Note que também excluímos dos parâmetros as chaves :action e :controller, uma vez que elas não importam nem um pouco para o hook.
+
+Até agora nós criamos widgets, os configuramos para enviar hooks quando eles são modificados, e criamos uma aplicação para receber e processar esses hooks. Vamos iniciar nossa aplicação webhooks_receiver também, mas na porta 3001, assim ela não irá conflitar com nossa aplicação webhook_sender que já está sendo executada.
+
+(código)
+
+Tudo deveria estar funcionando e ligados corretamente, mas vamos conferir em um navegador só para ter certeza. Abra duas abas (ou janelas) em um navegador de sua escolha, a primeira para http://localhost:3000/widgets e a segunda para http://localhost:3001/messages.
+
+Crie um novo widget na primeira aba, usando o link "New widget" e então recarregue a aba de mensagens. Você deveria ver a mensagem na lista. Parabéns! Você acaba de criar e receber seu primeiro hook.
+
+Além do Básico
+
+Esse é um exemplo muito simples de tal forma que ele pode ser entendido por todos, mas eu espero que você tenha entendido quão poderosos e flexíveis os web hooks podem ser. Dito isso, se você começará a implementar hooks em suas aplicações, você deve considerar os seguintes pontos.
+
+Interface para Gerenciamento
+
+Tipicamente, você deveria oferecer uma interface para os usuários definirem suas próprios URLs de web hooks ao invés codificar o url no WidgetObserver. Quando eu digo interface, eu não estou necessariamente me referindo a interfaces web. Uma API seria um meio perfeitamente aceitável de criar, atualizar e excluir web hooks. Você também irá querer oferecer suporte à múltiplos hooks por usuários e múltiplos usuários, e o exemplo que forneci não faz nada disso.
+
+Criar uma fila para envio
+
+Uma boa prática ao se desenvolver uma aplicação é que, se algo pode ser movido para fora do ciclo de requisições/respostas, faça-o! Se eu fosse implementar hooks como essas em uma aplicação de produção, ao invés de enviar requisições net/http no WidgetObserver, eu as enfileiraria, usando delayed_job ou outro mecanismo.
+
+Existem dois ganhos ao se criar uma fila desses hooks. Primeiro, você move o processo possivelmente lento de envio de hooks para fora do ciclo requisição/resposta. Isso significa que os usuários criando os dados, utilizando a interface web não precisam esperar os hooks serem enviados antes de continuarem a navegar. Isso é particularmente importante se os clientes inscritos estiverem fora do ar ou rodando lentamente.
+
+Segundo, e se os inscritos estiverem fora do ar? Se você estiver fazendo uma requisição no estilo tudo ou nada, e o receptor estiver fora do ar, os dados enviados serão perdidos e o cliente terá de efetuar um poll para recebe-los. Por outro lado, se você enfileirar o hook, você pode deixá-lo na fila e continuar tentando o envio até que o cliente responda com sucesso. A wiki sobre web hooks do Shopify explica como eles mantém a requisição na fila até que o cliente responda com sucesso, e até fornecem um exemplo simples.
+
+Pensando em Segurança
+
+Outra coisa que você deve ter percebido no código de exemplo é que seria muito fácil forjar um hook para uma aplicação de recebimento. O Shopify utiliza a solução simples enviando junto dos dados a uma chave, que você pode conferir antes de processar o hook, eliminando assim a possibilidade de ataques e spiders. O PayPal vai ao extremo, permitindo a você configurar certificados SSL e criptografar os dados sendo enviados. Para a maioria das aplicações, uma simples chave ou uma autenticação básica seria suficiente. Você terá de decidir qual nível de segurança é melhor para os usuários da sua aplicação.
+
+Conclusão
+
+Os web hooks são um jeito mais simples de adicionar notificações em tempo real para suas aplicações web e elas não são só para HTTP. Como os serviços do GitHub e Astrotrain mostram, você pode enviar hooks utilizando uma variedade de formatos (HTTP, Email, Jabber, IRC).
+
+Há também algumas aplicações bastante interessantes aparecendo, como por exemplo o Switchub e o AppJet, que lidam exclusivamente com receber uma entrada, processá-la e gerar uma saída. Imagine um mundo onde aplicações web podem ser concatenadas no mesmo estilo de programas Unix. Isso me deixa empolgado com o futuro! 
+
+Eu o deixo não com uma poderosa colocação para chocar sua alma, mas uma lista de links relacionados, na esperança desse artigo o ter deixado querendo saber mais sobre o assunto.
