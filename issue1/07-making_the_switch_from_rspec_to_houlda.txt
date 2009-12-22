@@ -1,94 +1,94 @@
 Trocando o RSpec pelo Shoulda
 por Dan Pickett
 
-Nota: Algumas destas informaÁıes n„o se aplicam mais devido aos
+Nota: Algumas destas informa√ß√µes n√£o se aplicam mais devido aos
 recentes desenvolvimentos no Shoulda e no RSpec. Por favor verifique
-nossa ·rea de discuss„o do artigo para mais detalhes.
+nossa √°rea de discuss√£o do artigo para mais detalhes.
 
 
-GraÁas a Bryan Liles, agora sabemos a resposta para a pergunta,
+Gra√ßas a Bryan Liles, agora sabemos a resposta para a pergunta,
  "Quando devemos testar?".
-PorÈm, uma importante quest„o ainda permanece: "Como devo testar?".
-Enquanto esta pergunta ainda È muito discutida, existem alguns
-frameworks disponÌveis para nos ajudar.
+Por√©m, uma importante quest√£o ainda permanece: "Como devo testar?".
+Enquanto esta pergunta ainda √© muito discutida, existem alguns
+frameworks dispon√≠veis para nos ajudar.
 Por um bom tempo, eu fui casado com RSpec. Escrever comportamentos
 funcionou bem para a minha rotina, e comecei a gostar da sintaxe.
-Sem d˙vida, fomos feitos um para o outro e irÌamos viver felizes
+Sem d√∫vida, fomos feitos um para o outro e ir√≠amos viver felizes
 para sempre no mundo TDD. No entanto, a lua de mel durou pouco.
-As falhas aleatÛrias na especificaÁ„o e os segredos por tr·s da
-Spec::Runner levantaram algumas d˙vidas. Um caso secreto de testes
+As falhas aleat√≥rias na especifica√ß√£o e os segredos por tr√°s da
+Spec::Runner levantaram algumas d√∫vidas. Um caso secreto de testes
 se seguiu.
 Comecei a usar Shoulda em todos os meus projetos particulares.
-Macros e assertions customiz·veis me afastaram do RSpec.
-Nos ˙ltimos dois meses, todos os meus projetos comeÁaram com
-Shoulda, e desde ent„o nunca olhei para tr·s.
+Macros e assertions customiz√°veis me afastaram do RSpec.
+Nos √∫ltimos dois meses, todos os meus projetos come√ßaram com
+Shoulda, e desde ent√£o nunca olhei para tr√°s.
 
 
 Porque fiz a troca
 
 Antes de descobrir Shoulda, minhas ferramentas para testes
 consistiam de RSpec para comportamentos, factory_girl para
-geraÁ„o de model, autotest para manter os testes rodando
+gera√ß√£o de model, autotest para manter os testes rodando
 e Mocha para mocking e stubbing. Juntas, essas ferramentas
 funcionaram muito bem para mim.
 
 -------------------------------------------------
-Como sÛcio na Enlight Solutions, Inc.,
-Dan Pickett È um freelancer e consultor
+Como s√≥cio na Enlight Solutions, Inc.,
+Dan Pickett √© um freelancer e consultor
 em Boston, MA. Ele tem grande interesse no
 processo de desenvolvimento de software e
-mÈtodos ·geis. Dan programa com Ruby on Rails
-h· trÍs anos. Ele foi respons·vel pela arquitetura
-tecnolÛgica e pela lideranÁa de sites como
-www.gazelle.com e www.frightcatalog.com. Dan È apaixonado
-por lideranÁa, e tornar desenvolvedores melhores ao
-evangelizar melhores pr·ticas È o seu objetivo.
+m√©todos √°geis. Dan programa com Ruby on Rails
+h√° tr√™s anos. Ele foi respons√°vel pela arquitetura
+tecnol√≥gica e pela lideran√ßa de sites como
+www.gazelle.com e www.frightcatalog.com. Dan √© apaixonado
+por lideran√ßa, e tornar desenvolvedores melhores ao
+evangelizar melhores pr√°ticas √© o seu objetivo.
 -------------------------------------------------
 
 
 Numa determinada semana, eu estava codificando nosso
 projeto para o Rails Rumble 2008. Com um bom ritmo TDD,
 eu estava voando pelos comportamentos e suas
-implementaÁıes correspondentes. Eu estava escrevendo
-factories e fazendo stubs de finders como se isso n„o fosse
-da conta de ninguÈm.
+implementa√ß√µes correspondentes. Eu estava escrevendo
+factories e fazendo stubs de finders como se isso n√£o fosse
+da conta de ningu√©m.
 Enquanto continuava, percebi que precisava de um mecanismo
-de autenticaÁ„o, e devido ao pouco tempo disponÌvel, comecei
-a integraÁ„o do RESTful Authentication.
+de autentica√ß√£o, e devido ao pouco tempo dispon√≠vel, comecei
+a integra√ß√£o do RESTful Authentication.
 O que se seguiu foi uma falha total. Meu precioso tempo
-na maratona de 48 horas codificando foi perdido. Por quÍ?
-O RESTful Authentication gerou uma sÈrie de Specs usando
+na maratona de 48 horas codificando foi perdido. Por qu√™?
+O RESTful Authentication gerou uma s√©rie de Specs usando
 o framework nativo de mocking do RSpec. E como eu estava
-usando Mocha, as specs geradas para a autenticaÁ„o falharam.
-Depois de perder uma hora ou duas do meu precioso tempo, n„o
+usando Mocha, as specs geradas para a autentica√ß√£o falharam.
+Depois de perder uma hora ou duas do meu precioso tempo, n√£o
 consegui fazer diferentes specs usarem diferentes frameworks
-para mocking e stubbing. Por quÍ? Spec::Runner possui uma opÁ„o
-de configuraÁ„o chamada mock_with (mockar com). Infelizmente,
-sem muito hacking, eu n„o consegui alterar essa configuraÁ„o
-para alternar em exemplos especÌficos. Cheguei
-ent„o ‡ conclus„o que usar mais de um framework de mocks para
-a mesma suÌte de testes n„o era f·cil. Na minha opini„o, esse
-È um problema fundamental na forma como o RSpec È escrito.
-N„o tive tempo para alterar os testes gerados pelo RESTful
+para mocking e stubbing. Por qu√™? Spec::Runner possui uma op√ß√£o
+de configura√ß√£o chamada mock_with (mockar com). Infelizmente,
+sem muito hacking, eu n√£o consegui alterar essa configura√ß√£o
+para alternar em exemplos espec√≠ficos. Cheguei
+ent√£o √† conclus√£o que usar mais de um framework de mocks para
+a mesma su√≠te de testes n√£o era f√°cil. Na minha opini√£o, esse
+√© um problema fundamental na forma como o RSpec √© escrito.
+N√£o tive tempo para alterar os testes gerados pelo RESTful
 Authentication para usar Mocha, e eu precisava da cobertura
-para algumas partes de autenticaÁ„o da minha aplicaÁ„o.
+para algumas partes de autentica√ß√£o da minha aplica√ß√£o.
 Derrotado, tive que comentar todos os meus testes de
-autenticaÁ„o e perdi a cobertura em algumas partes de
-autenticaÁ„o da minha aplicaÁ„o. Essa foi a gota d'·gua
+autentica√ß√£o e perdi a cobertura em algumas partes de
+autentica√ß√£o da minha aplica√ß√£o. Essa foi a gota d'√°gua
 entre eu e a Spec::Runner.
 
 
 Eu deveria ter usado Shoulda
 Voltar para o Test::Unit equipado com um framework tem sido
-Ûtimo. VocÍ pode mesclar testes Test::Unit padrıes com
-blocos shoulda. VocÍ pode construir suas classes abstratas
-de testes com mÈtodos helper e macros. Em geral, È
-muito mais confort·vel trabalhar com uma estrutura
-de classe em minha suÌte de testes. Na transiÁ„o de alguns dos
-meus specs de model para testes unit·rios com Shoulda, macros
-ActiveRecord para validaÁ„o diminuÌram o n˙mero de linhas
-significativamente. Ficou f·cil escrever assertions
-customizadas de novo, e n„o preciso mais adicionar ou
+√≥timo. Voc√™ pode mesclar testes Test::Unit padr√µes com
+blocos shoulda. Voc√™ pode construir suas classes abstratas
+de testes com m√©todos helper e macros. Em geral, √©
+muito mais confort√°vel trabalhar com uma estrutura
+de classe em minha su√≠te de testes. Na transi√ß√£o de alguns dos
+meus specs de model para testes unit√°rios com Shoulda, macros
+ActiveRecord para valida√ß√£o diminu√≠ram o n√∫mero de linhas
+significativamente. Ficou f√°cil escrever assertions
+customizadas de novo, e n√£o preciso mais adicionar ou
 remover um monte de arquivos depois de executar
 script/generate.
 
@@ -127,21 +127,21 @@ class BandTest < ActiveSupport::TestCase
 end
 
 ActiveRecord::Macros fornece muitas utilidades. Achei
-should_have_db_column e as associaÁıes de macros
-antes de gerar as migrations extremamente ˙teis na
-implementaÁ„o dos meus models. should_protect_atribute
-tambÈm È um grande utilit·rio que ajuda a proteger
-chaves estrangeiras e outros atributos de seguranÁa
-das atribuiÁıes em massa.
+should_have_db_column e as associa√ß√µes de macros
+antes de gerar as migrations extremamente √∫teis na
+implementa√ß√£o dos meus models. should_protect_atribute
+tamb√©m √© um grande utilit√°rio que ajuda a proteger
+chaves estrangeiras e outros atributos de seguran√ßa
+das atribui√ß√µes em massa.
 
 
 O que eu deveria saber
 Tem algumas coisas que aprendi durante o processo
 que eu gostaria de ter descobrido antes.
-Eu geralmente n„o uso as macros do Shoulda para meus
+Eu geralmente n√£o uso as macros do Shoulda para meus
 testes funcionais.
-Eles sempre geram cÛdigos ruins quando quero definir
-expectativas primeiro para disparar a requisiÁ„o. Por
+Eles sempre geram c√≥digos ruins quando quero definir
+expectativas primeiro para disparar a requisi√ß√£o. Por
 exemplo, no contexto abaixo:
 
   context "when creating a user" do
@@ -154,9 +154,9 @@ exemplo, no contexto abaixo:
   end
 
 Se eu quiser adicionar uma expectativa para o controller
-tentar salvar o registro, eu n„o posso realmente conseguir
-isso claramente porque a requisiÁ„o È disparada no bloco
-setup. Geralmente eu apenas escrevo meus prÛprios
+tentar salvar o registro, eu n√£o posso realmente conseguir
+isso claramente porque a requisi√ß√£o √© disparada no bloco
+setup. Geralmente eu apenas escrevo meus pr√≥prios
 statements para os testes funcionais. O exemplo acima,
 adicionada a expectativa para salvar vai ficar assim:
 
@@ -181,60 +181,60 @@ adicionada a expectativa para salvar vai ficar assim:
   end
 
 
-AlÈm disso, o mÈtodo validates_uniqueness_of do
+Al√©m disso, o m√©todo validates_uniqueness_of do
 Shoulda requer um registro na tabela para executar. Quando
-o teste quebrar, ser· f·cil de identificar, mas isso pode te
+o teste quebrar, ser√° f√°cil de identificar, mas isso pode te
 desfiar um pouco.
-Existe um Ûtimo projeto de autoria do Jeremy McAnally no
+Existe um √≥timo projeto de autoria do Jeremy McAnally no
 GitHub chamado Matchy. Ele fornece algumas das belezas da
-sintaxe das declaraÁıes should do RSpec dentro da Test::Unit.
-Isso tem sido ˙til na mudanÁa das minhas specs para Test::Unit
+sintaxe das declara√ß√µes should do RSpec dentro da Test::Unit.
+Isso tem sido √∫til na mudan√ßa das minhas specs para Test::Unit
  e Shoulda.
 Mas cuidado, eu acredito que should =~ /regex/ nunca falhou
-(est· na minha lista todo escrever um patch).
+(est√° na minha lista todo escrever um patch).
 
 
 O que eu sinto falta
 RSpec me serviu bem por um bom tempo. Agora que mudei para
-Shoulda, h· definitivamente algumas coisas para sentir falta.
+Shoulda, h√° definitivamente algumas coisas para sentir falta.
 O bloco before(:all) era muito bom no RSpec. O bloco setup
-do Shoulda executa para cada declaraÁ„o should, enquanto que
-before(:all) ir· executar uma vez para uma lista de exemplos.
-Executando uma grande suÌte de testes, o ganho de performance
-com um before(:all) em vez de um before(:each) foi Ûtimo
-quando disponÌvel.
-Enquanto isso n„o È realmente um problema na implementaÁ„o
+do Shoulda executa para cada declara√ß√£o should, enquanto que
+before(:all) ir√° executar uma vez para uma lista de exemplos.
+Executando uma grande su√≠te de testes, o ganho de performance
+com um before(:all) em vez de um before(:each) foi √≥timo
+quando dispon√≠vel.
+Enquanto isso n√£o √© realmente um problema na implementa√ß√£o
 do Shoulda, eu perdi a capacidade de executar exemplos
 focados no TextMate. O item Run Focused Should do bundle do
 Shoulda para o TextMate sempre dispara um SystemStackError.
 Eu consigo rodar exemplos individuais na linha de comando,
-mas me incomoda n„o conseguir rodar no meu editor. E eu
-tambÈm gostava da janela Rspec Results do TextMate.
-Enquanto o principal suporte para helpers de testes est·
+mas me incomoda n√£o conseguir rodar no meu editor. E eu
+tamb√©m gostava da janela Rspec Results do TextMate.
+Enquanto o principal suporte para helpers de testes est√°
 ficando melhor com classes como ActionView::TestCase, testes de
 Helper foram um pouco mais intuitivos no RSpec para mim. Testando
-meus helpers com Shoulda, precisei de um hack e um patch no cÛdigo-fonte
-a fim de receber mÈtodos *_path e *_url funcionando
+meus helpers com Shoulda, precisei de um hack e um patch no c√≥digo-fonte
+a fim de receber m√©todos *_path e *_url funcionando
 para ActionView::TestCase.
 
 
-O que vocÍ deveria saber
-RSpec e Shoulda s„o Ûtimos frameworks construÌdos por Ûtimos
-desenvolvedores. Se vocÍ est· usando um framework e vocÍ
-est· escrevendo testes antes de implementar, vocÍ est· no
+O que voc√™ deveria saber
+RSpec e Shoulda s√£o √≥timos frameworks constru√≠dos por √≥timos
+desenvolvedores. Se voc√™ est√° usando um framework e voc√™
+est√° escrevendo testes antes de implementar, voc√™ est√° no
 caminho certo.
-Cada framework tem seus prÛs e contras, e minha intenÁ„o aqui
-n„o foi ser persuasivo sobre um framework especÌfico, mas
-documentar minha experiÍncia fazendo essa troca.
-Se vocÍ est· considerando a mudanÁa do RSpec para o Shoulda ou
+Cada framework tem seus pr√≥s e contras, e minha inten√ß√£o aqui
+n√£o foi ser persuasivo sobre um framework espec√≠fico, mas
+documentar minha experi√™ncia fazendo essa troca.
+Se voc√™ est√° considerando a mudan√ßa do RSpec para o Shoulda ou
 vice-versa, considere esses elementos cuidadosamente e qual
-È o custo de migrar toda a sua suÌte de testes. Ambos fazem
+√© o custo de migrar toda a sua su√≠te de testes. Ambos fazem
 bem o trabalho, e eu optei por deixar alguns dos meus projetos
-com uma suÌte de testes RSpec simplesmente porque o tempo
+com uma su√≠te de testes RSpec simplesmente porque o tempo
 investido em migrar para Shoulda iria ser muito grande e
-trabalhoso. Como desenvolvedor vocÍ deve sempre considerar
-o custo do seu trabalho relativo ao seu benefÌcio.
-Fale com seu time e garanta que todos estejam confort·veis e
+trabalhoso. Como desenvolvedor voc√™ deve sempre considerar
+o custo do seu trabalho relativo ao seu benef√≠cio.
+Fale com seu time e garanta que todos estejam confort√°veis e
 sejam competentes o suficiente antes de utilizar um novo
 framework.
-E n„o se esqueÁa, TATFT (Test All The Fucking Time).
+E n√£o se esque√ßa, TATFT (Test All The Fucking Time).
