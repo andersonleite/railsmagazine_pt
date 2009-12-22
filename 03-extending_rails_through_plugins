@@ -1,17 +1,17 @@
 Estendendo o Rails através de plugins
 por John Yerhot
 
-    O Rails foi desenvolvido pensando em ser um framework completo, mas apesar disso ele não pode incluir todas as funcionalidades possiveis. Há muitas razões pelas quais o Core Team do Rails opta por não incluir uma nova funcionalidade - ela pode ser muito instável, muito obscura, ou simplesmente não faz parte do escopo do framework. De fato, existem casos em que as funcionalidades foram retiradas do Rails e transformadas em plugins! Por exemplo, o in_place_edit e o auto_complete_for foram removidos de Rails na versão 2.0. 
+    O Rails foi desenvolvido pensando em ser um framework completo, mas apesar disso ele não pode incluir todas as funcionalidades possíveis. Há muitas razões pelas quais o Core Team do Rails opta por não incluir uma nova funcionalidade - ela pode ser muito instável, muito obscura, ou simplesmente não faz parte do escopo do framework. De fato, existem casos em que as funcionalidades foram retiradas do Rails e transformadas em plugins! Por exemplo, o in_place_edit e o auto_complete_for foram removidos de Rails na versão 2.0. 
 
 Para ajudar os desenvolvedores que queiram adicionar, substituir ou modificar funcionalidades, o Rails foi construído com uma infra-estrutura altamente extensível. A maioria das modificações e acréscimos vêm como plugins. Enquanto muitos deles estendem uma das principais classes de Rails, como ActionView::Base ou ActiveRecord::Base, você está livre para criar suas próprias classes ou módulos. Além disso, eles podem ter as suas próprias tarefas Rake e testes. Essencialmente, os plugins são bibliotecas completas e independentes especificas do Rails.
 
-Um dos melhores usos dos plugins é para reutilização de código que você em vários projetos. Robby Russell tem um excelente exemplo utilizado por sua equipe na Planet Argon, o Flash Message Conductor. Dado que o tratamento das mensagens flash Rails era inadequada para suas projetos, eles notaram que reescreviam muito do código de flash de uma aplicação para a outra. A equipe criou um plugin que adicionava helpers para adicionar mensagens, erros e avisos flash e um método chamado render_flash_messages para renderiza-los nas views. Usando Flash Message Conductor em suas aplicações, a Planet Argon tem uma melhor implementação de mensagens flash, uma interface comum e de uma forma muito DRY e elegante.
+Um dos melhores usos dos plugins é para reutilização de código que você em vários projetos. Robby Russell tem um excelente exemplo utilizado por sua equipe na Planet Argon, o Flash Message Conductor. Dado que o tratamento das mensagens com escopo flash do  Rails eram inadequadas para suas projetos, eles notaram que reescreviam muito do código de flash de uma aplicação para a outra. A equipe criou um plugin que adicionava helpers para adicionar mensagens, erros e avisos flash e um método chamado render_flash_messages para renderizá-los nas views. Por usar o Flash Message Conductor em suas aplicações, a Planet Argon tem uma melhor implementação de mensagens flash, uma interface comum e de uma forma muito DRY e elegante.
 
 Para este artigo, vamos construir um plugin simples que irá adicionar um método de citações aos nossos modelos. Nosso objetivo é um funcionalidade muito simples.
 
 a = Usuario.new
 a.citacao
-=> "Se ele sangra, podemos mata-lo."
+=> "Se ele sangra, podemos matá-lo."
 
 Vamos criar uma tarefa Rake para gerar um arquivo YAML com as frases, carregá-lo e usar os dados para nossas citações. Apesar de ser um exemplo trivial, meu objetivo não é ensinar como escrever um plugin grande e complexo, mas ensinar o necessário para começar. Vamos lá!
 
@@ -32,9 +32,9 @@ O Rails nos oferece um gerador para a criação de plugins.
  - tasks/      - As tarefas Rake personalizadas podem ir aqui. Iremos criar uma para nosso plugin.
  - test/       - Os testes de seu plugin devem estar aqui. Quando os testes são executados em um plugin o Rails não é carregado.
 
-John Yerhot vive em Northern, Minnesota, com sua esposa e cachorro, onde ele escreve aplicações rails para K-12 Sistemas de Educação. Ele é mantenedor do blog http://blog.john.yerhot.org, contato john@yerhot.org.
+John Yerhot vive em Northern, Minnesota, com sua esposa e cachorro, onde ele escreve aplicações Rails para a K-12 Sistemas de Educação. Ele é mantenedor do blog http://blog.john.yerhot.org, contato john@yerhot.org.
 
-Antes de continuarmos, devemos planejar como nosso plugin frases deve funcionar. Primeiro, devemos criar uma tarefa Rake que cria o nosso arquivo YAML cheio de frases. Depois que ela estiver concluída criaremos um arquivo init.rb que terá um require de citacao.rb do diretório lib e carregar as frases de citacoes.yml em uma Array. Vamos criar um novo Módulo, Citacao::ClassMethods para a definição de nossos novos métodos, e adicionaremos esses métodos ao ActiveRecord::Base para que estejam disponíveis nos modelos.
+Antes de continuarmos, devemos planejar como nosso plugin de citações deve funcionar. Primeiro, devemos criar uma tarefa Rake que cria o nosso arquivo YAML cheio de frases. Depois que ela estiver concluída criaremos um arquivo init.rb que terá um require de citacao.rb do diretório lib e carregar as frases de citacoes.yml em uma Array. Vamos criar um novo Módulo, Citacao::ClassMethods para a definição de nossos novos métodos, e adicionaremos esses métodos ao ActiveRecord::Base para que estejam disponíveis nos modelos.
 
 
                                              continuação da página 3
@@ -108,7 +108,7 @@ Continuação da página 3
      => "Venha comigo se quiser viver!"
      >>
 
-     Está funcionando! Por fim, vamos completar o arquivo README e mostra-lo durante a instalação:
+     Está funcionando! Por fim, vamos completar o arquivo README e mostrá-lo durante a instalação:
 
      README
      Citações
@@ -134,7 +134,7 @@ Continuação da página 3
 
 
      Se tudo correr bem, o plugin será instalado e você deve ver o conteúdo do README exibido. Se você tiver problemas, verifique se você tem mesmo o Git instalado.
-     Plugins são uma ótima maneira de adicionar funcionalidades a sua aplicação Rails de maneira concisa, organizada e elegante. Ainda há muitas coisas para falar, sendo que os teste dos plugins são fundamentais.
+     Plugins são uma ótima maneira de adicionar funcionalidades a sua aplicação Rails de maneira concisa, organizada e elegante. Ainda há muita coisa para falar, sendo que os teste dos plugins são fundamentais.
 
      Para saber mais sobre o assunto, sugiro ler Advanced Rails escrito pelo Brad Ediger, tem um capítulo inteiro dedicado ao desenvolvimento de plugins incluindo testes. Outro guia aprofundado esta disponível em rails.info. Como sempre, uma das melhores maneiras de se aprender é vendo como um plugin mais complexo é desenvolvido, tente estudar o código de alguns dos plugins mais populares, como o Restful-Authentication ou o Paperclip. A maioria pode ser encontrada no Github.
 

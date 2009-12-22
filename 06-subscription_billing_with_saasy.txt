@@ -13,21 +13,21 @@ evitar esses problemas, e quem sabe até adiantar o projeto.
 Para receber pagamentos de cartões de crédito você irá
 precisar de:
 - Uma conta bancária de empresa
-- Uma conta de mercante # TODO: substituir "mercante" por uma palavra mais amigável
-- Uma conta gateway # TODO: verificar tradução
+- Uma conta de mercante # TODO: mercante?
+- Uma conta em um gateway de pagamentos
 
 Sua conta de mercante é uma conta bancária comum, mas não é
-possível acessá-la diretamente. Através de acordos, os bancos # TODO: acordos?
+possível acessá-la diretamente. Através de acordos, os bancos # TODO: Através de acordos?
 irão realizar as transações com cartões de crédito nela.
 O seu gateway transmite os dados dos cartões de crédito dos
 seus clientes para a conta de mercante e, em alguns casos,
 armazenam esses dados para que você possa fazer novas
 cobranças posteriormente.
 
-Você não deve armazenar esses dados nos seus próprios servidores.
-Se o fizer, deverá seguir rigorosas regras (PCI) ou estará # TODO: PCI compliant?
-sujeito a ser multado. É mais fácil deixar o gateway cuidar
-disso.
+Você não deve armazenar esses dados nos seus servidores.
+Se o fizer, deverá seguir as rigorosas regras PCI (Payment Card
+Industry Data Security Standard) ou estará sujeito a ser multado.
+É mais fácil deixar o gateway cuidar disso.
 
 Existem bibliotecas prontas em Ruby, como a ActiveMerchant,
 que abstraem a comunicação com os principais gateways,
@@ -49,7 +49,7 @@ E é aí que entra o Saasy. O Saasy é um aplicativo opensource
 feito em Rails que administra criação de contas,
 autenticação de usuários e cobrança de assinaturas. Além
 disso, o Saasy também cuida do envio de e-mails, gera
-extratos e trata cobranças que falharam. # TODO: invoices
+extratos e trata cobranças que falharam.
 
 Internamente o Saasy usa o ActiveMerchant (com alguns ajustes),
 e atualmente suporta os seguintes gateways:
@@ -75,8 +75,8 @@ diferentes.
 Alex MacCaw é um Desenvolvedor de Protótipos na # TODO: desenvolvedor de protótipos!?
 Made by Many (http://madebymany.co.uk), empresa de londres
 especializada em mídia social. Trabalha principalmente com
-desenvolvimento em Ruby, mas meche com diversas outras
-linguagens e áreas abrangendo design e implementação de # TODO: áreas?
+desenvolvimento em Ruby, mas tem contato com diversas outras
+linguagens e áreas abrangendo design e implementação de
 aplicativos. Seu website pessoal é o http://eribium.org.
 ---------------------
 
@@ -91,12 +91,12 @@ execute:
 
 git clone git://github.com/maccman/saasy.git
 
-Se você não usa o Git, baixe o pacote no GitHub
+Se você não usa o Git, baixe o pacote no github
 (http://github.com/maccman/saasy).
 
 O Rails e todas as outras gems de que o Saasy depende estão
-vendorizadas, então você não precisa se procupar em instalar # TODO: vendorizadas?
-elas.
+congeladas dentro do projeto, então você não precisa se
+procupar em instalar elas.
 
 A seguir, copie os arquivos de configuração padrões para
 o lugar correto, assim:
@@ -122,48 +122,51 @@ de testes nos campos de cartão de crédito:
 - Number: 4111111111111111
 - CVS: 999
 
-So, if the signup validation passed, you’ll be sent to the login
-screen with a prompt to check your inbox. However, since this is
-running in the Rails development environment, that email will
-never be sent - so you’ll have to check the logs which will contain
-the raw email, and navigate to the activation url manually.
+Se o cadastro for bem sucedido, você será redirecionado
+para a tela de login com uma solicitação para verificar seu email.
+Como estamos rodando o Saasy em ambiente de desenvolvimento,
+o e-mail nunca vai chegar - então você terá que encontrar o link
+de ativação manualmente nos logs de envio de e-mail.
 
-Once your account has been activated, and you’ve signed
-in, you’ll be looking at your profile management page. Have an
-explore of the various view, especially the billing one.
-You’ll notice Saasy comes with a default black theme - you’ll have
-to customize this to fit in with your own sites design. Likewise
-with the signup, and plan page.
+Depois que seu cadastro for ativado e você fizer login, você será
+levado para a página de configuração do seu perfil. Explore as
+várias sessões do Saasy, dando uma atenção especial para a de # TODO: sessões?
+cobrança (Billing).
+O tema padrão do Saasy é preto - você terá que customizar o
+layout para que ele fique de acordo com a identidade visual
+dos seus sites, incluindo as telas de cadastro e de planos.
 
-By default Saasy uses a gateway called Braintree as they allow
-sandbox developing without registering an account with them.
-You can change the gateway in config/subscription.yml. That’s
-also the configuration file where you specify the plans you want,
-their duration and price amonst other things. If you have a look
-at the defaults everything should be fairly self explanatory.
+Por padrão o Saasy usa um gateway chamado Braintree, pois ele
+tem uma sandbox de desenvolvimento que pode ser usada sem se
+cadastrar. Você pode trocar o gateway no arquivo
+config/subscription.yml. É nesse arquivo também que você deve
+configurar os planos e suas características, como duração,
+preço, etc. Você pode basear suas configurações nas de exemplo
+- elas são bem fáceis de entender.
 
-The other configuration file, config/application.yml, specifies
-more application specific settings such as the application name,
-domain and mailing address.
+O outro arquivo de configuração, config/application.yml, guarda
+configurações mais específicas da aplicação, como o nome, domínio
+e endereço e-mail.
 
--Integrating Saasy with your SaaS service-
+-Integrando o Saasy com o seu serviço SaaS-
 
-One of the other beneifts Saasy provides you with is a SSO
-(Single Sign On), so you don’t need to repeat authentication code
-in all your apps, and you can stay ‘DRY’. At the moment, Saasy
-uses a custom SSO protocol, since I was keen to keep it as simple
-as possible, with only one round request. This may change to a
-widely recognised SSO protocol if there are lots of calls for it.
+O Saasy tem outro um benefício: Single Sign On (SSO). Isso
+significa que você não precisa repetir a autenticação em
+todas as suas aplicações. Atualmente o Saasy usa um protocolo
+próprio de SSO, pois dessa forma ficou bem mais simples de
+implementar. Se muitos usuários pedirem, esse protocolo poderá
+ser substituído por outro mais maduro.
 
-I’m assuming that the app you’re integrating with Saasy is
-also a Rails site, if not you’ll have to look closer at the protocol
-to replicate it. Also, the SSO library I wrote also assumes you’ve
-installed the RestfulAuthentication plugin, which you can get it
-off github (http://github.com/technoweenie/restful-authentication/
+Estou assumindo que o aplicativo ao qual você está integrando
+o Saasy também é feito em Rails. Se não for, você terá que
+reimplementar o protocolo. Além disso, a biblioteca de SSO
+precisa do plugin RestfulAuthentication, que você pode baixar
+no github (http://github.com/technoweenie/restful-authentication/
 tree).
 
-Copy lib/sso.rb from Saasy to your other app. In app/control-
-lers/application.rb, you’ll need to add this configuration:
+Copie o arquivo lib/sso.rb do Saasy para sua outra aplicação.
+Adicione a seguinte configuração no seu
+app/controllers/application.rb:
 include SSO::Client
 sso({
   :secret => ‘sso_secret’,
@@ -173,21 +176,20 @@ sso({
   :callback_url => app_site + ‘/sessions/sso’
 })
 
-Obviously you’ll need to replace those values with the real
-ones. The secret and salt should be different, random num-
-bers – you can generate them with a rake task called secret. The
-login_url will need to point to the login url of Saasy, likewise the
-logout_url needs to be set to Saasy’s logout action. The callback_
-url needs to point to an SSO action (which we haven’t made yet),
-on this application.
+Obviamente você precisará substituir esses dados com os seus.
+O :secret e o :salt devem ser diferentes, aleatórios - você pode
+gerar eles com a tarefa 'secret' no rake. O :login_url deve
+apontar para a url de login do Saasy, assim como o :logout_url
+deve apontar para a de logout. O :callback_url deve apontar para
+uma action de SSO (que vamos criar adiante) da aplicação.
 
-You’ll need to edit Saasy’s config/application.yml file, so the
-sso_secret and sso_salt match the ones you added to the control-
-ler. These are the shared secrets used to generate checksums for
-the SSO, and so need to be the same.
+Você precisará atualizar o config/application.yml com o
+:sso_secret e o :sso_salt que você configurou no controller.
+Essas senhas são compartilhadas para gerar checksums para o SSO,
+então precisam estar iguais nos dois lugares.
 
-Create a basic Sessions controller containing the following
-code:
+Crie uma controller simples chamada Sessions com o seguinte
+código:
 class SessionsController < ApplicationController
   def new
     redirect_to sso_login_url
@@ -203,15 +205,16 @@ class SessionsController < ApplicationController
   end
 end
 
-Those SSO specific methods are provided by including
-Saasy::Client, which we did in application.rb. As you can see,
-there is significantly less code there than you’d normally need
-for authentication (not to mention the User model). There’s still a
-problem with the code though:
+Esses métodos específicos de SSO são fornecidos pela classe
+Saasy::Client, que adicionamos no application.rb. Como você
+pode ver, tem muito menos código do que normalmente se escreve
+para autenticação de usuários (sem contar a própria model User).
+Mas ainda falta uma coisa:
 
-Once we’ve authorized the client in the method sso, we still
-don’t know which one it is, so we need to do an additional re-
-quest too Saasy. We’re going to use ActiveResource to do that:
+Quando autenticamos um usuário no método sso, nós ainda não
+temos como saber que usuário está logado, então precisamos
+solicitar isso para o Saasy. Vamos usar o ActiveResource para
+isso:
 class RemoteUser < ActiveResource::Base
   class_inheritable_accessor :headers
   self.site = ‘saas_site’
@@ -223,15 +226,14 @@ class RemoteUser < ActiveResource::Base
   end
 end
 
-The above is what you’ll need to include in app/models/remote_
-user.rb. The reason I’m using the class name RemoteUser, rather
-than User, is to prevent clobbering of an existing User model (if it
-exists).
+Adicione este código no model app/models/remote_user.rb. Eu
+usei o nome RemoteUser, ao invés de User, para que ela não conflite
+caso já exista uma classe chamada User.
 
-Now we can call just User.current_user in the controller, and
-it’ll fetch the current user from Saasy.
+Agora podemos recuperar o usuário que está logado apenas chamando
+o método User.remote_user na controller.
 
-Make the SessionsController#sso method look like this:
+Modifique o método SessionsController#sso para:
 def sso
   head(401) and return unless sso_valid_token?
   RemoteUser.headers =
@@ -242,32 +244,31 @@ def sso
   redirect_back_or_default(‘/’)
 end
 
-You can see we’re setting the headers on RemoteUser, so Saasy
-knows which user we’re talking about. We’re then setting cur-
-rent_user, which is an RestfulAuthentication method, so that us-
-ers id stays in the session, and doesn’t need authentication every
-time they make a request.
+Como você pode ver, estamos definindo o cabeçalho na model
+RemoteUser para que o Saasy saiba de qual usuário estamos tratando.
+Depois nós chamamos o self.current_user=, que é um método do
+RestfulAuthentication, para que o usuário fique gravado na sessão
+e possamos recuperá-lo a cada requisição.
 
-If you just want an overview of the complete code, there’s
-some documentation in lib/sso.rb – and code examples too.
+Se você quiser apenas dar uma olhada no código completo, procure o
+arquivo lib/sso.rb - lá tem documentação e exemplos de código.
 
-And now, I’m afraid, a disclaimer: Saasy is only a few weeks
-old, still alpha and hasn’t yet been used in a production environ-
-ment. That said, things are progressing quickly, and I’m planning
-on using Saasy in my own commercial site, socialmod.com – an
-automated moderation service which is currently in a private
-beta. Hopefully, with the support of the open source community,
-we’ll have a production ready framework soon.
+Agora, um aviso: o Saasy tem apenas algumas semanas de vida, está em
+fase alpha e ainda não foi usado em ambiente de produção. Apesar
+disso, ele está evoluindo rapidamente, e eu pretendo usá-lo no meu
+site comercial, socialmod.com - um serviço de moderação automática # TODO: moderação automática?
+que por enquanto está em beta fechado. Acredito que, com a ajuda
+da comunidade open source, teremos uma versão estável em breve.
 
-If you’re looking for a more robust and tested solution, try
-the Rails Kits SaaS app (http://railskits.com/saas/) which has
-been around for quite a while.
+Se você está procurando uma solução mais robusta e madura, dê uma
+olhada no aplicativo SaaS do Rails Kits (http://railskits.com/saas/),
+Ele já tem um bom tempo de casa.
 
-So, that’s a brief introduction to Saasy, I hope it saved you
-a bit of time reinventing the wheel by writing your own billing
-framework.
+Essa foi uma breve introdução ao Saasy. Espero ter te ajudado a
+economizar tempo e a não reinventar a roda implementando a
+cobrança do zero.
 
--Resources-
+-Referências-
 http://www.slash7.com/jumpstart
 http://letsfreckle.com/blog/2008/12/ecommerce-stuff/
 http://www.activemerchant.org/
@@ -277,4 +278,4 @@ http://www.37signals.com/svn/posts/753-ask-37signals-how-do-you-process-credit-c
 http://activereload.net/2007/5/17/dealing-with-subscription-payments
 http://www.setfiremedia.com/blog/7-top-tips-for-coding-with-currency
 
-Discuss: http://railsmagazine.com/1/4
+Tópico no fórum: http://railsmagazine.com/1/4
