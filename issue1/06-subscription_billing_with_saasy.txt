@@ -163,7 +163,7 @@ implementar. Se muitos usuários pedirem, esse protocolo poderá
 ser substituído por outro mais maduro.
 
 Estou assumindo que a aplicação a qual você está integrando
-o Saasy também é um site em Rails. Se não for, você terá que
+o Saasy também é feita em Rails. Se não for, você terá que
 reimplementar o protocolo. Além disso, a biblioteca de SSO
 precisa do plugin RestfulAuthentication, que você pode baixar
 no github (http://github.com/technoweenie/restful-authentication/
@@ -183,7 +183,7 @@ sso({
 })
 
 Obviamente você precisará substituir esses dados com os seus (valores reais).
-O :secret e o :salt devem ser valoores diferentes, aleatórios - você pode
+O :secret e o :salt devem ser valores diferentes, aleatórios - você pode
 gerar eles com uma tarefa (task) chamada 'secret' no rake. O :login_url deve
 apontar para a url de login do Saasy, assim como o :logout_url
 deve apontar para a de logout. O :callback_url deve apontar para
@@ -212,7 +212,7 @@ class SessionsController < ApplicationController
   end
 end
 
-Esses métodos específicos de SSO são fornecidos, incluindo a classe
+Esses métodos específicos de SSO são fornecidos pela classe
 Saasy::Client, que adicionamos no application.rb. Como você
 pode ver, tem muito menos código do que normalmente se escreve
 para autenticação de usuários (sem contar a própria model User).
@@ -235,7 +235,7 @@ class RemoteUser < ActiveResource::Base
 end
 
 Adicione este código no model app/models/remote_user.rb. Eu
-usei o nome RemoteUser, ao invés de User, para que ela não aconteça conflito
+usei o nome RemoteUser, ao invés de User, para que não aconteça um conflito
 caso já exista uma classe chamada User.
 
 Agora podemos recuperar o usuário que está logado apenas chamando
@@ -255,7 +255,7 @@ end
 
 Como você pode ver, estamos definindo o cabeçalho na model
 RemoteUser para que o Saasy saiba de qual usuário estamos tratando.
-Depois nós chamamos o self.current_user, que é um método do
+Depois nós chamamos o self.current_user=, que é um método do
 RestfulAuthentication, para que o id do usuário fique gravado na sessão
 e possamos recuperá-lo a cada requisição.
 
