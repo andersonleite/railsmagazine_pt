@@ -1,0 +1,66 @@
+Entrevista com Ryan Bates
+
+Entrevistado por Rupak Ganguly em 9 de Maio de 2009
+
+Rupak: Você poder nos falar brevemente sobre sua experiência, para o benefício dos leitores?
+
+Ryan: Eu Comecei a aprender desenvolvimento web dinâmico em torno de 1997 através WebDNA. Rapidamente percebendo as limitações com isso na época, me mudei para PHP, mas não estava satisfeito devido a falta de melhores práticas na estruturação de um grande site. Então Rails entrou em cena, e o resto é história.
+
+Rupak: Como e quando você se envolveu em Ruby / Rails?
+
+Ryan: O que pode ser surpreendente para alguns é que eu não gostei de Rails logo no inicio. Era muito restritivo e não me permitia trabalhar da maneira que eu queria. Ele também parecia mais complexo que o necessário. No entanto, eu achei Ruby fascinante e levou dois meses para aprender por conta própria.
+
+Um novo projeto surgiu, um que exigia um robusto framework web. Eu dei ao Rails uma nova chance. Desta vez, deixando completamente de lado a minha forma ideal de trabalho e adotando as convenções que são fornecidas, logo percebi que a maneira Rails foi muito mais eficiente que qualquer coisa que eu poderia criar. Isso foi no final de 2005.
+
+Rupak: O que o leva a trabalhar com Rails? O que você tinha elaborado para esta plataforma quando você começou e ainda chama sua atenção?
+
+Ryan: A publicidade exagerada foi inicialmente o que chamou a minha atenção. Um tanto quanto irritante, eu estava esperando secretamente para refutar o exagero em meu olhar inicial no framework. Eu falhei. Depois de terminar meu primeiro projeto, eu era viciado pela velocidade e elegância em que eu poderia produzir aplicações web. O exagero era justificado.
+
+Há muitas outras coisas que me mantem trabalhando com Rails hoje: ele usa Ruby, há uma grande comunidade, e tem um grande respeito aos testes, refatoração, e tudo de bom, código limpo. #TODO :melhorar esse final
+
+[[image: Participantes na sala de almoço]]
+
+Rupak: Você arriscaria uma previsão sobre o futuro do Rails? Um ano a partir de agora? Cinco?
+
+Ryan: Eu não quero prever o futuro, mas posso dizer-lhe o que eu espero venha a acontecer. Espero que Rails continue a crescer em um ritmo constante e se torne mais acessível. Espero também que as melhores práticas tenham a mesma prioridade que têm hoje.
+
+Em cinco anos? Ninguém sabe, mas eu espero que Rails não tenha a mesma aparência que tem hoje. Deve permecer inovador e evoluir, mas também manter o a sua natureza opinativa. Em algum momento, sem dúvida, outros frameworks iram tomar o seu lugar, mas isso não é uma coisa ruim. Eles provavelmente serão construidos sobre as bases estabelecidas pelo Rails, e muitas das práticas podem ser transferidas.
+
+
+----------------------------------------------------
+Ryan Bates esteve envolvido com desenvolvimento web desde 1998. Em 2005 começou a trabalhar profissionalmente com Ruby on Rails e agora é mais conhecido pelo seu trabalho no Railscasts, a série gratuita de screencasts sobre Ruby on Rails.
+----------------------------------------------------
+
+Rupak: Com a fusão do Merb no Rails 3, que características de outras plataformas ou frameworks que você gostaria que fossem incorporada ao Rails no futuro?
+
+Ryan: Existem algumas pequenas coisas, mas nada realmente se destaca. Obviamente outros frameworks são melhores em algums aspectos do que o Rails, mas isso não significa que o Rails deve adota-los. Com Rack tornando-se um novo padrão, é mais fácil de usar outros frameworks em paralelo com Rails. Use a ferramenta que se enquadra ao trabalho e deixe Rails ficar opinativo. #TODO ver melhor se não tem palavra melhor para "opinativo", talves optativo?
+
+Rupak: Você acha que Rails corre o risco de ficar inchado com toda esta funcionalidade? Ou que ele vai perder a sua facilidade de uso e mágica como um preço a se pagar pela flexibilidade recém-descoberta?
+
+Ryan: A maioria das adições e alterações no Rails 3: Eu não iria classificar como inchaço, de fato, completamente o oposto. É cada vez mais modular e, portanto, mais fácil para tirar o excesso que você não quer usar.
+
+Uma preocupação válida é: será que esta modularidade adicionada fara Rails 3 o menos opinativa? Acho que não. A abordagem convenção sobre configuração será ainda muito usada, e a pilha padrão será a mesma do Rails 2. A flexibilidade adicionada é praticamente invísvel a menos que você a queira.
+
+Rupak: Se você pudesse dar uma dica a alguém que está apenas começando, qual seria? (exceto, naturalmente, assistir o Rails Casts e ler a Rails Magazine!)
+
+Ryan: Não tente forçar Rails a se encaixar na sua velha maneira de fazer as coisas. Rails é configurável, mas você perde muito do seu encanto ao fazê-lo. Incialmente adere às convenções até que as coisas se fiquem confortáveis. Você pode descobrir, como eu, que o maneira Rails é muito melhor que o sua antiga maneira.
+
+Isso não significa que você nunca deve sair das convenções, há casos em que eu as quebro. No entanto, sem a experiência inicial, você não terá a sabedoria para saber quando e onde a quebrar as convenções.
+
+Finalmente, não caia na rotina. Continue a explorar novos projetos e ideias para ficar afiado. Em última análise: continuar investindo em si mesmo.
+
+Rupak: O que você desejaria que existisse no Rails hoje?
+
+Ryan: O sistema de roteamento no Rails 3 tem muitos melhoramentos em velocidade e funcionalidade. Seria bom ter isso hoje.
+
+Rupak: Como foi o RailsConf para você? Por quais temas você se interessou mais?
+
+Ryan: RailsConf foi demais. Fiquei contente de ver Rack sendo mencionado em varias apresentações. Ele tem o potencial para fazer coisas incríveis, e ainda mais quando toda a comunidade está apoiando-o.
+
+Rupak: Qual será o tema para o próximo Railscast?
+
+Ryan: Eu literalmente não sei até o dia em que eu gravá-lo, mas eu tenho muitas idéias amadurecendo. Em geral, eu gostaria de fazer algo mais sobre autorização, otimização, testes, refatoração, e depuração. Claro que estou sempre à procura de sugestões. Por favor, adicione-os ao http://railscasts.uservoice.com.
+
+Discussão: http://railsmagazine.com/2/8
+
+[[imagem: Sarah Mei, Lori Olson e Desi McAdam no painel Mulher em Rails]]
