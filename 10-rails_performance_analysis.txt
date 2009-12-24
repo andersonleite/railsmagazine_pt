@@ -1,87 +1,112 @@
+<<<<<<< HEAD
 Rails: Análise de Performance
+=======
+AnÃ¡lise de Performance no Rails
+>>>>>>> RevisÃ£o concluÃ­da artigo 10
 por Terry Heath
 
-Introdução
+IntroduÃ§Ã£o
 ===========
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 Um dos meus apectos favoritos de desenvolvimento é trabalhar com performance. A atividade, associada com a instrumentação e ferramentas de medida de performance acaba transformando-se bem em análise científica.
 =======
 Um dos meus aspectos favoritos de desenvolvimento é trabalhar com performance. A atividade, associada com profiling e ferramentas de benchmark acaba transformando-se bem em análise científica.
 >>>>>>> Terminei a leitura do artigo 10. Agora sÃ³ falta verificar a ortografia
+=======
+Um dos meus aspectos favoritos de desenvolvimento Ã© trabalhar com performance. A atividade, associada com profiling e ferramentas de benchmark acaba transformando-se bem em anÃ¡lise cientÃ­fica.
+>>>>>>> RevisÃ£o concluÃ­da artigo 10
 
-Usabilidade e aparência são sempre assuntos subjetivos e, na melhor das hipóteses, tem regras que mesmo assim não são muito bem definidas. Ao contrário disto, medidas de performance são muito mais precisas.
+Usabilidade e aparÃªncia sÃ£o sempre assuntos subjetivos e, na melhor das hipÃ³teses, tem regras que mesmo assim nÃ£o sÃ£o muito bem definidas. Ao contrÃ¡rio disto, medidas de performance sÃ£o muito mais precisas.
 
-Eu vou dar uma idéia de como abordar análises de performance e as ferramentas necessárias para as diferentes partes que compoem uma aplicação. Eu não entrei em nada muito místico porque isso iria transformar esse artigo em um livro de capa dura de 2 quilos de uma grande livraria.
+Eu vou dar uma ideia de como abordar anÃ¡lises de performance e as ferramentas necessÃ¡rias para as diferentes partes que compÃµem uma aplicaÃ§Ã£o. Eu nÃ£o entrei em nada muito mÃ­stico porque isso iria transformar esse artigo em um livro de capa dura de 2 quilos de uma grande livraria.
 
 
 =-=-=
-Terry Heath é um desenvolvedor Rails que trabalha em Austin, no Texas. Ele mantém um blog que fala algumas vezes sobre Rails em terrbear.org
+Terry Heath Ã© um desenvolvedor Rails que trabalha em Austin, no Texas. Ele mantÃ©m um blog que fala algumas vezes sobre Rails em terrbear.org
 
 =-=-=
 
 Medida
 =========
 
-Números e não sensações
+NÃºmeros e nÃ£o sensaÃ§Ãµes
 ---------------------
 
-Antes de começar a ler sobre performance e receber a tarefa de otimizar alguma coisa, eu normalmente iria otimizar algo que não parece rápido. Embora algumas vezes isso pode ser uma boa maneira para determinar se algo precisa ser otimizado, não é uma boa medida de otimização.
+Antes de comeÃ§ar a ler sobre performance e receber a tarefa de otimizar alguma coisa, eu normalmente iria otimizar algo que nÃ£o parece rÃ¡pido. Embora algumas vezes isso pode ser uma boa maneira para determinar se algo precisa ser otimizado, nÃ£o Ã© uma boa medida de otimizaÃ§Ã£o.
 
-Depois de trabalhar duro em otimização, você vai querer ver melhorias. Você vai querer tanto que vai se deixar levar pelo seu julgamento, você vai ver melhorias, mesmo se você tornou as coisas piores. Por essa razão, é importante avaliar performance numericamente através de profiling e a medida de performance (benchmarking), e não sensações.
+Depois de trabalhar duro em otimizaÃ§Ã£o, vocÃª vai querer ver melhorias. VocÃª vai querer tanto que vai se deixar levar pelo seu julgamento, vocÃª vai ver melhorias, mesmo se vocÃª tornou as coisas piores. Por essa razÃ£o, Ã© importante avaliar performance numericamente atravÃ©s de profiling e a medida de performance (benchmarking), e nÃ£o sensaÃ§Ãµes.
 
-Uma outra razão para usar ferramentas e não sensações é por que elas te permitem isolar o que é realmente lento. Acontecem diversas coisas durante uma requisição via web e um exemplo é uma requisição enviada ao Apache, que é repassada para o Mongrel, que por sua vez ativa alguma ação Ruby, finalmente voltando ao cliente. Você pode ver algo no código mais interno à sua aplicação e falar "Eu sei que isso é lento, vou melhorar". Infelizmente, sem uma medida de base, você (1) não sabe o quanto sua melhoria vai de fato ajudar e (2), você não sabe ao certo se aquele código realmente precisa ser melhorado.
+Uma outra razÃ£o para usar ferramentas e nÃ£o sensaÃ§Ãµes Ã© por que elas te permitem isolar o que Ã© realmente lento. Acontecem diversas coisas durante uma requisiÃ§Ã£o via web e um exemplo Ã© uma requisiÃ§Ã£o enviada ao Apache, que Ã© repassada para o Mongrel, que por sua vez ativa alguma aÃ§Ã£o Ruby, finalmente voltando ao cliente. VocÃª pode ver algo no cÃ³digo mais interno Ã  sua aplicaÃ§Ã£o e falar "Eu sei que isso Ã© lento, vou melhorar". Infelizmente, sem uma medida de base, vocÃª (1) nÃ£o sabe o quanto sua melhoria vai de fato ajudar e (2), vocÃª nÃ£o sabe ao certo se aquele cÃ³digo realmente precisa ser melhorado.
 
-Números justificam tudo. Sem eles, é difícil para explicar aos seus colegas o que exatamente você tem feito durante a semana toda.
+NÃºmeros justificam tudo. Sem eles, Ã© difÃ­cil para explicar aos seus colegas o que exatamente vocÃª tem feito durante a semana toda.
 
 
-Introdução à estatística 
+IntroduÃ§Ã£o Ã  estatÃ­stica 
 --------------
-Eu tive a sorte de ter aulas de estatística durante a faculdade e tive a sorte de ser tirar uma nota 10 fácil para mim. Infelizmente, eu não lembro muito além disso disso. Eu acho que você está na mesma situação.
+Eu tive a sorte de ter aulas de estatÃ­stica durante a faculdade e tive a sorte de ser tirar uma nota 10 fÃ¡cil para mim. Infelizmente, eu nÃ£o lembro muito alÃ©m disso disso. Eu acho que vocÃª estÃ¡ na mesma situaÃ§Ã£o.
 
 =-=-=-=-=-=-
-Para aguçar sua memória...
+Para aguÃ§ar sua memÃ³ria...
 
-Média: x' =  1/n Sum(i=1, n, xi)
-Desvio padrão: sigma = Sqrt(E((X-E(X)))^2)
+MÃ©dia: x' =  1/n Sum(i=1, n, xi)
+Desvio padrÃ£o: sigma = Sqrt(E((X-E(X)))^2)
 
-Nota de tradutor: Uma boa fonte para ler sobre isso é a Wikipedia http://en.wikipedia.org/wiki/Random_variables
+Nota de tradutor: Uma boa fonte para ler sobre isso Ã© a Wikipedia http://en.wikipedia.org/wiki/Random_variables
 
 =--=-=-=-=-=-
 
-Embora eu acho que isso é ensinado como um axioma ou algo assim sobre tamanho de amostras, em conversas casuais já ouvi esse conceito ser referido como "lei dos pequenos números". Essencialmente, se você não tem amostras suficientes, você não pode ter certeza sobre o que você está medindo. Você talvez esteja medindo o tempo do garbage collector do Ruby quando você quer de fato ver quanto tempo um match em expressão regular está tomando. Isso não só iria levar a resultados falsos como pode desviar a sua atenção nos esforços de otimização. Resumindo, quanto mais executar os testes, melhor.
+Embora eu acho que isso Ã© ensinado como um axioma ou algo assim sobre tamanho de amostras, em conversas casuais jÃ¡ ouvi esse conceito ser referido como "lei dos pequenos nÃºmeros". Essencialmente, se vocÃª nÃ£o tem amostras suficientes, vocÃª nÃ£o pode ter certeza sobre o que vocÃª estÃ¡ medindo. VocÃª talvez esteja medindo o tempo do garbage collector do Ruby quando vocÃª quer de fato ver quanto tempo um match em expressÃ£o regular estÃ¡ tomando. Isso nÃ£o sÃ³ iria levar a resultados falsos como pode desviar a sua atenÃ§Ã£o nos esforÃ§os de otimizaÃ§Ã£o. Resumindo, quanto mais executar os testes, melhor.
 
-Enquanto se estiver tomando medidas estatísticas, é importante reduzir fatores que podem prejudicar a análise. Qualquer coisa que possa interferir com os números que você está coletando pode afetar seus dados. Se você executar seus benchmarks localmente, feche outras aplicações em execução. Reforçando, é difícil saber se o que você está medindo é realmente o match de expressão regular se seu iTunes está passando o Senhor dos Anéis e você está jogando Tower Defense no Firefox. Talvez colocar uma torre de água no jogo consuma alguma CPU, influenciando no processo Ruby. O timer não irá saber e nem você.
+Enquanto se estiver tomando medidas estatÃ­sticas, Ã© importante reduzir fatores que podem prejudicar a anÃ¡lise. Qualquer coisa que possa interferir com os nÃºmeros que vocÃª estÃ¡ coletando pode afetar seus dados. Se vocÃª executar seus benchmarks localmente, feche outras aplicaÃ§Ãµes em execuÃ§Ã£o. ReforÃ§ando, Ã© difÃ­cil saber se o que vocÃª estÃ¡ medindo Ã© realmente o match de expressÃ£o regular se seu iTunes estÃ¡ passando o Senhor dos AnÃ©is e vocÃª estÃ¡ jogando Tower Defense no Firefox. Talvez colocar uma torre de Ã¡gua no jogo consuma alguma CPU, influenciando no processo Ruby. O timer nÃ£o irÃ¡ saber e nem vocÃª.
 
-Se você está testando a vazão do servidor, garanta que você está testando o mais próximo da máquina que puder. Se você tem um servidor espelho que fica a alguns metros de você, melhor, pois você não está medindo velocidade de roteadores e nem buracos negros na internet.
+Se vocÃª estÃ¡ testando a vazÃ£o do servidor, garanta que vocÃª estÃ¡ testando o mais prÃ³ximo da mÃ¡quina que puder. Se vocÃª tem um servidor espelho que fica a alguns metros de vocÃª, melhor, pois vocÃª nÃ£o estÃ¡ medindo velocidade de roteadores e nem buracos negros na internet.
 
-Por último, quando apresentar suas medidas, calcule o desvio padrão e a média. Isso é extremamente importante. O desvio padrão indica o quanto as medidas desviam da média. Um desvio padrão deve cobrir cerca de 70% dos casos e um segundo desvio padrão deve cobrir 90% dos casos. Embora não haja nenhuma implementação embutida no Ruby para cálculo de desvio padrão, eu providenciei um em [0].
+Por Ãºltimo, quando apresentar suas medidas, calcule o desvio padrÃ£o e a mÃ©dia. Isso Ã© extremamente importante. O desvio padrÃ£o indica o quanto as medidas desviam da mÃ©dia. Um desvio padrÃ£o deve cobrir cerca de 70% dos casos e um segundo desvio padrÃ£o deve cobrir 90% dos casos. Embora nÃ£o haja nenhuma implementaÃ§Ã£o embutida no Ruby para cÃ¡lculo de desvio padrÃ£o, eu providenciei um em [0].
 
-Se você tem uma requisição que, na média, está tomando metade de um segundo, você pode pensar "que bom, nossa aplicação é tão rápida!", mas se você comparar essa informação com o desvio padrão que digamos seja 12 segundos, você pode ter certeza que muitas pessoas estão esperando muito mais que meio segundo. Esse comportamento pode revelar que algum código de backend está travando ou uma condição de corrida que apenas uma média não iria mostrar.
+Se vocÃª tem uma requisiÃ§Ã£o que, na mÃ©dia, estÃ¡ tomando metade de um segundo, vocÃª pode pensar "que bom, nossa aplicaÃ§Ã£o Ã© tÃ£o rÃ¡pida!", mas se vocÃª comparar essa informaÃ§Ã£o com o desvio padrÃ£o que digamos seja 12 segundos, vocÃª pode ter certeza que muitas pessoas estÃ£o esperando muito mais que meio segundo. Esse comportamento pode revelar que algum cÃ³digo de backend estÃ¡ travando ou uma condiÃ§Ã£o de corrida que apenas uma mÃ©dia nÃ£o iria mostrar.
 
 Rails
 -----------
 
-É importante notar que todas as três áreas mencionadas (backend, frontend e configuração de servidores) podem afetar signifcamente a performance. Por sorte, tanto o backend e frontend Rails podem ser diagnosticados e instrumentados individualmente, então não temos que jogar dominós com os nossos ajustes.
+Ã‰ importante notar que todas as trÃªs Ã¡reas mencionadas (backend, frontend e configuraÃ§Ã£o de servidores) podem afetar signifcamente a performance. Por sorte, tanto o backend e frontend Rails podem ser diagnosticados e instrumentados individualmente, entÃ£o nÃ£o temos que jogar dominÃ³s com os nossos ajustes.
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 Configuração e ajuste de servidores, por exemplo o número de instâncias mongrel para executar em um servidor, não podem ser feitos por si só. Como o processamento de backend pode aumentar o consumo de memória para uma instância ....
 =======
 Configuração e ajuste de servidores, como por exemplo o número de instâncias mongrel para executar em um servidor, não podem ser feitos por si só. Como o processamento de backend pode aumentar tanto o consumo de memória quanto o tempo que uma instância mongrel demora para desbloquear o processo, as coisas do lado Rails precisam ser ajustadas antes.
 >>>>>>> Mais um pouco feito. Faltam sÃ³ 2 pÃ¡ginas
+=======
+ConfiguraÃ§Ã£o e ajuste de servidores, como por exemplo o nÃºmero de instÃ¢ncias Mongrel para executar em um servidor, nÃ£o podem ser feitos por si sÃ³. Como o processamento de backend pode aumentar tanto o consumo de memÃ³ria quanto o tempo que uma instÃ¢ncia Mongrel demora para desbloquear o processo, as coisas do lado Rails precisam ser ajustadas antes.
+>>>>>>> RevisÃ£o concluÃ­da artigo 10
 
 
+<<<<<<< HEAD
 
 
 <<<<<<< HEAD
 =======
 O logpwnr irá gerar medidas completas de todas as actions usadas em sua aplicação. Se você tem vários servidores de produção, você precisará concatenar todos os logs antes de transformá-los com o logpwnr. Execute ele da seguinte maneira:
 >>>>>>> Terminei a leitura do artigo 10. Agora sÃ³ falta verificar a ortografia
+=======
+A primeira tarefa Ã© descobrir o que precisa ser otimizado. Um bom lugar para comeÃ§ar sÃ£o os logs de produÃ§Ã£o, jÃ¡ que eles irÃ£o mostrar onde as pessoas vÃ£o e quanto tempo o servidor toma para responder.
+
+Existe uma ferramenta chamada PL Analyzer [1], parte da suÃ­te Rails Analyzer, mas nÃ£o funciona "out-of-the-box" no OSX, no qual eu trabalho. Ele tambÃ©m trabalha com um conjunto separado de dados, entÃ£o eu uso um programa que fiz hÃ¡ um tempo atrÃ¡s chamado logpwnr [2] para converter os dados.
+
+O logpwnr irÃ¡ gerar medidas completas de todas as actions usadas em sua aplicaÃ§Ã£o. Se vocÃª tem vÃ¡rios servidores de produÃ§Ã£o, vocÃª precisarÃ¡ concatenar todos os logs antes de transformÃ¡-los com o logpwnr. Execute ele da seguinte maneira:
+>>>>>>> RevisÃ£o concluÃ­da artigo 10
+
+
+<<<<<<< HEAD
+=======
+Assim vocÃª irÃ¡ ter um CSV que vocÃª pode importar em qualquer planilha.
+>>>>>>> RevisÃ£o concluÃ­da artigo 10
 
 
 
-
-
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -90,49 +115,61 @@ Aqui podemos começar a procurar pelo que é mais usado e depois ver qual das acti
 =======
 Aqui podemos começar a procurar pelo que é mais usado e depois ver qual das actions pode ser uma candidata a ser otimizada, usando o tempo total de requisição (não exibido na tabela, mas é a soma das médias de bd, action e render). Tente avaliar os números no contexto do uso. Pode haver actions terrivelmente lentas em sua applicação, mas usadas apenas 5 vezes em alguns meses. Otimizar actions raramente usadas não valem o esforço até que todas as actions mais populares estiverem mais velozes.
 >>>>>>> Terminei a leitura do artigo 10. Agora sÃ³ falta verificar a ortografia
+=======
+name -> nome
+hits -> vis.
+action avg -> mÃ©d. action
+action avg stddev -> mÃ©d. desvp action
+render avg -> mÃ©d. render
+render avg stddev -> mÃ©d. desvp render
+db avg -> mÃ©d. bd
+db avg stddev -> mÃ©d. desvp bd
+
+Aqui podemos comeÃ§ar a procurar pelo que Ã© mais usado e depois ver qual das actions pode ser uma candidata a ser otimizada, usando o tempo total de requisiÃ§Ã£o (nÃ£o exibido na tabela, mas Ã© a soma das mÃ©dias de bd, action e render). Tente avaliar os nÃºmeros no contexto do uso. Pode haver actions terrivelmente lentas em sua aplicaÃ§Ã£o, mas usadas apenas 5 vezes em alguns meses. Otimizar actions raramente usadas nÃ£o valem o esforÃ§o atÃ© que todas as actions mais populares estiverem mais velozes.
+>>>>>>> RevisÃ£o concluÃ­da artigo 10
 
 Entrando na toca do coelho
 
 ------------------------------
 
-Uma vez encontrada a action que parece boa para ser otimizada, podemos pensar em como atacar o problema usando o RubyProf. O Rubyprof é parcialmente mantido por Charlie Savage [3], que fez um dos melhores guias rápidos para acelerar Rails[4]. Ele também fez um guia fantástico de instalação do RubyProf [5].
+Uma vez encontrada a action que parece boa para ser otimizada, podemos pensar em como atacar o problema usando o RubyProf. O RubyProf Ã© parcialmente mantido por Charlie Savage [3], que fez um dos melhores guias rÃ¡pidos para acelerar Rails[4]. Ele tambÃ©m fez um guia fantÃ¡stico de instalaÃ§Ã£o do RubyProf [5].
 
-Um problema é que se você está usando Rails <= 1.1.6, você terá que fazer aliases de métodos por conta própria ou especificar alias_method_chain no plugin. Eu prefiro o último e apenas coloquei essee trecho do código do Rails [6] no topo do plugin.
+Um problema Ã© que se vocÃª estÃ¡ usando Rails <= 1.1.6, vocÃª terÃ¡ que fazer aliases de mÃ©todos por conta prÃ³pria ou especificar alias_method_chain no plugin. Eu prefiro o Ãºltimo e apenas coloquei esse trecho do cÃ³digo do Rails [6] no topo do plugin.
 
-Novamente, é importante mensurar novamente todas as alterações que você fez para justificar suas refatorações e como direcionar seus esforços de otimização, mas se for para levar apenas algumas coisas de conhecimento para si, Charlie disponibiliza as seguintes linhas gerais para performance de backend:
+Novamente, Ã© importante mensurar novamente todas as alteraÃ§Ãµes que vocÃª fez para justificar suas refatoraÃ§Ãµes e como direcionar seus esforÃ§os de otimizaÃ§Ã£o, mas se for para levar apenas algumas coisas de conhecimento para si, Charlie disponibiliza as seguintes linhas gerais para performance de backend:
 
-* Não use ActiveRecord#attributes - O ActiveRecord já clona todos os atributos associados com o objeto toda vez que ele é acessado;
-* Acerte seus ActiveRecord :includes - Includes muito agressivos podem gerar joins desnecessários no banco de dados, enquanto a falta deles pode resultar em um aumento no número de queries no banco.
-* Não verifique hora e data de templates (cache_template_loading = true)
-* Não use url_for - buscar pela tabela de rotas todas as vezes é lento
-* Não deixe o Rails interpretar data e hora - A classe Date do Ruby (e os monkeypatches do Rails em cima dele) é dolorosamente lenta.
-* Não transforme chaves em símbolos (local_assigns_support_string_keys = true)
+* NÃ£o use ActiveRecord#attributes - O ActiveRecord jÃ¡ clona todos os atributos associados com o objeto toda vez que ele Ã© acessado;
+* Acerte seus ActiveRecord :includes - Includes muito agressivos podem gerar joins desnecessÃ¡rios no banco de dados, enquanto a falta deles pode resultar em um aumento no nÃºmero de queries no banco.
+* NÃ£o verifique hora e data de templates (cache_template_loading = true)
+* NÃ£o use url_for - buscar pela tabela de rotas todas as vezes Ã© lento
+* NÃ£o deixe o Rails interpretar data e hora - A classe Date do Ruby (e os monkeypatches do Rails em cima dele) Ã© dolorosamente lenta.
+* NÃ£o transforme chaves em sÃ­mbolos (local_assigns_support_string_keys = true)
 
-E algumas sugestões minhas:
-* Sempre use if's em cláusulas de debug, exemplo "logger.debug (em Controller#new) if logger.debug?" - isso é importante para evitar chamadas desnecessárias ao método to_s e também faz "curto circuito" em outros métodos em um ambiente de produção; não comente as cláusulas logger, já que elas são úteis para, você sabe, fazer debug.
-* Evite helpers inúteis do Rails (a tag HTML <img> é mais rápido e tão fácil quanto o helper image_tag)
-* Evite cópias inúteis de objetos (como gsub) quando você pode usar alternativas que alteram o próprio objeto (gsub!)
+E algumas sugestÃµes minhas:
+* Sempre use if's em clÃ¡usulas de debug, exemplo "logger.debug (em Controller#new) if logger.debug?" - isso Ã© importante para evitar chamadas desnecessÃ¡rias ao mÃ©todo to_s e tambÃ©m faz "curto circuito" em outros mÃ©todos em um ambiente de produÃ§Ã£o; nÃ£o comente as clÃ¡usulas logger, jÃ¡ que elas sÃ£o Ãºteis para, vocÃª sabe, fazer debug.
+* Evite helpers inÃºteis do Rails (a tag HTML <img> Ã© mais rÃ¡pido e tÃ£o fÃ¡cil quanto o helper image_tag)
+* Evite cÃ³pias inÃºteis de objetos (como gsub) quando vocÃª pode usar alternativas que alteram o prÃ³prio objeto (gsub!)
 
 
-Otimização de frontend
+OtimizaÃ§Ã£o de frontend
 =-=-=-=-=-=-=-=-=-=-
 
-Uma ferramenta fantástica para determinar tempo de carga de uma página web é o YSlow [7], uma ferramenta colocada pelo Yahoo como um addon ao Firebug [8]. YSlow pontua sua página através de diversos critérios e faz recomendações de como melhorar seu site.
+Uma ferramenta fantÃ¡stica para determinar tempo de carga de uma pÃ¡gina web Ã© o YSlow [7], uma ferramenta colocada pelo Yahoo como um addon ao Firebug [8]. YSlow pontua sua pÃ¡gina atravÃ©s de diversos critÃ©rios e faz recomendaÃ§Ãµes de como melhorar seu site.
 
-Um site extremamente veloz no backend com uma pontuação terrível no YSlow vai ser geralmente visto como pesado pelos usuários.
+Um site extremamente veloz no backend com uma pontuaÃ§Ã£o terrÃ­vel no YSlow vai ser geralmente visto como pesado pelos usuÃ¡rios.
 
-Uma das coisas mais fáceis para ser feitas é comprimir seus arquivos Javascript e CSS. Se você usa uma ferramenta como o asset packager [9], você pode ter seus javascripts e css's em ambiente de produção concatenados e "compactados", necessitando apenas 2 downloads pelos seus usuários. Esse é um grande ganho porquê você não só diminui consumo de banda como o número de downloads necessários para ver uma página. Muitos browsers vem preparados para fazer apenas 2 downloads de arquivos por vez de um servidor, então menos downloads é sempre bom.
+Uma das coisas mais fÃ¡ceis para ser feitas Ã© comprimir seus arquivos Javascript e CSS. Se vocÃª usa uma ferramenta como o asset packager [9], vocÃª pode ter seus javascripts e css's em ambiente de produÃ§Ã£o concatenados e "compactados", necessitando apenas 2 downloads pelos seus usuÃ¡rios. Esse Ã© um grande ganho porquÃª vocÃª nÃ£o sÃ³ diminui consumo de banda como o nÃºmero de downloads necessÃ¡rios para ver uma pÃ¡gina. Muitos navegadores vem preparados para fazer apenas 2 downloads de arquivos por vez de um servidor, entÃ£o menos downloads Ã© sempre bom.
 
-O YSlow em sua essência olha para elementos da página que travam o download de páginas e maneiras de como acelerar o tempo de downloads. Para esse fim, alguns ajustes no Apache podem render bons frutos.
+O YSlow em sua essÃªncia olha para elementos da pÃ¡gina que travam o download de pÃ¡ginas e maneiras de como acelerar o tempo de downloads. Para esse fim, alguns ajustes no Apache podem render bons frutos.
 
 Ajustes do Apache
 -----------------
 
-A maioria dos browsers populares aceitam conteúdo compactados com gzip. Então gzipe tudo usando o mod_deflate [10] do Apache. Além disso, arquivos estáticos podem ter data de expiração bem no futuro. Você pode simplesmente colocar:
+A maioria dos navegadores populares aceitam conteÃºdo compactados com gzip. EntÃ£o gzipe tudo usando o mod_deflate [10] do Apache. AlÃ©m disso, arquivos estÃ¡ticos podem ter data de expiraÃ§Ã£o bem no futuro. VocÃª pode simplesmente colocar:
 
 ExpiresDefault "access plus 10 years" 
 
-Em sua configuração do Apache e então todos os seus recursos estáticos vão conter esse cabeçalho . No trabalho, encontramos um problema com o cabeçalho Expires-Default e o IE7 que até requisições processadas pelo Mongrel estavam sendo armazenadas em cache, então precisamos deixar as coisas mais claras, tirando a cláusula ExpiresDefault com:
+Em sua configuraÃ§Ã£o do Apache e entÃ£o todos os seus recursos estÃ¡ticos vÃ£o conter esse cabeÃ§alho . No trabalho, encontramos um problema com o cabeÃ§alho Expires-Default e o IE7 que atÃ© requisiÃ§Ãµes processadas pelo Mongrel estavam sendo armazenadas em cache, entÃ£o precisamos deixar as coisas mais claras, tirando a clÃ¡usula ExpiresDefault com:
 
 
 ExpiresByType image/gif "access 10 years"
@@ -141,39 +178,39 @@ ExpiresByType image/png "access 10 years"
 ExpiresByType text/css "access 10 years"
 ExpiresByType text/javascript "access 10 years"
 
-Um perigo com essa abordagem é que caching pode causar problemas se você está atualizando suas imagens, seu CSS ou seu javascripts. O Asset packager resolve isso com seus CSSs e javascripts e você pode usar a mesma técnica com suas imagens - mudar o nome do arquivo cada vez que os arquivos forem alterados. Um número de revisão SVN ou Git resolve muito bem.
+Um perigo com essa abordagem Ã© que caching pode causar problemas se vocÃª estÃ¡ atualizando suas imagens, seu CSS ou seu javascripts. O Asset packager resolve isso com seus CSSs e javascripts e vocÃª pode usar a mesma tÃ©cnica com suas imagens - mudar o nome do arquivo cada vez que os arquivos forem alterados. Um nÃºmero de revisÃ£o SVN ou Git resolve muito bem.
 
-Por fim, a configuração de ETags pode ser ajustada no Apache. Mais especificamente, pode ser desativada. Isso é bem importante quando seu site se torna grande o suficiente para tomar diversos servidores de recursos. O mecanismo de hashing padrão de ETags é dependente da máquina, então arquivos em diferentes servidores irão ter ETags diferentes. Isso gera invalidação desnecessária de cache e invalida o processamento feito pelo servidor para gerar o ETag. Para desligá-lo no Apache, bastainserir:
+Por fim, a configuraÃ§Ã£o de ETags pode ser ajustada no Apache. Mais especificamente, pode ser desativada. Isso Ã© bem importante quando seu site se torna grande o suficiente para tomar diversos servidores de recursos. O mecanismo de hashing padrÃ£o de ETags Ã© dependente da mÃ¡quina, entÃ£o arquivos em diferentes servidores irÃ£o ter ETags diferentes. Isso gera invalidaÃ§Ã£o desnecessÃ¡ria de cache e invalida o processamento feito pelo servidor para gerar o ETag. Para desligÃ¡-lo no Apache, basta inserir:
 
 FileETag none
 
 no seu httpd.conf
 
-Na ponta do Rails, entretanto, ETags são muito mais úteis. O Rails tem um mecanismo embutido para ETags que é confiável e consistente em diversas máquinas e no Rails 2.2 o código foi muito simplificado. Você pode definir condições para expiração e fazer uma action inteira da seguinte maneira:
+Na ponta do Rails, entretanto, ETags sÃ£o muito mais Ãºteis. O Rails tem um mecanismo embutido para ETags que Ã© confiÃ¡vel e consistente em diversas mÃ¡quinas e no Rails 2.2 o cÃ³digo foi muito simplificado. VocÃª pode definir condiÃ§Ãµes para expiraÃ§Ã£o e fazer uma action inteira da seguinte maneira:
 
 if stale?(:last_modified => @user.updated_at, :etag => @user)
-	<código>
+	<cÃ³digo>
 end
 	
-E o <código> não será executado até que a data é alterada ou o ETag o indique.
+E o <cÃ³digo> nÃ£o serÃ¡ executado atÃ© que a data Ã© alterada ou o ETag o indique.
 
-Depois de fazer essas mudanças, trabalhe com o YSlow e veja o que consegue melhorar. O YSlow tem links excelentes que explica tanto os problemas de sua página e também de como resolvê-los.
+Depois de fazer essas mudanÃ§as, trabalhe com o YSlow e veja o que consegue melhorar. O YSlow tem links excelentes que explica tanto os problemas de sua pÃ¡gina e tambÃ©m de como resolvÃª-los.
 
 
 Servidor/Ajustes no HTTP
 -=-=-=-=-=-=-=-=-=-=-=-=-=
 
-Parece que o Phusion Passenger não tem o mesmo problema com ajustes como o Mongrel, mas se você precisar fazer proxy com múltiplos Apaches ou experimentar como se comporta seu servidor em alto tráfego, essa seção será bem útil.
+Parece que o Phusion Passenger nÃ£o tem o mesmo problema com ajustes como o Mongrel, mas se vocÃª precisar fazer proxy com mÃºltiplos Apaches ou experimentar como se comporta seu servidor em alto trÃ¡fego, essa seÃ§Ã£o serÃ¡ bem Ãºtil.
 
-Eu não sei como a maioria das pessoas configuram várias máquinas com Mongrels, mas descobrimos recentemente em uma das nossas aplicações, que nós havíamos configurado mal. Tínhamos algo do tipo:
+Eu nÃ£o sei como a maioria das pessoas configuram vÃ¡rias mÃ¡quinas com Mongrels, mas descobrimos recentemente em uma das nossas aplicaÃ§Ãµes, que nÃ³s havÃ­amos configurado mal. TÃ­nhamos algo do tipo:
 
-Ignore o fato de que há apenas duas setas (deveriam ser seis) saindo das caixas do Apache; isso é preguiça minha. O problema aqui é que nós tínhamos uma instância Apache delegando para outras 4 instâncias que por sua vez passava a requisição para o Mongrel ou servia conteúdo estático.
+Ignore o fato de que hÃ¡ apenas duas setas (deveriam ser seis) saindo das caixas do Apache; isso Ã© preguiÃ§a minha. O problema aqui Ã© que nÃ³s tÃ­nhamos uma instÃ¢ncia Apache delegando para outras 4 instÃ¢ncias que por sua vez passava a requisiÃ§Ã£o para o Mongrel ou servia conteÃºdo estÃ¡tico.
 
-A análise com httperf[12] (daqui a poucos parágrafos!) mostrou que, para requisições pequenas, a diferença foi desprezível, mas quando o número de requisições por segundo começaram a acumular, fazer proxy sem precisar para mais Apaches se tornou um gargalo. Fazendo proxy diretamente do Apache balanceador de carga para instâncias Mongrel mostrou uma melhoria de 25% em alto tráfego (500 reqs/s por 10 segundos).
+A anÃ¡lise com httperf[12] (daqui a poucos parÃ¡grafos!) mostrou que, para requisiÃ§Ãµes pequenas, a diferenÃ§a foi desprezÃ­vel, mas quando o nÃºmero de requisiÃ§Ãµes por segundo comeÃ§aram a acumular, fazer proxy sem precisar para mais Apaches se tornou um gargalo. Fazendo proxy diretamente do Apache balanceador de carga para instÃ¢ncias Mongrel mostrou uma melhoria de 25% em alto trÃ¡fego (500 reqs/s por 10 segundos).
 
-Como um lembrete rápido, o Mongrel executava como uma thread sincronizada até o Rails 2.2. Isso significa que, para o Rails, uma instância Mongrel só poderia responder 1 única requisição por vez e quando essa instância está processando a requisição, ela acaba bloqueando todas as outras requisições chegando a ela. Isso leva a uma solução óbvia de escalabilidade (até um certo ponto): mais Mongrels!
+Como um lembrete rÃ¡pido, o Mongrel executava como uma thread sincronizada atÃ© o Rails 2.2. Isso significa que, para o Rails, uma instÃ¢ncia Mongrel sÃ³ poderia responder 1 Ãºnica requisiÃ§Ã£o por vez e quando essa instÃ¢ncia estÃ¡ processando a requisiÃ§Ã£o, ela acaba bloqueando todas as outras requisiÃ§Ãµes chegando a ela. Isso leva a uma soluÃ§Ã£o Ã³bvia de escalabilidade (atÃ© um certo ponto): mais Mongrels!
 
-Mas mesmo antes de pensar no número correto de Mongrels por máquina, você tem que garantir que você não está usando o Mongrel para coisas que ele não deveria. O Mongrel não é nem de perto tão bom quanto o Apache para servir arquivos estáticos, então tenha certeza que sua pasta public esteja sendo servida diretamente pelo Apache, anterior a qualquer intervenção. Coloque isso no seu arquivo vhost (assumindo que todas as suas regras de Rewrite estejam corretas):
+Mas mesmo antes de pensar no nÃºmero correto de Mongrels por mÃ¡quina, vocÃª tem que garantir que vocÃª nÃ£o estÃ¡ usando o Mongrel para coisas que ele nÃ£o deveria. O Mongrel nÃ£o Ã© nem de perto tÃ£o bom quanto o Apache para servir arquivos estÃ¡ticos, entÃ£o tenha certeza que sua pasta public esteja sendo servida diretamente pelo Apache, anterior a qualquer intervenÃ§Ã£o. Coloque isso no seu arquivo vhost (assumindo que todas as suas regras de Rewrite estejam corretas):
 
 <Directory "/your/apps/public/directory">
 	Option FollowSymLinks
@@ -182,42 +219,46 @@ Mas mesmo antes de pensar no número correto de Mongrels por máquina, você tem qu
 	Allow from all
 </Directory>
 
-# Rewrite index para verificar por arquivos estáticos
+# Rewrite index para verificar por arquivos estÃ¡ticos
 RewriteRule ^/$ /index.html [QSA]
 
-# Rewrite para verificar por páginas em cache do Rails
+# Rewrite para verificar por pÃ¡ginas em cache do Rails
 RewriteRule ^([^.]+)$ $1.html [QSA]
 
 RewriteRule ".*(images|stylesheets|javascripts)/?(.*)" "$0" [L]
 
-E então depois de reiniciar o Apache, seus recursos vão ser servidos pelo Apache. Agora é hora de ajustar instâncias Mongrel.
+E entÃ£o depois de reiniciar o Apache, seus recursos vÃ£o ser servidos pelo Apache. Agora Ã© hora de ajustar instÃ¢ncias Mongrel.
 
 
-Conheça o httperf
+ConheÃ§a o httperf
 -=-=-=-=-=-=-=-=-=-
 
-Então, enquanto muitas dessas coisas devem ser feitas com cuidado ou em período de manutenção, esse último teste parece pode ser feito durante o dia. Isso seria muito errado. Se você conseguir marretar bem seu servidor, você pode derrubar tudo (e falo por experiência quando usei inocentemente o httperf o servidor de produção há uns anos atrás). Faça testes em períodos de pouco tráfego.
+EntÃ£o, enquanto muitas dessas coisas devem ser feitas com cuidado ou em perÃ­odo de manutenÃ§Ã£o, esse Ãºltimo teste parece pode ser feito durante o dia. Isso seria muito errado. Se vocÃª conseguir marretar bem seu servidor, vocÃª pode derrubar tudo (e falo por experiÃªncia quando usei inocentemente o httperf o servidor de produÃ§Ã£o hÃ¡ uns anos atrÃ¡s). FaÃ§a testes em perÃ­odos de pouco trÃ¡fego.
 
-Essa é basicamente uma recaptulação de um post em um mailing list [13] incrivelmente esclarecedor do Zed Shaw (de fama do Mongrel e "Rails is a Ghetto").
+Essa Ã© basicamente uma recaptulaÃ§Ã£o de um post em um mailing list [13] incrivelmente esclarecedor do Zed Shaw (de fama do Mongrel e "Rails is a Ghetto").
 
-Primeiramente, encontre uma máquina perto (tanto na rede quanto em proximidade) do servidor que você quer testar, mas não a mesma máquina (testar a interface loopback não ajudam muito).
+Primeiramente, encontre uma mÃ¡quina perto (tanto na rede quanto em proximidade) do servidor que vocÃª quer testar, mas nÃ£o a mesma mÃ¡quina (testar a interface loopback nÃ£o ajudam muito).
 
-O próximo passo, você vai querer testar recursos naquela máquina. A boa notícia é que se você seguiu por esse guia, todos os seus recursos estáticos estão sendo servidos pelo Apache. Isso te dá um ponto de partida de melhor caso, no qual você pode testar seus Mongrels.
+O prÃ³ximo passo, vocÃª vai querer testar recursos naquela mÃ¡quina. A boa notÃ­cia Ã© que se vocÃª seguiu por esse guia, todos os seus recursos estÃ¡ticos estÃ£o sendo servidos pelo Apache. Isso te dÃ¡ um ponto de partida de melhor caso, no qual vocÃª pode testar seus Mongrels.
 
 Comece executando um comando como esse:
 httperf --hog --server=<seu servidor> --uri=<seu recurso, como /happy.jpg> --num-conns
 
-Você terá alguma saída do programa mas o que você deve prestar atenção antes é a duração do teste. O Zed recomenda 10 segundos, que funciona bem para um caso de teste abrangente contra um servidor de recursos estáticos e muitas requisições. Em um servidor "parrudo" da produção que temos, tive algo assim com num-conns de 1200.
+VocÃª terÃ¡ alguma saÃ­da do programa mas o que vocÃª deve prestar atenÃ§Ã£o antes Ã© a duraÃ§Ã£o do teste. O Zed recomenda 10 segundos, que funciona bem para um caso de teste abrangente contra um servidor de recursos estÃ¡ticos e muitas requisiÃ§Ãµes. Em um servidor "parrudo" da produÃ§Ã£o que temos, tive algo assim com num-conns de 1200.
 
-Depois de encontrar o número mágico, tente executar apenas uma requisição (--num-conns 1) contra uma action (--url <action>) em sua aplicação Rails que possa dar uma idéia de como sua aplicação funciona. Você não quereria executar na action mais lenta e executar conteúdo estático não vai ajudar em nada. Tenha certeza de encontrar uma página que não precise de login, já que isso irá resultar em redirects inúteis.
+Depois de encontrar o nÃºmero mÃ¡gico, tente executar apenas uma requisiÃ§Ã£o (--num-conns 1) contra uma action (--url <action>) em sua aplicaÃ§Ã£o Rails que possa dar uma ideia de como sua aplicaÃ§Ã£o funciona. VocÃª nÃ£o quereria executar na action mais lenta e executar conteÃºdo estÃ¡tico nÃ£o vai ajudar em nada. Tenha certeza de encontrar uma pÃ¡gina que nÃ£o precise de login, jÃ¡ que isso irÃ¡ resultar em redirects inÃºteis.
 
-Se apenas uma requisição foi muito lenta, então você provavelmente tem uma configuração incorreta para os Mongrels ou alguma coisa está bem errada. Essa execução deveria ser pelo menos tão rápida quanto as coisas em desenvolvimento localmente e provavelmente muito mais rápido. Se sua simples requisição Rails está mais rápida que uma requisição estática, então o conteúdo estático provavelmente não está estático - o Apache é mais veloz que o Mongrel, isso é fato. 
+Se apenas uma requisiÃ§Ã£o foi muito lenta, entÃ£o vocÃª provavelmente tem uma configuraÃ§Ã£o incorreta para os Mongrels ou alguma coisa estÃ¡ bem errada. Essa execuÃ§Ã£o deveria ser pelo menos tÃ£o rÃ¡pida quanto as coisas em desenvolvimento localmente e provavelmente muito mais rÃ¡pido. Se sua simples requisiÃ§Ã£o Rails estÃ¡ mais rÃ¡pida que uma requisiÃ§Ã£o estÃ¡tica, entÃ£o o conteÃºdo estÃ¡tico provavelmente nÃ£o estÃ¡ estÃ¡tico - o Apache Ã© mais veloz que o Mongrel, isso Ã© fato. 
 
-Depois que uma requisição simples pareca bem, tente executar com --num-conns igual ao seu número encontrado anteriormente, com 10 segundos de execução, para o seu servidor de conteúdo estático e coloque --rate para num-conns/10. Isso idealmente irá te dar testes com 10 segundos de duração, apesar de que na prática é um pouco mais que isso. Então execute novamente. É importante que os caches sejam feitos e que todos os Mongrels são levantados antes de executar um teste de performance. Nunca use números de um teste executado pela primeira vez.
+Depois que uma requisiÃ§Ã£o simples pareca bem, tente executar com --num-conns igual ao seu nÃºmero encontrado anteriormente, com 10 segundos de execuÃ§Ã£o, para o seu servidor de conteÃºdo estÃ¡tico e coloque --rate para num-conns/10. Isso idealmente irÃ¡ te dar testes com 10 segundos de duraÃ§Ã£o, apesar de que na prÃ¡tica Ã© um pouco mais que isso. EntÃ£o execute novamente. Ã‰ importante que os caches sejam feitos e que todos os Mongrels sÃ£o levantados antes de executar um teste de performance. Nunca use nÃºmeros de um teste executado pela primeira vez.
 
-Agora tente adicionar uma instância do Mongrel, reinicie as coisas e execute o teste novamente. Se você encontrou melhorias no tempo geral to teste, você está progredindo.
+Agora tente adicionar uma instÃ¢ncia do Mongrel, reinicie as coisas e execute o teste novamente. Se vocÃª encontrou melhorias no tempo geral to teste, vocÃª estÃ¡ progredindo.
 
-Existe um número ideal de instâncias Mongrel em um processador e você irá encontrá-lo facilmente. Aumentando o número de Mongrels por um. Assim que você alcançar o ápice, você deverá então encontrar uma queda drástica de performance. Eu já vi essa queda ser algo próximo a 25%, apenas adicionando um Mongrel. Quando você encontrar esse número, reduza um Mongrel e você tem o número ideal para sua aplicação e servidor atual.
+Existe um nÃºmero ideal de instÃ¢ncias Mongrel em um processador e vocÃª irÃ¡ encontrÃ¡-lo facilmente. Aumentando o nÃºmero de Mongrels por um. Assim que vocÃª alcanÃ§ar o Ã¡pice, vocÃª deverÃ¡ entÃ£o encontrar uma queda drÃ¡stica de performance. Eu jÃ¡ vi essa queda ser algo prÃ³ximo a 25%, apenas adicionando um Mongrel. Quando vocÃª encontrar esse nÃºmero, reduza um Mongrel e vocÃª tem o nÃºmero ideal para sua aplicaÃ§Ã£o e servidor atual.
 
+<<<<<<< HEAD
 Se você seguir os links, você provavelmente irá ver (tanto quantitativamente quanto qualitativamente) ganhos bem notáveis de performance.
 >>>>>>> Mais um pouco feito. Faltam sÃ³ 2 pÃ¡ginas
+=======
+Se vocÃª seguir os links, vocÃª provavelmente irÃ¡ ver (tanto quantitativamente quanto qualitativamente) ganhos bem notÃ¡veis de performance.
+>>>>>>> RevisÃ£o concluÃ­da artigo 10
