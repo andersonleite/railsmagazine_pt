@@ -4,9 +4,13 @@ por Terry Heath
 Introdução
 ===========
 
+<<<<<<< HEAD
 Um dos meus apectos favoritos de desenvolvimento é trabalhar com performance. A atividade, associada com a instrumentação e ferramentas de medida de performance acaba transformando-se bem em análise científica.
+=======
+Um dos meus aspectos favoritos de desenvolvimento é trabalhar com performance. A atividade, associada com profiling e ferramentas de benchmark acaba transformando-se bem em análise científica.
+>>>>>>> Terminei a leitura do artigo 10. Agora sÃ³ falta verificar a ortografia
 
-Usabilidade e aparência são sempre assuntos subjetivos e, na melhor das hipóteses, tem regras que mesmo assim não muito bem definidas. Ao contrário, medidas de performance são muito mais precisas.
+Usabilidade e aparência são sempre assuntos subjetivos e, na melhor das hipóteses, tem regras que mesmo assim não são muito bem definidas. Ao contrário disto, medidas de performance são muito mais precisas.
 
 Eu vou dar uma idéia de como abordar análises de performance e as ferramentas necessárias para as diferentes partes que compoem uma aplicação. Eu não entrei em nada muito místico porque isso iria transformar esse artigo em um livro de capa dura de 2 quilos de uma grande livraria.
 
@@ -22,9 +26,9 @@ Medida
 Números e não sensações
 ---------------------
 
-Antes de começar a ler sobre performance e receber a tarefa de otimizar alguma coisa, eu normalmente iria otimizar algo que não "parecia" rápido. Enquanto algumas vezes isso pode ser uma boa maneira para determinar se algo precisa ser otimizado, não é uma boa medida de otimização.
+Antes de começar a ler sobre performance e receber a tarefa de otimizar alguma coisa, eu normalmente iria otimizar algo que não parece rápido. Embora algumas vezes isso pode ser uma boa maneira para determinar se algo precisa ser otimizado, não é uma boa medida de otimização.
 
-Depois de trabalhar duro em otimização, você vai querer ver melhorias. Você vai querer tanto que se deixar levar pelo seu julgamento, você vai ver melhorias, mesmo se você tornou as coisas piores. Por essa razão, é importante avaliar performance numericamente através de profiling e a medida de performance (benchmarking), e não sensações.
+Depois de trabalhar duro em otimização, você vai querer ver melhorias. Você vai querer tanto que vai se deixar levar pelo seu julgamento, você vai ver melhorias, mesmo se você tornou as coisas piores. Por essa razão, é importante avaliar performance numericamente através de profiling e a medida de performance (benchmarking), e não sensações.
 
 Uma outra razão para usar ferramentas e não sensações é por que elas te permitem isolar o que é realmente lento. Acontecem diversas coisas durante uma requisição via web e um exemplo é uma requisição enviada ao Apache, que é repassada para o Mongrel, que por sua vez ativa alguma ação Ruby, finalmente voltando ao cliente. Você pode ver algo no código mais interno à sua aplicação e falar "Eu sei que isso é lento, vou melhorar". Infelizmente, sem uma medida de base, você (1) não sabe o quanto sua melhoria vai de fato ajudar e (2), você não sabe ao certo se aquele código realmente precisa ser melhorado.
 
@@ -33,7 +37,7 @@ Números justificam tudo. Sem eles, é difícil para explicar aos seus colegas o qu
 
 Introdução à estatística 
 --------------
-Eu tive a sorte de ter aulas de estatística durante a faculdade e tive a sorte de ser uma nota 10 fácil para mim. Infelizmente, eu não lembro muito além disso disso. Eu acho que você está na mesma situação.
+Eu tive a sorte de ter aulas de estatística durante a faculdade e tive a sorte de ser tirar uma nota 10 fácil para mim. Infelizmente, eu não lembro muito além disso disso. Eu acho que você está na mesma situação.
 
 =-=-=-=-=-=-
 Para aguçar sua memória...
@@ -41,24 +45,24 @@ Para aguçar sua memória...
 Média: x' =  1/n Sum(i=1, n, xi)
 Desvio padrão: sigma = Sqrt(E((X-E(X)))^2)
 
-(nota ao revisor: acho que vale a pena aprofundar os conhecimentos aqui, acho que nem todo mundo lembra o que é uma variável aleatória...)
+Nota de tradutor: Uma boa fonte para ler sobre isso é a Wikipedia http://en.wikipedia.org/wiki/Random_variables
 
 =--=-=-=-=-=-
 
-Embora eu acho que isso é ensinado como um axioma ou algo assim sobre tamanho de amostras, em conversas casuais já ouvi esse conceito ser referido como "lei dos pequenos números". Essensialmente, se você não tem amostras suficientes, você não pode ter certeza sobre o que você está medindo. Você talvez esteja medindo o tempo do garbage collector do Ruby quando você quer de fato ver quanto tempo um match em expressão regular está tomando. Isso não só iria levar a resultados falsos como pode desviar a sua atenção nos esforços de otimização. Resumindo, quanto mais executar os testes, melhor.
+Embora eu acho que isso é ensinado como um axioma ou algo assim sobre tamanho de amostras, em conversas casuais já ouvi esse conceito ser referido como "lei dos pequenos números". Essencialmente, se você não tem amostras suficientes, você não pode ter certeza sobre o que você está medindo. Você talvez esteja medindo o tempo do garbage collector do Ruby quando você quer de fato ver quanto tempo um match em expressão regular está tomando. Isso não só iria levar a resultados falsos como pode desviar a sua atenção nos esforços de otimização. Resumindo, quanto mais executar os testes, melhor.
 
-Enquanto se estiver tomando medidas estatísticas, é importante reduzir fatores que podem prejudicar a análise. Qualquer coisa que possa interferir com os números que você está coletando pode afetar seus dados. Se você executar seus benchmarks localmente, feche outras aplicações em execução. Reforçando, é difícil saber se o que você está medindo é realmente o match de expressão regular se seu iTunes está passando o Senhor dos Anéis e jogando Tower Defense no Firefox. Talvez colocar uma torre de água no jogo consuma alguma CPU, influenciando no processo Ruby. O timer não irá saber e nem você.
+Enquanto se estiver tomando medidas estatísticas, é importante reduzir fatores que podem prejudicar a análise. Qualquer coisa que possa interferir com os números que você está coletando pode afetar seus dados. Se você executar seus benchmarks localmente, feche outras aplicações em execução. Reforçando, é difícil saber se o que você está medindo é realmente o match de expressão regular se seu iTunes está passando o Senhor dos Anéis e você está jogando Tower Defense no Firefox. Talvez colocar uma torre de água no jogo consuma alguma CPU, influenciando no processo Ruby. O timer não irá saber e nem você.
 
 Se você está testando a vazão do servidor, garanta que você está testando o mais próximo da máquina que puder. Se você tem um servidor espelho que fica a alguns metros de você, melhor, pois você não está medindo velocidade de roteadores e nem buracos negros na internet.
 
 Por último, quando apresentar suas medidas, calcule o desvio padrão e a média. Isso é extremamente importante. O desvio padrão indica o quanto as medidas desviam da média. Um desvio padrão deve cobrir cerca de 70% dos casos e um segundo desvio padrão deve cobrir 90% dos casos. Embora não haja nenhuma implementação embutida no Ruby para cálculo de desvio padrão, eu providenciei um em [0].
 
-Se você tem uma requisição que, na média, está tomando metade de um segundo, você pode pensar "que bom, nossa aplicação é tão rápida!", mas se você comparar essa informação com o desvio padrão que digamos seja 12 segundos, você pode ter certeza que muitas pessoas estão esperando muito mais que meio segundo. Esse comportamento pode revelar que algum código de backend está travando ou um "race condition" que apenas uma média não iria mostrar.
+Se você tem uma requisição que, na média, está tomando metade de um segundo, você pode pensar "que bom, nossa aplicação é tão rápida!", mas se você comparar essa informação com o desvio padrão que digamos seja 12 segundos, você pode ter certeza que muitas pessoas estão esperando muito mais que meio segundo. Esse comportamento pode revelar que algum código de backend está travando ou uma condição de corrida que apenas uma média não iria mostrar.
 
 Rails
 -----------
 
-É importante notar que todas as três áreas mencionadas (backend, frontend e configuração de servidores) podem afetar signifcamente a performance. Por sorte, tanto o backend e frontend Rails podem ser diagnosticados e instrumentados individualmente, então não temos que empurrar dominós nos nossos ajustes.
+É importante notar que todas as três áreas mencionadas (backend, frontend e configuração de servidores) podem afetar signifcamente a performance. Por sorte, tanto o backend e frontend Rails podem ser diagnosticados e instrumentados individualmente, então não temos que jogar dominós com os nossos ajustes.
 
 <<<<<<< HEAD
 Configuração e ajuste de servidores, por exemplo o número de instâncias mongrel para executar em um servidor, não podem ser feitos por si só. Como o processamento de backend pode aumentar o consumo de memória para uma instância ....
@@ -69,6 +73,10 @@ Configuração e ajuste de servidores, como por exemplo o número de instâncias mon
 
 
 
+<<<<<<< HEAD
+=======
+O logpwnr irá gerar medidas completas de todas as actions usadas em sua aplicação. Se você tem vários servidores de produção, você precisará concatenar todos os logs antes de transformá-los com o logpwnr. Execute ele da seguinte maneira:
+>>>>>>> Terminei a leitura do artigo 10. Agora sÃ³ falta verificar a ortografia
 
 
 
@@ -76,10 +84,14 @@ Configuração e ajuste de servidores, como por exemplo o número de instâncias mon
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 Aqui podemos começar a procurar pelo que é mais usado e depois ver qual das actions pode ser uma candidata a ser otimizada, usando o tempo total de requisição (não exibido na tabela, mas é a soma das médias de bd, action e render). Tente avaliar os números no contexto do uso. Pode haver actions terrivelmente lentas em sua applicação, mas usadas apenas 5 vezes em alguns meses. Otimizar actions raramente usadas não valem o esforço até que todas as actions populares estiverem mais velozes.
+=======
+Aqui podemos começar a procurar pelo que é mais usado e depois ver qual das actions pode ser uma candidata a ser otimizada, usando o tempo total de requisição (não exibido na tabela, mas é a soma das médias de bd, action e render). Tente avaliar os números no contexto do uso. Pode haver actions terrivelmente lentas em sua applicação, mas usadas apenas 5 vezes em alguns meses. Otimizar actions raramente usadas não valem o esforço até que todas as actions mais populares estiverem mais velozes.
+>>>>>>> Terminei a leitura do artigo 10. Agora sÃ³ falta verificar a ortografia
 
-Entando na toca do coelho
+Entrando na toca do coelho
 
 ------------------------------
 
@@ -92,14 +104,12 @@ Novamente, é importante mensurar novamente todas as alterações que você fez para
 * Não use ActiveRecord#attributes - O ActiveRecord já clona todos os atributos associados com o objeto toda vez que ele é acessado;
 * Acerte seus ActiveRecord :includes - Includes muito agressivos podem gerar joins desnecessários no banco de dados, enquanto a falta deles pode resultar em um aumento no número de queries no banco.
 * Não verifique hora e data de templates (cache_template_loading = true)
-(nota ao revisor: eu infelizmente não entendi esse ponto!!)
 * Não use url_for - buscar pela tabela de rotas todas as vezes é lento
 * Não deixe o Rails interpretar data e hora - A classe Date do Ruby (e os monkeypatches do Rails em cima dele) é dolorosamente lenta.
 * Não transforme chaves em símbolos (local_assigns_support_string_keys = true)
 
 E algumas sugestões minhas:
-* Sempre use if's em cláusulas de debug, exemplo "logger.debug (em Controller#new) if logger.debug?" - isso é importante para evitar chamadas desnecessárias ao método to_s e também faz "curto circuito" em outros métodos em um ambiente de produção; não comente as cláusulas logger, já que elas são úteis para, você sabe, debuggar.
-
+* Sempre use if's em cláusulas de debug, exemplo "logger.debug (em Controller#new) if logger.debug?" - isso é importante para evitar chamadas desnecessárias ao método to_s e também faz "curto circuito" em outros métodos em um ambiente de produção; não comente as cláusulas logger, já que elas são úteis para, você sabe, fazer debug.
 * Evite helpers inúteis do Rails (a tag HTML <img> é mais rápido e tão fácil quanto o helper image_tag)
 * Evite cópias inúteis de objetos (como gsub) quando você pode usar alternativas que alteram o próprio objeto (gsub!)
 
@@ -118,7 +128,7 @@ O YSlow em sua essência olha para elementos da página que travam o download de p
 Ajustes do Apache
 -----------------
 
-A maioria dos browsers populares aceitam conteúdo compactados com gzip. Então zipe tudo usando o mod_deflate [10] do Apache. Além disso, arquivos estáticos podem ter data de expiração bem no futuro. Você pode simplesmente colocar:
+A maioria dos browsers populares aceitam conteúdo compactados com gzip. Então gzipe tudo usando o mod_deflate [10] do Apache. Além disso, arquivos estáticos podem ter data de expiração bem no futuro. Você pode simplesmente colocar:
 
 ExpiresDefault "access plus 10 years" 
 
@@ -133,7 +143,7 @@ ExpiresByType text/javascript "access 10 years"
 
 Um perigo com essa abordagem é que caching pode causar problemas se você está atualizando suas imagens, seu CSS ou seu javascripts. O Asset packager resolve isso com seus CSSs e javascripts e você pode usar a mesma técnica com suas imagens - mudar o nome do arquivo cada vez que os arquivos forem alterados. Um número de revisão SVN ou Git resolve muito bem.
 
-Por fim, a configuração de ETags pode ser ajustada no Apache. Mais especificamente, pode ser desativado. Isso é bem importante quando seu site se torna grande o suficiente para tomar diversos servidores de recursos. O mecanismo de hashing padrão de ETags é dependente da máquina, então arquivos em diferentes servidores irão ter ETags diferentes. Isso gera invalidação desnecessária de cache e invalida o processamento feito pelo servidor para gerar o ETag. Para desligá-lo no Apache, bastainserir:
+Por fim, a configuração de ETags pode ser ajustada no Apache. Mais especificamente, pode ser desativada. Isso é bem importante quando seu site se torna grande o suficiente para tomar diversos servidores de recursos. O mecanismo de hashing padrão de ETags é dependente da máquina, então arquivos em diferentes servidores irão ter ETags diferentes. Isso gera invalidação desnecessária de cache e invalida o processamento feito pelo servidor para gerar o ETag. Para desligá-lo no Apache, bastainserir:
 
 FileETag none
 
@@ -159,11 +169,11 @@ Eu não sei como a maioria das pessoas configuram várias máquinas com Mongrels, m
 
 Ignore o fato de que há apenas duas setas (deveriam ser seis) saindo das caixas do Apache; isso é preguiça minha. O problema aqui é que nós tínhamos uma instância Apache delegando para outras 4 instâncias que por sua vez passava a requisição para o Mongrel ou servia conteúdo estático.
 
-A análise com httperf[12] (daqui a poucos parágrafos!) mostrou que, para requisições pequenas, a diferença foi despresível, mas quando o número de requisições por segundo começou a acumular, Apaches que delegam para outros Apaches desnecessariamente logo se tornaram gargalo. Fazendo proxy diretamente do Apache balanceador de carga para instâncias Mongrel mostrou uma melhoria de 25% em alto tráfego (500 reqs/s por 10 segundos).
+A análise com httperf[12] (daqui a poucos parágrafos!) mostrou que, para requisições pequenas, a diferença foi desprezível, mas quando o número de requisições por segundo começaram a acumular, fazer proxy sem precisar para mais Apaches se tornou um gargalo. Fazendo proxy diretamente do Apache balanceador de carga para instâncias Mongrel mostrou uma melhoria de 25% em alto tráfego (500 reqs/s por 10 segundos).
 
 Como um lembrete rápido, o Mongrel executava como uma thread sincronizada até o Rails 2.2. Isso significa que, para o Rails, uma instância Mongrel só poderia responder 1 única requisição por vez e quando essa instância está processando a requisição, ela acaba bloqueando todas as outras requisições chegando a ela. Isso leva a uma solução óbvia de escalabilidade (até um certo ponto): mais Mongrels!
 
-Mas mesmo antes de pensar no número correto de Mongrels por máquina, você tem que garantir que você não está usando o Mongrel para coisas que ele não deveria. O Mongrel não é nem de perto tão bom quanto o Apache para servir arquivos estáticos, então tenha certeza que sua pasta public esteja sendo servida diretamente pelo Apache, anterior a qualquer intervenção. Coloque isso no seu arquivo vhost (assumindo que todas as suas regras de Rewrite estejam correntas):
+Mas mesmo antes de pensar no número correto de Mongrels por máquina, você tem que garantir que você não está usando o Mongrel para coisas que ele não deveria. O Mongrel não é nem de perto tão bom quanto o Apache para servir arquivos estáticos, então tenha certeza que sua pasta public esteja sendo servida diretamente pelo Apache, anterior a qualquer intervenção. Coloque isso no seu arquivo vhost (assumindo que todas as suas regras de Rewrite estejam corretas):
 
 <Directory "/your/apps/public/directory">
 	Option FollowSymLinks
@@ -172,15 +182,15 @@ Mas mesmo antes de pensar no número correto de Mongrels por máquina, você tem qu
 	Allow from all
 </Directory>
 
-# Rewrite index parar checar por arquivos estáticos
+# Rewrite index para verificar por arquivos estáticos
 RewriteRule ^/$ /index.html [QSA]
 
-# Rewrite para checar por páginas em cache do Rails
+# Rewrite para verificar por páginas em cache do Rails
 RewriteRule ^([^.]+)$ $1.html [QSA]
 
 RewriteRule ".*(images|stylesheets|javascripts)/?(.*)" "$0" [L]
 
-E então depois de reiniciar o Apache, seus arquivos estáticos vão ser servidos pelo Apache. Agora é hora de ajustar instâncias Mongrel.
+E então depois de reiniciar o Apache, seus recursos vão ser servidos pelo Apache. Agora é hora de ajustar instâncias Mongrel.
 
 
 Conheça o httperf
@@ -192,18 +202,18 @@ Essa é basicamente uma recaptulação de um post em um mailing list [13] incrivelm
 
 Primeiramente, encontre uma máquina perto (tanto na rede quanto em proximidade) do servidor que você quer testar, mas não a mesma máquina (testar a interface loopback não ajudam muito).
 
-O próximo passo, você vai querer testar arquivos estáticos naquela máquina. A boa notícia é que se você seguiu por esse guia, todos os seus arquivos estáticos estão sendo servidos pelo Apache. Isso te dá um ponto de partida de melhor caso, no qual você pode testar seus Mongrels.
+O próximo passo, você vai querer testar recursos naquela máquina. A boa notícia é que se você seguiu por esse guia, todos os seus recursos estáticos estão sendo servidos pelo Apache. Isso te dá um ponto de partida de melhor caso, no qual você pode testar seus Mongrels.
 
-Comece executando um comando tipo:
+Comece executando um comando como esse:
 httperf --hog --server=<seu servidor> --uri=<seu recurso, como /happy.jpg> --num-conns
 
-Você terá alguma saída do programa mas o que você deve prestar atenção antes é a duração do teste. O Zed recomenda 10 segundos, que funciona bem para um caso de teste abrangente contra um servidor de arquivos estáticos e muitas requisições. Em um servidor "parrudo" da produção que temos, tive algo assim com num-conns de 1200.
+Você terá alguma saída do programa mas o que você deve prestar atenção antes é a duração do teste. O Zed recomenda 10 segundos, que funciona bem para um caso de teste abrangente contra um servidor de recursos estáticos e muitas requisições. Em um servidor "parrudo" da produção que temos, tive algo assim com num-conns de 1200.
 
 Depois de encontrar o número mágico, tente executar apenas uma requisição (--num-conns 1) contra uma action (--url <action>) em sua aplicação Rails que possa dar uma idéia de como sua aplicação funciona. Você não quereria executar na action mais lenta e executar conteúdo estático não vai ajudar em nada. Tenha certeza de encontrar uma página que não precise de login, já que isso irá resultar em redirects inúteis.
 
 Se apenas uma requisição foi muito lenta, então você provavelmente tem uma configuração incorreta para os Mongrels ou alguma coisa está bem errada. Essa execução deveria ser pelo menos tão rápida quanto as coisas em desenvolvimento localmente e provavelmente muito mais rápido. Se sua simples requisição Rails está mais rápida que uma requisição estática, então o conteúdo estático provavelmente não está estático - o Apache é mais veloz que o Mongrel, isso é fato. 
 
-Depois que uma requisição simples pareca bem, tente executar com --num-conns igual ao seu número mágico encontrado anteriormente, com 10 segundos de execução, para o seu servidor de conteúdo estático e coloque --rate para num-conns/10. Isso idealmente irá te dar testes com 10 segundos de duração, apesar de que na prática é um pouco mais que isso. Então execute novamente. É importante que os caches sejam feitos e que todos os Mongrels são levantados antes de executar um teste de performance. Nunca use números de um teste executado pela primeira vez.
+Depois que uma requisição simples pareca bem, tente executar com --num-conns igual ao seu número encontrado anteriormente, com 10 segundos de execução, para o seu servidor de conteúdo estático e coloque --rate para num-conns/10. Isso idealmente irá te dar testes com 10 segundos de duração, apesar de que na prática é um pouco mais que isso. Então execute novamente. É importante que os caches sejam feitos e que todos os Mongrels são levantados antes de executar um teste de performance. Nunca use números de um teste executado pela primeira vez.
 
 Agora tente adicionar uma instância do Mongrel, reinicie as coisas e execute o teste novamente. Se você encontrou melhorias no tempo geral to teste, você está progredindo.
 
