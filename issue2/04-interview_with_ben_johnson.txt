@@ -1,0 +1,45 @@
+== Entrevista com Ben Johnson
+- Entrevistado por Bob Martens em 7 de maio de 2009
+
+[Caixa com o profile do Ben Johnson]
+Meu nome é Ben Johnson e eu sou um programador. Binary Logic é minha empresa, localizada na área de NY. Eu amo resolver problemas com computadores e apresentar soluções elegantes e simples. Dê uma olhada no meu portfolio (http://www.binarylogic.com/portfolio/) e projetos open source (http://www.binarylogic.com/open-source-projects) para exemplos do meu trabalho.
+
+
+- Bob: Hey Ben, obrigado por concordar em participar desta entrevista inesperada para a Rails Magazine. Deixe-me ir direto ao ponto, qual sua opnião geral sobre a RailsConf 2009 até agora?
+
+- Ben: De forme geral tem sido uma boa experiência, houveram algumas boas sessões, palestras interessantes e eu aprendi alguns truques novos. A maior do meu tempo é gasto programando sozinho, então é legal sair um pouco e interagir diretamente com outros desenvolvedores Rails. Eu posso ver como eles desenvolvem, quais ferramentas/truques eles usam, etc. É impossível estar neste tipo de ambiente e não aprender algo novo, e eu acho que este é o objetivo. Se você se envolve com um monte de pessoas espertas e que pensam como você, com certeza algo bom vai sair dali. É um ambiente que semeia criatividade e te deixa motivado.
+
+Por outro lado, há algumas coisas pelas quais eu não esperava. Esta é minha primeira conferência, então talvez minhas expectativas estejam um pouco equivocadas. Uma das coisas mais desencorajadoras é a auto-promoção e propaganda constantes. Parece que tudo tem um motivo escondido. Eu tive que me perguntar por várias vezes se uma pessoa palestrando estava fazendo aquilo para promover sua empresa/produto, ou simplesmente para massagear seu ego. Então eu tento ficar longe dessas pessoas tanto quanto possível. Honestamente, eu não estou tentando ser uma 'Debbie Downer' (NT: 'Debbie Downer' é uma personagem de um talk show americano que chega a reuniões e começa a dar más notícias e criticar tudo), mas eu não voei atravessando o país e perdi uma semana de trabalho para ver pessoas se dando tapinhas nas costas. Por favor não levem isso tudo muito a sério, é apenas a minha opinião.
+
+- Bob: Essa é sua primeira RailsConf?
+
+- Ben: Sim.
+
+- Bob: O que você acha de Las Vegas como o local para a RailsConf deste ano?
+
+- Ben: Eu amo o local. Existe algo para todos, o que torna este um grande lugar para uma conferência. É acessível, tem um preço razoável e é muito útil para conferências. Eu também acho um pouco engraçado/irônico que este seja o local para a RailsConf após a grande controvérsia 'sexista' sobre os slides do Matt Aimonetti. Andando do meu quarto no hotel para a conferência eu vejo mais imagens ofensivas. Espero que isso tenha ajudado as pessoas a voltarem para a Terra um pouco.
+
+- Bob: Algum anúncio surpreendeu você até agora? Te deixou empolgado? 
+
+- Ben: A Engine Yard lançou seu novo produto Flex, que parece ser bem interessante. Ele basicamente faz com que fazer deploy e escalar sejam tão simples quanto apertar um botão. Eles realmente estão fazendo algumas coisas interessantes.
+
+Em relação ao Rails 3, não houve nenhum anúncio *realmente* interessante que eu me lembre. O Rails 3 não está tão avançado quanto todos esperavam, e eu sempre achei que o objetivo de ter uma versão alfa do Rails 3 para a conferência era forçar a barra. Mas eu posso dizer que é óbvio que eles estão trabalhando muito duro no projeto e a direção para a qual ele está indo é realmente empolgante. Refatorar o Rails não é uma tarefa fácil, então não ter muito para mostrar aqui na RailsConf é compreensível.
+
+Umas das coisas sobre as quais tem se falado é o Modelo de Maturidade Rails do Obie Fernandez da Hash Rocket. Eu já tinha conhecimento sobre isso mas nunca tinha parado para olhar com calma. Eu fui na desconferência e vi ele falando sobre isso. O conceito é permitir que empresas, não free-lancers, mas empresas com um bom tamanho adicionem suas próprias 'boas práticas' para desenvolver. Suas receitas para o sucesso, se você preferir. Essas 'boas práticas' são pontuadas pelo número de empresas que as utilizam. Então não é para dizermos 'esta é certo' ou 'deste jeito é errado', é mais uma referência sobre o que outras empresas na indústria estão fazendo para terem sucesso. Pessoalmente, eu não gosto da idéia, por várias razões sobre as quais eu não vou falar. Votando à primeira pergunta, eu sinto que claramente existe um motivo escondido aqui. Eu não acho que o foco seja na comunidade mas sim na carteira do Obie Fernandez. Algo assim realmente deveria ser feito de forma imparcial, o que não tenho certeza de que seja possível.
+
+- Bob: O que você acha da qualidade das palestras até o momento?
+
+- Ben: A qualidade das palestras tem variado, mas de forma geral elas estão sendo muito boas. Não é fácil ficar na frete de um monte de gente e elegantemente explicar seu tópico.
+
+Uma que me chamou a atenção foi a palestra do Ryan Singer sobre 'Fundamentos de UI para programadores'. Eu realmente gostei dessa palestra porque eu sinto que este aspecto do desenvolvimento web pode ser facilmente negligenciado, especialmente da perspectiva de um programador. Eu acho que a interface com usuário é tão importante quando o código por trás dela. Eu não posso lhe dizer quantas vezes eu vi um website com uma idéia realmente legal mas com uma interface terrível. Eu vou dar uma olhada e então saio logo em seguida porque a interface é confusa e não intuitiva. Sua palestra não foi sobre ter uma interface sexy, foi sobre usabilidade, o que é muito mais importante. É nisso que o foco deveria estar para a UI.
+
+- Bob: Eu sei que a sua 'reinvindicação de fama' atual é o Authlogic. Você está conseguindo falar com outros desenvolvedores de bibliotecas/gems/plugins e ter alguma nova idéia para novas funcionalidades ou melhorias?
+
+- Ben: Isso é engraçado, pois essa é a razão principal pela qual eu vim para a conferência. Para interagir com outros, fazer com que as pessoas tenham idéias, compartilhar dicas e truques, conhecer novas pessoas, etc, mas eu não fiz isso de verdade. A conferência ocupa a maior parte do dia e após um dia inteiro pensando e ouvindo pessoas falarem eu quero apenas uma pausa. O fato de estarmos em Las Vegas também não ajuda.
+
+- Bob: O Rails 3 foi um pouco mais comentado pelos desenvolvedores. Qual você acha que é a 'killer feature' do Rails 3? Quais mudanças você pretende usar mais?
+
+- Ben: Eu assisti a apresentação do Yehuda Katz sobre o Rails 3 na desconferência e foi realmente interessante. A coisa mais legal, sem dúvida, é o foco em uma API para o Rails. Eles não estão simplesmente fornecendo uma API arbitrária para as pessoas usarem, mas estão na verdade usando essa API internamente para construir o Rails. Essencialmente, eles estão definindo uma API base para o Rails e então construindo módulos que alavancam o que a API provê. O objetivo final é ter uma coleção de módulos que servem como um exemplo de como extender o Rails e utilizar a API da forma correta. Isso realmente resolverá problemas de compatibilidade com bibliotecas de terceiros, porque se a compatibilidade com versões anteriores for quebrada, o Rails quebrará a si mesmo.
+
+Eu AMO esta abordagem porque eu tenho experiência em usá-la. Eu fiz a mesma coisa com o Authlogic 2.0 e sem dúvida esta é a melhor forma de projetar uma biblioteca. Se alguém me perguntar sobre como escrever um 'add on' para o Authlogic eu posso simplesmente lhes mostrar um módulo similar dentro do Authlogic em si e elas podem usar isso como um exemplo. Elas também podem se sentir confiantes em usar a API que eu lhes forneci porque eu mesmo a usei. A mesma coisa será eventualmente aplicável ao Rails, o que eu acho que é bem legal.
+
