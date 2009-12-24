@@ -1,22 +1,10 @@
-<<<<<<< HEAD
-Rails: An·lise de Performance
-=======
 An√°lise de Performance no Rails
->>>>>>> Revis√£o conclu√≠da artigo 10
 por Terry Heath
 
 Introdu√ß√£o
 ===========
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-Um dos meus apectos favoritos de desenvolvimento È trabalhar com performance. A atividade, associada com a instrumentaÁ„o e ferramentas de medida de performance acaba transformando-se bem em an·lise cientÌfica.
-=======
-Um dos meus aspectos favoritos de desenvolvimento È trabalhar com performance. A atividade, associada com profiling e ferramentas de benchmark acaba transformando-se bem em an·lise cientÌfica.
->>>>>>> Terminei a leitura do artigo 10. Agora s√≥ falta verificar a ortografia
-=======
 Um dos meus aspectos favoritos de desenvolvimento √© trabalhar com performance. A atividade, associada com profiling e ferramentas de benchmark acaba transformando-se bem em an√°lise cient√≠fica.
->>>>>>> Revis√£o conclu√≠da artigo 10
 
 Usabilidade e apar√™ncia s√£o sempre assuntos subjetivos e, na melhor das hip√≥teses, tem regras que mesmo assim n√£o s√£o muito bem definidas. Ao contr√°rio disto, medidas de performance s√£o muito mais precisas.
 
@@ -72,50 +60,24 @@ Rails
 
 √â importante notar que todas as tr√™s √°reas mencionadas (backend, frontend e configura√ß√£o de servidores) podem afetar signifcamente a performance. Por sorte, tanto o backend e frontend Rails podem ser diagnosticados e instrumentados individualmente, ent√£o n√£o temos que jogar domin√≥s com os nossos ajustes.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-ConfiguraÁ„o e ajuste de servidores, por exemplo o n˙mero de inst‚ncias mongrel para executar em um servidor, n„o podem ser feitos por si sÛ. Como o processamento de backend pode aumentar o consumo de memÛria para uma inst‚ncia ....
-=======
-ConfiguraÁ„o e ajuste de servidores, como por exemplo o n˙mero de inst‚ncias mongrel para executar em um servidor, n„o podem ser feitos por si sÛ. Como o processamento de backend pode aumentar tanto o consumo de memÛria quanto o tempo que uma inst‚ncia mongrel demora para desbloquear o processo, as coisas do lado Rails precisam ser ajustadas antes.
->>>>>>> Mais um pouco feito. Faltam s√≥ 2 p√°ginas
-=======
 Configura√ß√£o e ajuste de servidores, como por exemplo o n√∫mero de inst√¢ncias Mongrel para executar em um servidor, n√£o podem ser feitos por si s√≥. Como o processamento de backend pode aumentar tanto o consumo de mem√≥ria quanto o tempo que uma inst√¢ncia Mongrel demora para desbloquear o processo, as coisas do lado Rails precisam ser ajustadas antes.
->>>>>>> Revis√£o conclu√≠da artigo 10
 
+Onde procurar?
+-------------
 
-<<<<<<< HEAD
-
-
-<<<<<<< HEAD
-=======
-O logpwnr ir· gerar medidas completas de todas as actions usadas em sua aplicaÁ„o. Se vocÍ tem v·rios servidores de produÁ„o, vocÍ precisar· concatenar todos os logs antes de transform·-los com o logpwnr. Execute ele da seguinte maneira:
->>>>>>> Terminei a leitura do artigo 10. Agora s√≥ falta verificar a ortografia
-=======
 A primeira tarefa √© descobrir o que precisa ser otimizado. Um bom lugar para come√ßar s√£o os logs de produ√ß√£o, j√° que eles ir√£o mostrar onde as pessoas v√£o e quanto tempo o servidor toma para responder.
 
 Existe uma ferramenta chamada PL Analyzer [1], parte da su√≠te Rails Analyzer, mas n√£o funciona "out-of-the-box" no OSX, no qual eu trabalho. Ele tamb√©m trabalha com um conjunto separado de dados, ent√£o eu uso um programa que fiz h√° um tempo atr√°s chamado logpwnr [2] para converter os dados.
 
 O logpwnr ir√° gerar medidas completas de todas as actions usadas em sua aplica√ß√£o. Se voc√™ tem v√°rios servidores de produ√ß√£o, voc√™ precisar√° concatenar todos os logs antes de transform√°-los com o logpwnr. Execute ele da seguinte maneira:
->>>>>>> Revis√£o conclu√≠da artigo 10
 
+./logpwnr.rb production.log > output.csv
 
-<<<<<<< HEAD
-=======
 Assim voc√™ ir√° ter um CSV que voc√™ pode importar em qualquer planilha.
->>>>>>> Revis√£o conclu√≠da artigo 10
 
 
+tabela:
 
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-Aqui podemos comeÁar a procurar pelo que È mais usado e depois ver qual das actions pode ser uma candidata a ser otimizada, usando o tempo total de requisiÁ„o (n„o exibido na tabela, mas È a soma das mÈdias de bd, action e render). Tente avaliar os n˙meros no contexto do uso. Pode haver actions terrivelmente lentas em sua applicaÁ„o, mas usadas apenas 5 vezes em alguns meses. Otimizar actions raramente usadas n„o valem o esforÁo atÈ que todas as actions populares estiverem mais velozes.
-=======
-Aqui podemos comeÁar a procurar pelo que È mais usado e depois ver qual das actions pode ser uma candidata a ser otimizada, usando o tempo total de requisiÁ„o (n„o exibido na tabela, mas È a soma das mÈdias de bd, action e render). Tente avaliar os n˙meros no contexto do uso. Pode haver actions terrivelmente lentas em sua applicaÁ„o, mas usadas apenas 5 vezes em alguns meses. Otimizar actions raramente usadas n„o valem o esforÁo atÈ que todas as actions mais populares estiverem mais velozes.
->>>>>>> Terminei a leitura do artigo 10. Agora s√≥ falta verificar a ortografia
-=======
 name -> nome
 hits -> vis.
 action avg -> m√©d. action
@@ -126,7 +88,6 @@ db avg -> m√©d. bd
 db avg stddev -> m√©d. desvp bd
 
 Aqui podemos come√ßar a procurar pelo que √© mais usado e depois ver qual das actions pode ser uma candidata a ser otimizada, usando o tempo total de requisi√ß√£o (n√£o exibido na tabela, mas √© a soma das m√©dias de bd, action e render). Tente avaliar os n√∫meros no contexto do uso. Pode haver actions terrivelmente lentas em sua aplica√ß√£o, mas usadas apenas 5 vezes em alguns meses. Otimizar actions raramente usadas n√£o valem o esfor√ßo at√© que todas as actions mais populares estiverem mais velozes.
->>>>>>> Revis√£o conclu√≠da artigo 10
 
 Entrando na toca do coelho
 
@@ -256,9 +217,4 @@ Agora tente adicionar uma inst√¢ncia do Mongrel, reinicie as coisas e execute o 
 
 Existe um n√∫mero ideal de inst√¢ncias Mongrel em um processador e voc√™ ir√° encontr√°-lo facilmente. Aumentando o n√∫mero de Mongrels por um. Assim que voc√™ alcan√ßar o √°pice, voc√™ dever√° ent√£o encontrar uma queda dr√°stica de performance. Eu j√° vi essa queda ser algo pr√≥ximo a 25%, apenas adicionando um Mongrel. Quando voc√™ encontrar esse n√∫mero, reduza um Mongrel e voc√™ tem o n√∫mero ideal para sua aplica√ß√£o e servidor atual.
 
-<<<<<<< HEAD
-Se vocÍ seguir os links, vocÍ provavelmente ir· ver (tanto quantitativamente quanto qualitativamente) ganhos bem not·veis de performance.
->>>>>>> Mais um pouco feito. Faltam s√≥ 2 p√°ginas
-=======
 Se voc√™ seguir os links, voc√™ provavelmente ir√° ver (tanto quantitativamente quanto qualitativamente) ganhos bem not√°veis de performance.
->>>>>>> Revis√£o conclu√≠da artigo 10
