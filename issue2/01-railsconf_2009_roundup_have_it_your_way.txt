@@ -1,1 +1,213 @@
-teste git
+RailsConf 2009 Roundup – Do seu jeito...
+
+por Casper Fabricius
+
+Mais de 1000 desenvolvedores Ruby on Rails de todos os EUA e
+do resto do mundo vieram a Las Vegas este ano para beber, jogar,
+relaxar na piscina e - ocasionalmente - aprender dos experts da
+comunidade sobre os aspectos de Ruby, Rails e tudo relacionado.
+Desde a primeira conferência em Chicago em 2006,
+a popularidade e o uso do Rails só cresceu, e com uma conferência
+com um grande número de participantes em Las Vegas é seguro dizer
+que Rails já é mainstream e além.
+
+Não é uma coisa ruim, no entanto. Com cinco trilhas, a seleção
+e a diversidade das palestras foram sensacionais, com tópicos de variavam
+de estudos aprofundados de escalabilidade e estratégias de deploy
+até padrões musicais para programadores. Falando em música, a RailsConf
+também contou com sessões Birds of Feather, e uma delas foi uma
+jam session de 3 horas com desenvolvedores Rails que trouxeram
+seus instrumentos.
+
+David Heinemeier Hansson abriu a RailsConf com a tão
+esperada keynote sobre Rails 3. Ele começou, no entanto,
+olhando o passado dos cinco anos que Rails está open source,
+superando feridas mortais que, de acordo com críticos deveriam
+ter matado o Rails, muito tempo atrás. "Rails não está pronto
+para as empresas" foi uma reclamação constante sobre o framework,
+e enquanto a reação inicial de David foi lutar pelo seu ponto
+de vista, ele mais tarde percebeu que as coisas precisam de
+tempo para se firmarem. Rails não é muito diferente hoje do que
+era 5 anos atrás, mas muitas pessoas "enterprisey" estão vindo
+para o Rails agora, simplesmente porque ele é muito mais
+aceito e usado hoje.
+
+======
+Caption: David Heinemeier Hansson, criador do Rails,
+no palco da RailsConf 2009 em Las Vegas.
+======
+
+Outro exemplo de uma ferida mortal foram os vários clones de Rails
+em outras linguagens, o que faria o Rails em si irrelevante.
+Todos eles tentaram achar a essência do Rails, mas tal coisa não
+existe. Rails é uma filosofia e um grande número de detalhes
+únicos que funcionam extremamente bem juntos. Switch-backs, como
+Derek Silvers do CD Baby, que voltaram para o PHP, deveriam ter
+sido outra ferida mortal. E, lógico, a afirmação persistente de que
+Rails não escala, o que deve ter sido verdade nos primeiros anos
+do Rails, mas agora está solucionado e provado errado de
+muitas maneiras diferentes hoje.
+
+David continuou discutindo a próxima versão do Rails. No Rails 3,
+um framework concorrente, Merb, vai se juntar a ele. Como o
+Merb faz muitas coisas de maneira muito diferente do Rails, isso
+significa que tudo está em discussão no Rails 3. Não há vacas
+sagradas, mas a nova versão também não vai resolver os problemas
+de todos. A filosofia do Rails 3 pode ser descrita com o slogan
+do Burger king: Do seu jeito (Have it your way). Se você pedir um
+Whopper no Burger King, você terá um Whopper - sem perguntas - e
+será provavelmente tudo o que você esperava. Se você não gosta de
+picles, você pode pedir um Whopper sem picles - mas você vai ter
+que agir para evitar os picles. Não é porque você não gosta de
+picles que devemos tirar os picles de todos os Whoppers. É uma
+boa metáfora, e ela anda de mãos dadas com o famoso slogan de
+convention over configuration: Rails 3 ainda vai funcionar de
+cara e terá um conjunto padrão que vai ser ótimo, mas mais que
+hoje, as pessoas poderão mudar e adaptar o Rails para suas
+necessidades.
+
+O criador do Ruby on Rails continuou descrevendo algumas das
+mudanças no Rails 3. O roteamento será mais rápido e mais configurável.
+Além disso, a API de roteamento será simplificada para ser ainda
+mais compacta e expressiva que hoje. Proteção contra XSS (Cross-Site
+Scripting) será revertida, por assim dizer. Hoje, você tem que lembrar
+de usar o método humanize - h() para encurtar - para escapar todos
+os dados inseguros na sua saída, mas no futuro isso vai ser o padrão.
+Um bloco <%= ... %> será 'humanizado', enquanto que <%=raw ... %>
+funcionará como antigamente, sem escapar nada. Helpers usarão automaticamente
+o método html_safe!, que marca o HTML que ele gera como seguro, então
+não será escapado. Outra mudança interessante é que o javascript
+funcionará de modo menos intrusivo e mais agnóstico do que hoje. Nada
+mais de chamadas onclick geradas pelos helpers do Rails, e chega de
+se amarrar explicitamente ao Prototype e ao Scriptaculous. Em vez disso,
+o Rails 3 vai usar os atributos data definidos no HTML 5, então por exemplo,
+essa chamada do helper:
+
+<%= link_to “Destroy”, @comment, :method => :delete %>
+
+- vai gerar o HTML:
+
+<a href=”/comments/1” data-remote=”true” data-method=”delete”>Destroy</a>
+
+Daí será trivial ter um javascript genérico que vai amarrar os
+eventos apropriados a cada link.
+
+Tim Ferriss, da famosa semana de 4 horas, foi o keynote principal
+vindo de fora da comunidade. Para a surpresa de muitos, duas poltronas
+foram colocadas no palco, e David Heinemeier Hansson teve uma
+conversa de uma hora com Tim Ferriss sobre estilo de vida, startups,
+fazer exercícios, etc. As pessoas reclamaram deste formato no Twitter
+e no canal do IRC, e muitos saíram da sala. Outros, no entanto,
+expressaram grande interesse nos tópicos que estavam sendo discutidos,
+e talvez apenas o formato tenha sido errado para um salão lotado
+com mais de 1000 desenvolvedores. Um dos pontos iniciais de Ferriss
+antes que eu mesmo, confesso, perdesse a concentração, foi que não há
+problema em trabalhar mais que 4 horas por semana se você gosta do
+que faz. Programadores estão entre as exceções, e geralmente trata-se
+de ver o tempo como uma moeda valiosa e reservada.
+
+=========
+Caption: Timothy Ferriss (Trabalhe 4 Horas por Semana) com DHH no palco da RailsConf 2009
+=========
+
+Keynotes à parte, houve também muitas palestras boas na RailsConf.
+David Chelimsky, um dos criadores do RSpec, explicou a diferença
+entre mocks e stubs, e quando usar qual. Stubs servem para forçar
+um objeto ou um método a agir de forma previsível e então verificar
+o estado do seu sujeito depois de uma interação, enquanto que mocks
+foram feitos para verificar as interações reais, isto é, que um
+certo método é invocado com certos argumentos. Chelimsky revelou
+que ele estava trabalhando em um novo projeto chamado Stubble, que
+permite testes de controller muito mais DRY do que é feito hoje,
+e ele também mencionou uma nova solução para testar cadeias na
+próxima versão do RSpec, o que tornarão os testes mais expressivos.
+Por exemplo:
+
+User.stub_chain(:find, :friends, :favorite).and_return(friend)
+
+Ryan Singer da famosa 37signals fez uma apresentação extremamente
+bem preparada e bem executada sobre fundamentos de UI para
+programadores. Ele explicou que faz sentido começar com a
+interface, porque é com a interface que o cliente está preocupado.
+Antes que você possa ir para os detalhes da interface, no entanto,
+você vai ter que desenhar um modelo das regras de negócio que
+fazem sentido tanto para os clientes quanto para os desenvolvedores.
+Para aprender sobre esse processo, Singer recomendou o livro
+"Domain-Driven Design" de Eric Evans. Outro dos seus pontos
+foi que telas são como as interfaces são usualmente comunicadas,
+e que a noção de REST é ótima para organizar essas telas
+consistentemente e de uma maneira padronizada.
+
+Uma palestra sobre testes de javascript foi montada como uma
+programação em par entre os dois apresentadores, Larry Karnowski
+e Jason Rudolf da Relevance, Inc. Um fez o papel do desenvolvedor
+frontend que não sabia nada sobre testes de javascript e escreveu
+o código funcional, enquanto que o outro fez o papel do cara
+esperto escrevendo todos os testes para o javascript. Funcionou
+muito bem, e fez o javascript parecer mais fácil do que eu pensava.
+Eles fizeram propaganda de um plugin Rails chamado Blue Ridge,
+que permitirá que seus testes de javascript rodem no console
+junto com o resto da sua suíte de testes, e coloca estes testes
+na sua integração contínua. Mais ainda, você pode rodar estes
+testes no browser quando precisar testar compatibilidade.
+
+JRuby está crescendo em popularidade, e neste ano havia várias
+palestras sobre JRuby. Uma era do Charles Nutter e seus colegas
+que trabalham diretamente com JRuby, mostrando um panorama
+geral do estado do JRuby. Eles estavam satisfeitos com o fato
+do JRuby ser suportado na Google App Engine através do seu
+suporte recente a Java, e outra palestra foi focada nesse tema,
+com funcionários do Google explicando como a App Engine funciona
+e como fazer deploy de aplicações Rails nela. Porém, você não
+pode pegar uma aplicação padrão Rails e fazer deploy na App
+Engine, porque ActiveRecord, escrever em arquivos, abrir
+sockets e muitas outras coisas não são suportadas. Você vai
+ter que escrever uma aplicação que é especificamente compatível
+com a App Engine, e apesar da maioria das limitações como
+pegar URLs e enviar emails podem ser contornadas usando as
+APIs que o Google está disponibilizando, você não pode esperar
+uma migração sem problemas de uma aplicação Rails existente
+na App Engine.
+
+======
+Caption:
+O core team do Rails:
+David Heinemeier Hansson,
+Jeremy Kemper, Michael Koziarski,
+Rick Olson, Yehuda Katz
+======
+
+Obie Fernandez fez uma apresentação bastante aberta e honesta
+sobre suas experiências de começar sua empresa de consultoria
+Hashrocket. A palestra focou somente na parte dos negócios.
+Obie pode ser descrito como muitos descreveram David Heinemeier
+Hansson: Arrogante, porém brilhante. Confiança bem-fundada é
+peça chave para vender, Obie explicou, e ser controverso, e
+ao mesmo tempo ter a habilidade de suportar o abuso o ajudou
+bastante para ter seu nome estabelecido. Outro ponto de vendas
+e marketing é nunca parecer desesperado. Uma dica é sempre ter
+alguns projetos internos, portanto você sempre pode dizer que
+está ocupado, mas que poderá começar outra coisa na próxima semana.
+Obie também tem pensamentos interessantes sobre assuntos legais,
+finanças, práticas ágeis e práticas de cliente, e ele falou bem
+quando disse: "Estou cheio de evangelizar agile - eu não defendo
+respirar, eu não defendo agile - é só o jeito que você desenvolve
+software." Ele discutiu abertamente os preços da Hashhrocket
+($190/hora no curto prazo e $175/hora no longo prazo), e ele disse
+que contratos baseados em tempo são necessários.
+
+O clima na RailsConf foi bom como sempre. Las Vegas pode estar
+sofrendo com a recessão, mas Ruby on Rails certamente não está.
+
+===================
+Casper Fabricius é um desenvolvedor Ruby on
+Rails freelancer trabalhando em Copenhagen,
+Dinamarca com 8 anos de experiência em
+desenvolvimento web e 3 anos felizes com Rails.
+Ele é apaixonado pela web, o jeito agile e a
+comunidade Ruby, e fala coisas inteligentes no
+seu blog em http://casperfabricius.com e coisas
+estúpidas no Twitter como 'fabricius'.
+===================
+
+
