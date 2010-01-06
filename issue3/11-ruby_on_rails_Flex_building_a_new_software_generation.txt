@@ -1,0 +1,30 @@
+Ruby on Rails & Flex: Construindo uma nova geração de software
+por Arturo Fernandez
+
+Introdução
+
+Uma nova geração de aplicações está conquistando desenvolvedores e usuários através de sua bela interface e das grandes possibilidades que ela oferece.
+Estamos falando sobre RIA (Rich Internet Application), um novo tipo de software que combina o melhor das aplicações web e desktop.
+
+Existem muitas situações onde poderíamos nos beneficiar da combinação da usabilidade do desktop com os recursos de uma aplicação web.
+Considere um programa que organiza sua coleção de MP3. Obviamente, será necessário que ele acesse os arquivos do sistema. Mas também não seria ótimo que ele pudesse acessar algumas informações da internet, como a biografia do artista ou as notas da trilha ? Parece legal, você não acha ?
+
+Rich internet applications são mais complexas que aplicações web normais. Por isso, elas geralmente são desenvolvidas com a ajuda de um framework.
+
+Atualmente, temos várias opções para escolher, tanto open-source como proprietária. Para desenvolvedores Java, Open-Laszlo e JavaFX vale dar uma olhada. Se você prefere tecnologias Microsoft, existe o Silverlight. Mas, nos últimos dois anos um framwork em particular vem crescento muito rápido: Adobe Flex.
+
+Flex é um framework RIA open source desenvolvido pela Adobe. Ele possibilita que você construa aplicações RIA usando uma linguagem de programação parecida com ActionScript e uma linguagem de markup chamada MXML para a interface. Foi inicialmente lançado em 2004 e sua última versão 3 foi lançada em Março de 2009.
+
+O Flex possui dois componentes: um SDK (Software Development Kit) e um runtime onde cada aplicação é visualizada. O SDK é open source (lançado sobre a Licensa Mozilla Public), enquanto a runtime é o famoso Adobe Flash Player que tem sua licensa proprietária.
+
+Por sua runtime ser baseada no flash, aplicações Flex são cross-platform por default. E eles funcionam não somente em desktops mas também em vários dispositivos móveis como celulares e PDAs.
+Além disso, o SDK Flex permite desenvolver em diferentes sistemas operacionais como GNU/Linux, MS Windows e Mac OS X, já que os binários gerados também são cross-platform.
+
+Enquanto você pode desenvolver suas aplicações Flex sem comprar nada, a Adobe também oferece uma ferramenta de desenvolvimento adicional chamada Flex Builder.
+Uma moderna IDE (Integrated Development Enviroment) visual construída sob o Eclipse. Apesar do seu custo, o Flex Builder é muito útil para desenvolver a interface do usuário da sua aplicação.
+
+Porque precisamos de aplicações RIA?
+
+Uma aplicação desktop clássica geralmente roda em um PC ou Mac e não necessita de uma conexão de rede. Um bom exemplo seria um editor de textos como o Apple Pages, Microsoft Word ou OpenOffice Writer. Por outro lado, uma aplicação web roda em um servidor, e muitos clientes acessam ela simultaneamente usando browsers web.
+
+Ambas tem seus prós e contras. Obviamente são diferentes de um ponto de vista técnico. 
