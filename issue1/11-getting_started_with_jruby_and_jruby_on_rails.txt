@@ -1,38 +1,36 @@
 Primeiros Passos com JRuby e JRuby on Rails
 por Joshua Moore
 
-Série JRuby - Part 1
+Série JRuby - Parte 1
 
 Introdução
 
-Este é o primeiro de uma série de artigos sobre JRuby e Rails. Esta primeira parte cobrirá os passos básicos para iniciar com JRuby: introdução, instalação, e como se sentir confortável com JRuby. Nós iremos finalizar com precauções e dicas para que usar JRuby se torne um sonho.
+Este é o primeiro artigo de uma série sobre JRuby e Rails. Esta primeira parte cobrirá os passos básicos para iniciar com JRuby: introdução, instalação e familiarização com JRuby. Nós iremos finalizar com dicas e precauções que devem ser tomadas para que o uso do JRuby se torne um sonho.
 
-Porquê devo me importar?
+Por que devo me importar?
 
-Antes de começar, porquê escolher JRuby? O que o JRuby tem a oferecer que o MRI Ruby padrão não tem? O tempo a ser gasto aprendendo como usar o JRuby vai valer a pena? As respostas das pessoas provavelmente serão diferentes umas das outras da mesma forma que todo mundo tem um motivo diferente para usar Rails. Um artigo inteiro poderia ser feito apenas abordando o porquê de usar JRuby; entretanto, nos só temos tempo para considerar 4 principais motivos para usá-la neste artigo.
+Antes de começar, por que usar JRuby? O que o JRuby tem a oferecer que o Ruby padrão (MRI) não tem? O que fará valer a pena o tempo gasto aprendendo a usá-lo? Cada pessoa terá respostas diferentes para essas perguntas, da mesma forma que cada pessoa tem motivos diferentes para usar Rails. Um artigo inteiro poderia ser escrito apenas abordando o porquê de usar JRuby; entretanto, nés só temos tempo para considerar 4 bons motivos para usá-lo neste artigo.
 
+Em primeiro lugar, se você já está usando Java você não precisará preparar uma nova infra estrutura de produção. O JRuby é empacotado dentro do arquivo .war, então não há dependências externas. Simplesmente use os servidores de aplicação que você já tem para hospedar suas aplicações Rails. Isso é especialmente útil em ambientes corporativos onde uma mudança só vem depois de longas e difíceis batalhas.
 
-Em primeiro lugar, se você já está usando Java não há uma nova infraestrutura de produção que precise ser instalada/configurada. O JRuby é empacotado dentro de um arquivo .war, assim sendo, não há dependências externas - Simplesmente use o serviço de aplicação existente para hospedar suas aplicações Rails. Isto é especialmente útil em ambientes corporativos onde uma mudança só vem depois de longas e difíceis batalhas.
-Em segundo lugar, O Ruby MRI (versão 1.8.x) não é capaz de tirar vantagem do Rails ser "thread safe". O JRuby por outro lado, implementa threads Ruby como Javathreads, que são na verdade threads nativas. Isto permite que o JRuby leve uma grande vantagem de um Rails thread safe imediatamente.
+---------------------
+Meu nome é Joshua Moore e eu cresci em uma fazenda na Pennsylvania, Estados Unidos. Na fazenda eu aprendi que trabalhar duro não é fácil e que eu não gostava de me sujar. Então eu entrei no mundo da programação de computadores (menos sujo, mas ainda assim trabalhoso). Eu gostava de Java e trabalhei principalmente com desenvolvimento de aplicações desktop até mais ou menos um ano atrás quando eu decidi que não podia mais ignorar o desenvolvimento web (eu evitava porquê eu não queria brigar com vários navegadores pra fazer as minhas aplicações funcionarem direito em todos eles). Porém, com vários navegadores ou não, estou aqui usando Ruby on Rails, principalmente JRuby on Rails, e adorando. Eu escolhi o Rails porque ele é simples, poderoso, e não precisa de configurações. Você me encontrará em meu blog www.codingforrent.com, twitter @kaiping, email: josh@codingforrent.com.
+---------------------
 
-O terceiro ponto é a velocidade. JRuby é simplesmente mais rápido que qualquer outro, com exceção do interpretador Ruby 1.9.1.
+Em segundo lugar, o Ruby MRI (versão 1.8.x) não é capaz de tirar vantagem do fato de o Rails ser "thread safe". O JRuby, por outro lado, implementa as threads do Ruby como Javathreads, que são na verdade threads nativas. Isso permite que o JRuby aproveite todas as vantagens de o Rails ser thread safe.
 
-Vide Great Ruby Shootout: (http://antoniocangiano.com/2008/12/09/the-great-ruby-shootout-december-2008/) para mais detalhes. Ao usar JRuby você pode obter uma melhora considerável da velocidade sem quebrar o código existente ou gems dependentes (não é necessário usar a nova sintaxe do Ruby 1.9.1).
+O terceiro motivo é a velocidade. O JRuby é simplesmente mais rápido que qualquer outro interpretador de Ruby, com exceção do Ruby 1.9.1. Veja o artigo "The Great Ruby Shootout" (http://antoniocangiano.com/2008/12/09/the-great-ruby-shootout-december-2008/) para saber mais. Usando o JRuby você pode ter um grande ganho de performance sem quebrar o código ou as dependências/gems (não é necessário usar a nova sintaxe do Ruby 1.9.1).
 
-Em quarto, JRuby permite o uso de Java no código Ruby. O código Java pode ser chamado diretamente de dentro do código Ruby, permitindo que os objetos transitem entre aplicações Java e Ruby/Rails sem qualquer serialização. Assim, dependendo do cenário ou da necessidade de interagir com um sitema Java pré-existente isso pode ser uma grande vantagem! Além disso, o JRuby até mapeia boa parte da sintaxe do Java para imitar a sintaxe do Ruby.
+Em quarto lugar, o JRuby permite o uso de Java no código Ruby. O código Java pode ser chamado de dentro do código Ruby. Isso permite transferir objetos entre aplicações Java e Ruby/Rails sem serialização. Dependendo da situação ou se você precisa interagir com um sistema Java que já existe, isso pode ser muito útil. Além disso, o JRuby até mapeia boa parte da sintaxe do Java para imitar a sintaxe do Ruby.
 
-Essas são apenas algumas das razões para se usar JRuby. Não estamos abrangendo todas aqui, mas dando o  impulso suficiente, para que, ao menos, você dê uma olhada no JRuby.
+Essas são apenas algumas das razões para se usar JRuby. Elas não foram abordadas por completo, mas o suficiente para despertar interesse pelo JRuby.
  
- Palavras de alerta
+Atenção
 
- Um dos problemas ao se usar JRuby é a falta de compatibilidade com gems que tem extensões nativas. (ex.. o driver do sqlite3, hpricot..) JRuby não pode executar a extensão nativa porque ela é executada na JVM, a não ser que o código nativo seja chamado através da interface FFI (Foreign Function Invocation). A partir da versão 1.1.5, o JRuby implementa a interface FFI. FFI é como Ruby-FFI e Rubinius invocam funções nativas. Qualquer gem que chame código nativo usando a interface FFI pode ser usado no JRuby (veja em http://blog.headius.com/2008/10/ffi-for-ruby-now-available.html para mais detalhes). Alguns desenvolvedores de gems mantêm duas versões de cada gem, uma que funciona com JRuby e outra que funciona com o Ruby MRI. Se a gem não usa o FFI e o autor não disponibiliza  uma versão JRuby da gem então terá que encontrar uma alternativa Ruby puro ou usar alguma biblioteca Java para substituir a gem. O código Java e as bibliotecas podem ser chamadas a partir do código ruby quando estes são executados no JRuby.
+Um dos problemas do JRuby é que ele não é compatível com gems que tem extensões nativas. (ex.: o driver do sqlite3, hpricot, ...). O JRuby não poderá executar extensões nativas a não ser que elas sejam chamadas através da interface FFI (Foreign Function Invocation), pois o ele é executado dentro da Java Virtual Machine. A partir da versão 1.1.5, o JRuby implementa a interface FFI. FFI é método usado pelo Ruby-FFI e pelo Rubinius para executar código nativo. Qualquer gem que chame o código nativo usando a interface FFI pode ser usado no JRuby (veja http://blog.headius.com/2008/10/ffi-for-ruby-now-available.html para mais detalhes). Alguns desenvolvedores de gems mantêm duas versões de cada gem, uma compatível com JRuby e outra com o Ruby MRI. Se a gem não usa o FFI e o autor não disponibilizou uma versão compatível com JRuby, então você terá que encontrar uma alternativa 100% em Ruby ou então usar alguma biblioteca em Java para substituir a gem. Código e bibliotecas Java podem ser chamadas a partir de código Ruby se ele for executado no JRuby.
 
- Se você não tem como evitar o uso de código com extensões nativas (que não é compatível com JRuby), e você não achou nenhuma biblioteca java equivalente, então é melhor continuar usando o Ruby MRI.
+Se você não tem escolha e precisa usar código com extensões nativas (que não seja compatível com JRuby) e você não achou nenhuma biblioteca java equivalente, então é melhor continuar usando o Ruby MRI.
 
- /// Quadro da biografia
-
- Eu sou Joshua Moore e eu cresci em uma fazenda na Pennsylvania, Estados Unidos. Na fazenda eu aprendi que trabalho duro não é fácil e que eu não gostava de me sujar. Então eu comecei a seguir o caminho da programação de computadores (menos sujo, mas ainda assim trabalho duro). Eu gostava de Java e trabalhei basicamente com desenvolvimento de aplicações desktop até mais ou menos um ano atrás quando eu decidi que não poderia mais ignorar o desenvolvimento web (Eu ignorei antes porque eu não queria ter que ficar brigando com os diferentes navegadores pra fazer as minhas aplicações funcionarem direito). Porém, com navegadores diferentes ou não eu estou aqui usando Ruby on Rails, principalmente JRuby on Rails, e amando isso. Escolhi Rails porque ele é simples, poderoso, e não precisa ser configurado. Você me encontrará em meu blog www.codingforrent.com, twitter @kaiping, email: josh@codingforrent.com.
- ....
  Você também deve estar ciente de que automatizar o processo de implantação talvez exija que você escreva suas próprias "receitas" do Capistrano. Como o Capistrano é focado na implantação para aplicações Rails no Mongrel ou Passenger, você precisará de "receitas especializadas" para implantar aplicações JRuby on Rails. Entretanto, essas alterações devem ser pequenas e causarão poucos problemas a você.
 
  Fora esses duas limitações eu acho JRuby fácil e eu pessoalmente o uso diariamente no lugar do Ruby MRI.
