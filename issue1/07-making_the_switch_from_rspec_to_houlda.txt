@@ -137,7 +137,7 @@ das atribuições em massa.
 
 O que eu deveria saber
 Tem algumas coisas que aprendi durante o processo
-que eu gostaria de ter descobrido antes.
+que eu gostaria de ter descoberto antes.
 Eu geralmente não uso as macros do Shoulda para meus
 testes funcionais.
 Eles sempre geram códigos ruins quando quero definir
