@@ -26,7 +26,7 @@ Ryan: Eu não quero prever o futuro, mas posso dizer-lhe o que eu espero venha a
 
 Em cinco anos? Ninguém sabe, mas eu espero que Rails não tenha a mesma aparência que tem hoje. Deve permecer inovador e evoluir, mas também manter o a sua natureza opinativa. Em algum momento, sem dúvida, outros frameworks iram tomar o seu lugar, mas isso não é uma coisa ruim. Eles provavelmente serão construidos sobre as bases estabelecidas pelo Rails, e muitas das práticas podem ser transferidas.
 
-
+[[Caixa com o profile do Ben Ryan Bates]]
 ----------------------------------------------------
 Ryan Bates esteve envolvido com desenvolvimento web desde 1998. Em 2005 começou a trabalhar profissionalmente com Ruby on Rails e agora é mais conhecido pelo seu trabalho no Railscasts, a série gratuita de screencasts sobre Ruby on Rails.
 ----------------------------------------------------
