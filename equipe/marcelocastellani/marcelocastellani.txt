@@ -1,0 +1,5 @@
+Marcelo Castellani
+
+Marcelo Castellani é um dos fundadores do grupo de usuários de Ruby de SP. Apaixonado por tecnologia atua na área desde 1989 e hoje divide seu tempo entre o cargo de analista de sistemas sênior de uma grande multinacional e os projetos de sua empresa. Possui um blog em marcelocastellani.com e regularmente publica em diversos veículos artigos técnicos sobre software embarcado, Ruby, Java, Erlang e C/C++.
+
+==================================================================

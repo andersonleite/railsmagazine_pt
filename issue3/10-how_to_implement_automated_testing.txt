@@ -1,0 +1,51 @@
+Como implementar testes automatizados
+por Eric Anderson
+
+Você não vai encontrar escassez de discussão sobre quais as ferramentas que você deve usar para implementar a sua suite de testes automatizados. O que muitas vezes falta é discussão de exatamente como e o que testar. O objetivo deste artigo é fornecer esta informação.
+
+Determine seus objetivos
+
+Teste não é um processo pré-fabricadas. Cada projeto tem seus próprios objetivos unicos e estes objetivos vão determinar o que é importante testar e o que não é.
+
+Além disso, teste não é bom nem ruim. É apenas uma ferramenta para ajudar você a atingir objetivos específicos. Algumas pessoas tratam testes automatizados como uma decisão moral. Eles insistem que se você não tem uma cobertura de 100% do código ou prática TDD, então você é um programador ruim. Esta é uma visão inútil.
+
+Estratégias como a cobertura de 100% do código pode ser útil na realização de seus objetivos. Mas se eles não estão ajudando você a alcançar suas metas, não desperdice tempo valioso de implementá-las só porque alguém faz você se sentir mal por não fazê-lo.
+
+Então, vamos começar em metas específicas. Quais considerações devem afetar seus objetivos de teste?
+
+[[Caixa com o profile do Eric Anderson]] // Revisor verificar se a primeira frase desse box está realmente correta, pois me causou dúvida (remover comentário durante a revisão)
+---------------------------------------------------------------------
+Eric Anderson faz contrato autônmo de trabalho fora de Atlanta, GA. Ele tem desenvolvido aplicações Rails profissionalmente por vários anos. Você pode descobrir mais sobre seu trabalho em http://pixelwareinc.com.
+---------------------------------------------------------------------
+
+Nível desejado de confiabilidade
+
+Você está escrevendo software para um site de banco, um site de comunidade, um site pessoal, ou um utilitário interno? Dependendo do seu projeto, você tem necessidades diferentes de confiabilidade.
+
+Não vamos nos enganar. O teste não é gratuito. Você pode argumentar que, no teste de longo prazo, irá poupar tempo e dinheiro (e eu estaria inclinado a concordar com você), mas há algumas coisas a considerar.
+
+- Alguns projetos nunca são implantados. O teste pode aumentar o custo de um fracasso.
+- Alguns projetos têm outras prioridades do que 100% de confiabilidade.
+- Ocasionalmente, os custos de longo prazo são menos importantes do que os de curto prazo.
+
+Por outro lado, todo o negócio da sua empresa pode depender da sua aplicação funcionando corretamente. Reputação de sua empresa e sua privacidade do usuário pode estar em jogo. Então, quando você começar aquele próximo projeto considere qual o nível de confiabilidade é importante para o sucesso do seu projeto.
+
+Iteração do Projeto atual
+
+Mesmo quando o desenvolvimento do próximo principal produto para sua empresa, você não precisa necessariamente de uma cobertura de 100% do código. É crucial ter em conta o atual estado de desenvolvimento.
+
+Por exemplo, este é um projeto experimental? A versão inicial ou você está implementando versão 8.0 de um produto estabelecido?
+
+Nas fases iniciais de um projeto muitas vezes você não sabe o que construir. Muitas vezes, você verá que suas idéias iniciais sobre o projeto estavam incompletas, e algumas grandes refatorações são necessárias. E se você passou muito tempo fazendo a primeira iteração a prova de balas, você está sem sorte. Você apenas jogar fora ou refatorar grandes pedaços da aplicação, mas também tem jogar fora ou refatorar todos os testes para aquele código.
+
+Ao escrever seus testes, considere quão confiante você está de que a aplicação que está desenvolvendo será a mesma aplicação após uma iteração ou duas?
+
+Pessoalmente, se eu estou fazendo a programação exploratória, a maioria dos meus testes são nos meus models uma vez que estes modelos são menos propensos a mudar. Meus testes de controllers são poucos, como o fluxo de aplicação é bastante provável que a mudança. Eu faço muito poucos testes dos templates de saída, que possuem maior probabilidade de mudar. E testes de integração são inexistente neste momento. Por outro lado, se eu estou desenvolvendo quinta iteração de um projeto bem definido, em seguida, meus testes são muito mais completo.
+
+Processo de Desenvolvimento
+
+Outra consideração na determinação seus objetivos de teste é o ambiente, cultura e processos de negócios no seu local de desenvolvimento. É provavel que você entregue o seu código para outra pessoa para manter e nunca vê-lo novamente? Outros desenvolvedores constantemente entrando e saído em códigos que não estão familiarizados para fazer mudanças? Ou é de responsabilidade de um pedaço de código mais centrada em torno de um pequeno número de desenvolvedores (talvez apenas você)?
+
+Se muitas mãos estão tocando na base de código (como em um projeto open source), então você pode precisar de mais testes. Desenvolvedores neste ambiente querem fazer a sua mudança, executar alguns testes e se sentirem razoavelmente confiante de que eles não quebraram nada.
+
+Por outro lado, se alguém (ou um grupo pequeno de pessoas) vai assumir a responsabilidade pelo código, então eles vão ficar mais familiarizado com o aplicativo. Assim, seus testes podem ser um pouco mais leve.
