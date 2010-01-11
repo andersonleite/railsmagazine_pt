@@ -1,0 +1,19 @@
+Cássio Marques
+
+Cássio Marques é um desenvolvedor brasileiro que ama desenvolver software e resolver problemas intrincados. Seus principais interesses são desenvolvimento web, algorítimos e linguagens de programação.
+
+Ele possui experiência profissional com diversas linguagens de programação diferentes, incluindo C e C++, Java, JavaScript e Ruby. Além disso, é bacharel em Computação Científica pela Universidade de Taubaté. Ele escreve regularmente em http://cassiomarques.wordpress.com
+
+Atualmente trabalha para a Surgeworks LLC como parte da equipe brasileira de Ruby on Rails.
+
+Ele ama open source e tenta ajudar sempre que possível, criando novas bibliotecas ou escrevendo documentação. Quando não está na frente de um computador, Cássio pode ser encontrado com sua noiva, lendo livros, ou andando de skate
+
+==================================================================
+
+Cassio Marques is a Brazilian developer who loves to develop software and solve intricate problems. His main interests are web development, algorithms and programming languages.
+
+He has professional experience with many different programming languages, including C and C++, Java, Javascript and Ruby. Also, he has a bachelors degree in Scientific Computing, from Universidade de Taubaté. He writes regularly at http://cassiomarques.wordpress.com
+
+At Surgeworks he is part of the Brazilian Ruby on Rails team.
+
+He loves open source and try to help as much as possible, creating new libraries or writing documentation. When not sitting in front of a computer, Cássio can be found with his fiancé, reading books or riding his skateboard.

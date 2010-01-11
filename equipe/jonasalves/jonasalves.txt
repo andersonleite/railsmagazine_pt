@@ -1,0 +1,9 @@
+Jonas Alves
+
+Jonas Alves é um desenvolvedor de São Paulo, Brasil. Ele começou a usar Ruby on Rails no início de 2008 e depois conheceu outras bibliotecas Ruby.
+Jonas trabalha atualmente na WebGoal, onde Ruby ajuda a desenvolver rapidamente software de alta qualidade com alto retorno de investimento.
+                
+==================================================================
+
+Jonas Alves is a developer based in São Paulo, Brazil. He started Ruby on Rails development early in 2008 and other Ruby libraries later.
+Jonas is currently employed by WebGoal, where Ruby helps to develop high quality software with high return on investment quickly.
