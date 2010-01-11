@@ -3,11 +3,11 @@ por Joshua Moore
 
 Série JRuby - Parte 1
 
-Introdução
+- Introdução
 
 Este é o primeiro artigo de uma série sobre JRuby e Rails. Esta primeira parte cobrirá os passos básicos para iniciar com JRuby: introdução, instalação e familiarização com JRuby. Nós iremos finalizar com dicas e precauções que devem ser tomadas para que o uso do JRuby se torne um sonho.
 
-Por que devo me importar?
+- Por que devo me importar?
 
 Antes de começar, por que usar JRuby? O que o JRuby tem a oferecer que o Ruby padrão (MRI) não tem? O que fará valer a pena o tempo gasto aprendendo a usá-lo? Cada pessoa terá respostas diferentes para essas perguntas, da mesma forma que cada pessoa tem motivos diferentes para usar Rails. Um artigo inteiro poderia ser escrito apenas abordando o porquê de usar JRuby; entretanto, nés só temos tempo para considerar 4 bons motivos para usá-lo neste artigo.
 
@@ -25,47 +25,44 @@ Em quarto lugar, o JRuby permite o uso de Java no código Ruby. O código Java p
 
 Essas são apenas algumas das razões para se usar JRuby. Elas não foram abordadas por completo, mas o suficiente para despertar interesse pelo JRuby.
  
-Atenção
+- Atenção
 
 Um dos problemas do JRuby é que ele não é compatível com gems que tem extensões nativas. (ex.: o driver do sqlite3, hpricot, ...). O JRuby não poderá executar extensões nativas a não ser que elas sejam chamadas através da interface FFI (Foreign Function Invocation), pois o ele é executado dentro da Java Virtual Machine. A partir da versão 1.1.5, o JRuby implementa a interface FFI. FFI é método usado pelo Ruby-FFI e pelo Rubinius para executar código nativo. Qualquer gem que chame o código nativo usando a interface FFI pode ser usado no JRuby (veja http://blog.headius.com/2008/10/ffi-for-ruby-now-available.html para mais detalhes). Alguns desenvolvedores de gems mantêm duas versões de cada gem, uma compatível com JRuby e outra com o Ruby MRI. Se a gem não usa o FFI e o autor não disponibilizou uma versão compatível com JRuby, então você terá que encontrar uma alternativa 100% em Ruby ou então usar alguma biblioteca em Java para substituir a gem. Código e bibliotecas Java podem ser chamadas a partir de código Ruby se ele for executado no JRuby.
 
 Se você não tem escolha e precisa usar código com extensões nativas (que não seja compatível com JRuby) e você não achou nenhuma biblioteca java equivalente, então é melhor continuar usando o Ruby MRI.
 
- Você também deve estar ciente de que automatizar o processo de implantação talvez exija que você escreva suas próprias "receitas" do Capistrano. Como o Capistrano é focado na implantação para aplicações Rails no Mongrel ou Passenger, você precisará de "receitas especializadas" para implantar aplicações JRuby on Rails. Entretanto, essas alterações devem ser pequenas e causarão poucos problemas a você.
+Saiba também que ao automatizar o processo de implantação, você talvez precise escrever suas próprias receitas do Capistrano. Como o Capistrano foi feito pensando na implantação  de aplicações Rails no Mongrel ou no Passenger, você precisará de algumas receitas personalizadas para implantar aplicações Jruby on Rails. Entretanto, essas alterações serão pequenas e te causarão poucos problemas.
 
- Fora esses duas limitações eu acho JRuby fácil e eu pessoalmente o uso diariamente no lugar do Ruby MRI.
+Fora esses duas limitações eu acho JRuby fácil de usar e eu o uso diariamente no lugar do Ruby MRI.
 
- Um pouco de história
+- Um pouco de história
 
- O JRuby começou em 2001 por Jan Ame Petersen. Depois de dois anos o projeto foi assumido por Thomas Enebo. Sob sua direção, o JRuby foi alterado de uma base Ruby 1.6 para uma Ruby 1.8. Um pouco mais tarde, Charles Nutter se juntou ao projeto, e ajudou significantemente a trazer o JRuby ao ponto atual. Além dessas pessoas, o projeto JRuby tem diversos membros da comunidade trabalhando, e sua comunidade está crescendo constantemente. Na versão atual, esta mesma comunidade finalizou a compatibilidade com Ruby 1.8 e está trabalhando duro para melhorar a performance do JRuby e fazê-lo compatível com Ruby 1.9.1. JRuby é o primeiro interpretador excetuando o Ruby MRI, que está sendo trabalhando para dar suporte à sintaxe Ruby 1.9.1
+ O JRuby foi criado em 2001 por Jan Ame Petersen. Depois de dois anos Thomas Enebo assumiu o projeto. Sob sua direção, o JRuby trocou o Ruby 1.6 que tinha como base pelo Ruby 1.8. Mais tarde Charles Nutter se juntou ao projeto e foi um dos grandes responsáveis por transformar o JRuby no que ele é hoje. Além dessas pessoas, o projeto JRuby tem diversos membros da comunidade trabalhando, e sua comunidade está crescendo constantemente. Na versão atual, esta mesma comunidade finalizou a compatibilidade com o Ruby 1.8 e está trabalhando duro para melhorar a performance do JRuby e torná-lo compatível com o Ruby 1.9.1. O JRuby, depois do MRI, é o primeiro interpretador Ruby que está trabalhando para suportar a sintaxe do Ruby 1.9.1.
 
- Instalação
+- Instalação
 
- O único requisito para instalar o JRuby é ter o java instalado (vide java.sun.com para instruções de como instalar o java no seu computador.) O JRuby precisa do JDK 5 ou 6 (talvez o 1.4 seja compatível). O JRuby já é rápido, mas Eu utilizo o JDK 6 que permite com que ele execute mais rápido ainda. O JRuby também está disponível para instalação automática a partir dos repositórios MacPorts, Emerge e apt-get. Se o seu SO usa um destes três sistemas de gerenciamento de pacotes simplesmente execute os seguintes comandos:
+O único requisito para instalar o JRuby é ter o java instalado (visite java.sun.com para ter instruções de como instalar o java no seu computador). O JRuby precisa do JDK 5 ou 6 (talvez o 1.4 seja compatível). O JRuby é rápido, mas eu uso o JDK 6 que o deixa mais rápido ainda. O JRuby também está disponível para instalação a partir dos repositórios MacPorts, Emerge e apt-get. Se o seu SO usa um destes três sistemas de gerenciamento de pacotes simplesmente execute os seguintes comando:
 
- MacPorts
+MacPorts
+sudo port install jruby
 
- sudo port install jruby
+Emerge
+sudo emerge jruby
 
- Emerge
+apt-get
+sudo apt-get install jruby
 
- sudo emerge jruby
+(cuidado: esta é uma versão muito velha do JRuby! Eu não recomendo o seu uso)
 
- apt-get
+Eu nunca usei o MacPorts ou o Emerge então eu não sei se eles tem versões atualizadas do JRuby.
 
- sudo apt-get install jruby
+Se o seu SO não oferece suporte a algum desses gerenciadores de pacotes, não se desespere. É muito simples instalar o JRuby a partir do arquivo zip/tar.gz. A instalação manual pode ser feita em qualquer plataforma suportada (*Nix (incluindo OSX), e Windows) apenas seguindo estes 3 simples passos.
 
- (cuidado: esta é uma versão muito velha do JRuby! Eu não recomendo o seu uso)
+1. Faça o download do JRuby de http://dist.codehaus.org/jruby/1.1.6/. A versão estável mais recente é a 1.1.6, mas isto talvez tenha mudado desde que este artigo foi impresso. Certifique-se de obter a última versão estável. Baixe o arquivo jruby-bin-1.1.6.zip ou .tar.gz. A não ser que você queira ver o código fonte, não há necessidade de baixar o pacote completo ou de fontes (jruby-complete-1.1.6 ou jruby-src-1.1.6).
 
- Eu não tenho experiência no uso de MacPorts ou Emerge então eu não sei se eles disponibilizam versões atualizadas do JRuby.
+2. Descompacte-o no diretório desejado
 
- Se o seu SO não oferece suporte a algum desses gerenciadores de pacotes não se desespere. É muito simples instalar o JRuby a partir de um arquivo .zip/.tar.gz. Esta instalação manual pode ser feita em qualquer plataforma suportada (*Nix (incluindo OSX), e Windows) apenas seguindo estes 3 simples passos.
-
- 1. Faça o Download do JRuby de http://dist.codehaus.org/jruby/1.1.6/. A versão estável atualmente é a 1.1.6, mas isto talvez tenha mudado no instante que este artigo tiver sido impresso. Certifique-se de obter a última versão estável. Pegue o arquivo jruby-bin-1.1.6.zip ou .tar.gz. A não ser que você queira revisar pessoalmente o código fonte não há necessidade de baixar o pacote completo ou de fontes (jruby-complete-1.1.6 ou jruby-src-1.1.6)
-
- 2. Descompacte no diretório desejado
-
- 3. Adicione o diretório bin do JRuby no PATH do sistema. Por exemplo, se o JRuby estiver instalado em c:\Arquivos de Programas\jruby, então adicione c:\Arquivos de Programas\jruby\bin ao PATH de sistema do seu Windows. Verifique a documentação do seu SO em como adicionar o diretório bin ao PATH do sistema.
+3. Adicione o diretório bin do JRuby no PATH do sistema. Por exemplo, se o JRuby estiver instalado em c:\Arquivos de Programas\jruby, então adicione c:\Arquivos de Programas\jruby\bin ao PATH do seu sistema Windows. Verifique a documentação do seu SO para saber como como adicionar o diretório bin ao PATH do sistema.
 
  É isso. O JRuby deve estar instalado e funcionando em seu sistema. Ele pode ser testado simplesmente abrindo um console e executando o comando "jruby --version. O JRuby deve exibir algo parecido com isto:
 
