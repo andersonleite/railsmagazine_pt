@@ -1,11 +1,11 @@
 Palavras do editor
 por Olimpiu Metiu
 
-Com a RailsConf terminada,estamos de volta a nossa programãção normal. Fiquem atentos as próximas edições da Rails Magazine - essa será nossa maior edição até aqui, com artigos sobre padrões de projeto em ruby, workflow, suporte a temas, testes, JRuby, entrevistas e muito mais!
+Com a RailsConf terminada, voltamos à nossa programãção normal. Fiquem atentos à próxima edição da Rails Magazine - ela será nossa maior edição até o momento, com artigos sobre padrões de projeto em Ruby, workflow, suporte a temas, testes, JRuby, entrevistas e muito mais!
 
-Essa edição especial da RailsConf foi criada muito rápido - se voce encontrar qualquer falha, por favor nos informe e nós corrigiremos o mais rápido possível.
+Essa edição especial da RailsConf foi criada às pressas - se voce encontrar qualquer falha, por favor nos informe e faremos as correções assim que possível.
 
-Como essa é nossa primeira edição especial, estamos muito interessados em ouvir seu feedback. Por favor nos diga se você gostaria que nós continuassemos cobrindo eventos num formato similar.
+Como essa é nossa primeira edição especial, estamos muito interessados em saber o que acharam. Por favor, diga-nos se você gostaria que nós continuassemos cobrindo eventos num formato similar.
 
 Muito obrigado a todos que contribuiram nessa edição!
 Discuta: http://railsmagazine.com/2/1

@@ -5,13 +5,13 @@ por Casper Fabricius
 Mais de 1000 desenvolvedores Ruby on Rails de todos os EUA e
 do resto do mundo vieram a Las Vegas este ano para beber, jogar,
 relaxar na piscina e - ocasionalmente - aprender dos experts da
-comunidade sobre os aspectos de Ruby, Rails e tudo relacionado.
+comunidade sobre os aspectos de Ruby, Rails e assuntos relacionado.
 Desde a primeira conferência em Chicago em 2006,
 a popularidade e o uso do Rails só cresceu, e com uma conferência
 com um grande número de participantes em Las Vegas é seguro dizer
 que Rails já é mainstream e além.
 
-Não é uma coisa ruim, no entanto. Com cinco trilhas, a seleção
+Porém, isso não é uma coisa ruim. Com cinco trilhas, a seleção
 e a diversidade das palestras foram sensacionais, com tópicos de variavam
 de estudos aprofundados de escalabilidade e estratégias de deploy
 até padrões musicais para programadores. Falando em música, a RailsConf
@@ -45,11 +45,11 @@ existe. Rails é uma filosofia e um grande número de detalhes
 Derek Silvers do CD Baby, que voltaram para o PHP, deveriam ter
 sido outra ferida mortal. E, lógico, a afirmação persistente de que
 Rails não escala, o que deve ter sido verdade nos primeiros anos
-do Rails, mas agora está solucionado e provado errado de
-muitas maneiras diferentes hoje.
+do Rails, mas agora está solucionada e provada que é falsa por várias
+razões.
 
 David continuou discutindo a próxima versão do Rails. No Rails 3,
-um framework concorrente, Merb, vai se juntar a ele. Como o
+um framework concorrente, o Merb, vai se juntar a ele. Como o
 Merb faz muitas coisas de maneira muito diferente do Rails, isso
 significa que tudo está em discussão no Rails 3. Não há vacas
 sagradas, mas a nova versão também não vai resolver os problemas
@@ -62,9 +62,9 @@ que agir para evitar os picles. Não é porque você não gosta de
 picles que devemos tirar os picles de todos os Whoppers. É uma
 boa metáfora, e ela anda de mãos dadas com o famoso slogan de
 convention over configuration: Rails 3 ainda vai funcionar de
-cara e terá um conjunto padrão que vai ser ótimo, mas mais que
-hoje, as pessoas poderão mudar e adaptar o Rails para suas
-necessidades.
+cara e terá um conjunto padrão de bibliotecas excelente,
+mas mais que hoje, as pessoas poderão mudar e adaptar o Rails
+às suas necessidades.
 
 O criador do Ruby on Rails continuou descrevendo algumas das
 mudanças no Rails 3. O roteamento será mais rápido e mais configurável.
@@ -74,11 +74,11 @@ Scripting) será revertida, por assim dizer. Hoje, você tem que lembrar
 de usar o método humanize - h() para encurtar - para escapar todos
 os dados inseguros na sua saída, mas no futuro isso vai ser o padrão.
 Um bloco <%= ... %> será 'humanizado', enquanto que <%=raw ... %>
-funcionará como antigamente, sem escapar nada. Helpers usarão automaticamente
+funcionará como antigamente, sem escapar de nada. Todos os helpers usarão automaticamente
 o método html_safe!, que marca o HTML que ele gera como seguro, então
 não será escapado. Outra mudança interessante é que o javascript
-funcionará de modo menos intrusivo e mais agnóstico do que hoje. Nada
-mais de chamadas onclick geradas pelos helpers do Rails, e chega de
+funcionará de modo menos intrusivo e mais agnóstico do que hoje. Chega
+de chamadas onclick geradas pelos helpers do Rails, e chega de
 se amarrar explicitamente ao Prototype e ao Scriptaculous. Em vez disso,
 o Rails 3 vai usar os atributos data definidos no HTML 5, então por exemplo,
 essa chamada do helper:
@@ -103,8 +103,8 @@ e talvez apenas o formato tenha sido errado para um salão lotado
 com mais de 1000 desenvolvedores. Um dos pontos iniciais de Ferriss
 antes que eu mesmo, confesso, perdesse a concentração, foi que não há
 problema em trabalhar mais que 4 horas por semana se você gosta do
-que faz. Programadores estão entre as exceções, e geralmente trata-se
-de ver o tempo como uma moeda valiosa e reservada.
+que faz. Programadores estão entre as exceções, e geralmente tratam
+o tempo como um recurso valioso e escasso.
 
 =========
 Caption: Timothy Ferriss (Trabalhe 4 Horas por Semana) com DHH no palco da RailsConf 2009
@@ -113,14 +113,14 @@ Caption: Timothy Ferriss (Trabalhe 4 Horas por Semana) com DHH no palco da Rails
 Keynotes à parte, houve também muitas palestras boas na RailsConf.
 David Chelimsky, um dos criadores do RSpec, explicou a diferença
 entre mocks e stubs, e quando usar qual. Stubs servem para forçar
-um objeto ou um método a agir de forma previsível e então verificar
-o estado do seu sujeito depois de uma interação, enquanto que mocks
+um objeto ou método a agir de forma previsível e então verificar
+o estado do sujeito testado depois de uma interação, enquanto que mocks
 foram feitos para verificar as interações reais, isto é, que um
 certo método é invocado com certos argumentos. Chelimsky revelou
-que ele estava trabalhando em um novo projeto chamado Stubble, que
-permite testes de controller muito mais DRY do que é feito hoje,
-e ele também mencionou uma nova solução para testar cadeias na
-próxima versão do RSpec, o que tornarão os testes mais expressivos.
+que estava trabalhando em um novo projeto chamado Stubble, que
+permitirá testes de controller muito mais DRY do que hoje,
+e também mencionou uma nova solução para testar comandos encadeados na
+próxima versão do RSpec, que tornarão os testes mais expressivos.
 Por exemplo:
 
 User.stub_chain(:find, :friends, :favorite).and_return(friend)
@@ -128,18 +128,18 @@ User.stub_chain(:find, :friends, :favorite).and_return(friend)
 Ryan Singer da famosa 37signals fez uma apresentação extremamente
 bem preparada e bem executada sobre fundamentos de UI para
 programadores. Ele explicou que faz sentido começar com a
-interface, porque é com a interface que o cliente está preocupado.
+interface, porque é com ela que o cliente está preocupado.
 Antes que você possa ir para os detalhes da interface, no entanto,
 você vai ter que desenhar um modelo das regras de negócio que
 fazem sentido tanto para os clientes quanto para os desenvolvedores.
 Para aprender sobre esse processo, Singer recomendou o livro
 "Domain-Driven Design" de Eric Evans. Outro dos seus pontos
-foi que telas são como as interfaces são usualmente comunicadas,
+foi que é através de telas que normalmente as interfaces são comunicadas,
 e que a noção de REST é ótima para organizar essas telas
-consistentemente e de uma maneira padronizada.
+de maneira consistente e padronizada.
 
 Uma palestra sobre testes de javascript foi montada como uma
-programação em par entre os dois apresentadores, Larry Karnowski
+programação em par entre os dois palestrantes, Larry Karnowski
 e Jason Rudolf da Relevance, Inc. Um fez o papel do desenvolvedor
 frontend que não sabia nada sobre testes de javascript e escreveu
 o código funcional, enquanto que o outro fez o papel do cara
@@ -151,8 +151,8 @@ junto com o resto da sua suíte de testes, e coloca estes testes
 na sua integração contínua. Mais ainda, você pode rodar estes
 testes no browser quando precisar testar compatibilidade.
 
-JRuby está crescendo em popularidade, e neste ano havia várias
-palestras sobre JRuby. Uma era do Charles Nutter e seus colegas
+O JRuby está crescendo em popularidade, e neste ano houveram várias
+palestras sobre ele. Uma era do Charles Nutter e seus colegas
 que trabalham diretamente com JRuby, mostrando um panorama
 geral do estado do JRuby. Eles estavam satisfeitos com o fato
 do JRuby ser suportado na Google App Engine através do seu
@@ -160,14 +160,14 @@ suporte recente a Java, e outra palestra foi focada nesse tema,
 com funcionários do Google explicando como a App Engine funciona
 e como fazer deploy de aplicações Rails nela. Porém, você não
 pode pegar uma aplicação padrão Rails e fazer deploy na App
-Engine, porque ActiveRecord, escrever em arquivos, abrir
+Engine, porque o ActiveRecord, escrita em arquivos, abertura de
 sockets e muitas outras coisas não são suportadas. Você vai
 ter que escrever uma aplicação que é especificamente compatível
 com a App Engine, e apesar da maioria das limitações como
 pegar URLs e enviar emails podem ser contornadas usando as
 APIs que o Google está disponibilizando, você não pode esperar
 uma migração sem problemas de uma aplicação Rails existente
-na App Engine.
+para o App Engine.
 
 ======
 Caption:
@@ -181,30 +181,30 @@ Obie Fernandez fez uma apresentação bastante aberta e honesta
 sobre suas experiências de começar sua empresa de consultoria
 Hashrocket. A palestra focou somente na parte dos negócios.
 Obie pode ser descrito como muitos descreveram David Heinemeier
-Hansson: Arrogante, porém brilhante. Confiança bem-fundada é
-peça chave para vender, Obie explicou, e ser controverso, e
-ao mesmo tempo ter a habilidade de suportar o abuso o ajudou
-bastante para ter seu nome estabelecido. Outro ponto de vendas
+Hansson: Arrogante, porém brilhante. Confiança bem-fundamentada é
+uma peça-chave para vender, Obie explicou, e ser controverso, e
+ao mesmo tempo ter a capacidade de suportar os ataques o ajudou
+bastante para estabelecer seu nome. Outro ponto de vendas
 e marketing é nunca parecer desesperado. Uma dica é sempre ter
 alguns projetos internos, portanto você sempre pode dizer que
 está ocupado, mas que poderá começar outra coisa na próxima semana.
 Obie também tem pensamentos interessantes sobre assuntos legais,
 finanças, práticas ágeis e práticas de cliente, e ele falou bem
 quando disse: "Estou cheio de evangelizar agile - eu não defendo
-respirar, eu não defendo agile - é só o jeito que você desenvolve
+respirar, eu não defendo agile - é assim que se desenvolve
 software." Ele discutiu abertamente os preços da Hashhrocket
 ($190/hora no curto prazo e $175/hora no longo prazo), e ele disse
 que contratos baseados em tempo são necessários.
 
 O clima na RailsConf foi bom como sempre. Las Vegas pode estar
-sofrendo com a recessão, mas Ruby on Rails certamente não está.
+sofrendo com a recessão, mas o Ruby on Rails certamente não está.
 
 ===================
 Casper Fabricius é um desenvolvedor Ruby on
 Rails freelancer trabalhando em Copenhagen,
 Dinamarca com 8 anos de experiência em
 desenvolvimento web e 3 anos felizes com Rails.
-Ele é apaixonado pela web, o jeito agile e a
+Ele é apaixonado pela web, a abordagem agile e a
 comunidade Ruby, e fala coisas inteligentes no
 seu blog em http://casperfabricius.com e coisas
 estúpidas no Twitter como 'fabricius'.
