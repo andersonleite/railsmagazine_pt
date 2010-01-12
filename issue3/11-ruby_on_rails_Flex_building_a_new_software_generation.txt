@@ -27,4 +27,14 @@ Porque precisamos de aplicações RIA?
 
 Uma aplicação desktop clássica geralmente roda em um PC ou Mac e não necessita de uma conexão de rede. Um bom exemplo seria um editor de textos como o Apple Pages, Microsoft Word ou OpenOffice Writer. Por outro lado, uma aplicação web roda em um servidor, e muitos clientes acessam ela simultaneamente usando browsers web.
 
-Ambas tem seus prós e contras. Obviamente são diferentes de um ponto de vista técnico. 
+Esses dois tipos de aplicação tem suas vantagens e desvantagens. Obviamente são diferentes de um ponto de vista técnico. Aplicações Desktops tem todo o poder de vários toolkits para criar interfaces ricas. E são as mais rápidas. E você não tem as inconsistências de renderização como em uma aplicação baseada em browser. Por outro lado as aplicações web são fáceis de fazer deploy e rodam em qualquer plataforma.
+
+------------------------
+Arturo Fernandez é um empresário, engenheiro de software, escritor técnico e entusiasta de software free/open-source. Sua experiência profissional inclui serviços como engenheiro de software, consultor, administrador de sistemas e gerente de projeto trabalhando com tecnologias como J2EE, PHP e Rails. Atualmente elemora em Andalucia, Espanha onde ele fundou a BSNUX Software Factory (http://www.bsnux.com), uma empresa especializada em RIA e aplicações móveis. Ele pode ser contactado em arturo@bsnux.com.
+--------------------------
+
+Tecnologias como AJAX trás aplicações web um pouco mais perto da performance de uma aplicação desktop, ao custo de uma alta complexidade. Desenvolvedores são forçados a trabalhar em múltiplas linguagens: JavaScript para o front-end e uma outra linguagem como Ruby para o back-end. Mas com Flex, você pode desenvolver uma aplicação do começo ao fim em apenas uma linguagem.
+
+Desenvolvendo uma aplicação RIA podemos juntar o melhor do desktop com o melhor da web, resultando numa aplicação multi-plataforma com uma interface boa e flexível que pode trocar dados com uma outra aplicação usando protocolos padrões e tecnologias través da internet.
+
+Agora vamos dar uma olhada em como podemos usar o Adobe Flex e Rails para desenvolver uma ótima aplicação em pouco tempo.
