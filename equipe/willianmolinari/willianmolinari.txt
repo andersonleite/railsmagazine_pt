@@ -1,0 +1,13 @@
+Willian Molinari
+
+Willian Molinari é desenvolvedor em São Paulo, Brasil. Trabalha com RubyOnRails desde 2008 e se interessa por diversas linguagens de programação. 
+Foi um dos mentors do site Rubylearning.org que ministra curso de Ruby gratuitamente, atualmente permanecendo como mentor inativo não ajudando ativamente.
+É um dos fundadores do Guru-sp e participa ativamente das atividades do grupo. Atualmente trabalha Fulltime com Ruby e Rails desenvolvendo novas features
+para uma rede social voltada a orientação profissional.
+                
+==================================================================
+
+Willian Molinari is a developer from Sao Paulo, Brazil. He started working with Ruby on Rails development in 2008 and has interest in various programming 
+languages. Was a mentor of Rubylearning.org website that provide free Ruby courses across the globe, and actually stays as inactive mentor not contributing so much.
+He is a founder of Guru-sp and stay as an active member of the group. Nowadays he works full-time with Ruby and Rails developing new features for a Social Network
+focused in professional guidance.
