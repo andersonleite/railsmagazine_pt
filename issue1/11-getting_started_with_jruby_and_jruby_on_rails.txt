@@ -37,7 +37,7 @@ Fora esses duas limitações eu acho JRuby fácil de usar e eu o uso diariamente
 
 - Um pouco de história
 
- O JRuby foi criado em 2001 por Jan Ame Petersen. Depois de dois anos Thomas Enebo assumiu o projeto. Sob sua direção, o JRuby trocou o Ruby 1.6 que tinha como base pelo Ruby 1.8. Mais tarde Charles Nutter se juntou ao projeto e foi um dos grandes responsáveis por transformar o JRuby no que ele é hoje. Além dessas pessoas, o projeto JRuby tem diversos membros da comunidade trabalhando, e sua comunidade está crescendo constantemente. Na versão atual, esta mesma comunidade finalizou a compatibilidade com o Ruby 1.8 e está trabalhando duro para melhorar a performance do JRuby e torná-lo compatível com o Ruby 1.9.1. O JRuby, depois do MRI, é o primeiro interpretador Ruby que está trabalhando para suportar a sintaxe do Ruby 1.9.1.
+O JRuby foi criado em 2001 por Jan Ame Petersen. Depois de dois anos Thomas Enebo assumiu o projeto. Sob sua direção, o JRuby trocou o Ruby 1.6 que tinha como base pelo Ruby 1.8. Mais tarde Charles Nutter se juntou ao projeto e foi um dos grandes responsáveis por transformar o JRuby no que ele é hoje. Além dessas pessoas, o projeto JRuby tem diversos membros da comunidade trabalhando, e sua comunidade está crescendo constantemente. Na versão atual, esta mesma comunidade finalizou a compatibilidade com o Ruby 1.8 e está trabalhando duro para melhorar a performance do JRuby e torná-lo compatível com o Ruby 1.9.1. O JRuby, depois do MRI, é o primeiro interpretador Ruby que está trabalhando para suportar a sintaxe do Ruby 1.9.1.
 
 - Instalação
 
@@ -72,7 +72,7 @@ Se acontecer algum problema no processo de instalação ou se o JRuby não funci
 
 - Sujando as mãos
 
- Agora, o JRuby está instalado e funcionando. Mas, como se usa ele? Em praticamente todos os aspectos é exatamente a mesma coisa que usar o Ruby MRI. Seu código deve rodar sem absolutamente nenhuma alteração. Para executar um script ruby simplesmente digite "jruby nome_do_script" no prompt de comando e pronto. Você executou sua primeira aplicação JRuby (veja o exemplo).
+Agora, o JRuby está instalado e funcionando. Mas, como se usa ele? Em praticamente todos os aspectos é exatamente a mesma coisa que usar o Ruby MRI. Seu código deve rodar sem absolutamente nenhuma alteração. Para executar um script ruby simplesmente digite "jruby nome_do_script" no prompt de comando e pronto. Você executou sua primeira aplicação JRuby (veja o exemplo).
 
 Exemplo de Script:
 helloworld.rb
@@ -91,72 +91,80 @@ E os comandos do ruby como gem, rake e rails? Executar a versão JRuby destes co
 
 - JRuby on Rails
 
-Chegou a parte pela qual você esperava! JRuby on Rails. Funciona? A resposta é: Sim, funciona muito bem! Você não precisa se preocupar quando tiver que executar uma aplicação Rails no interpretador JRuby. A única coisa que deve ser alterada na sua aplicação Rails é o arquivo database.yml. É necessário mudar o arquivo de configuração do banco de dados porque os drivers de banco do ActiveRecord não são compatíveis com JRuby, já que muitos deles contêm código nativo. Em vez do driver padrão do ActiveRecord, o JRuby usa alguns itens do ActiveRecord sendo implementados com o JDBC do Java. (Muito obrigado ao Nick Sieger e todos aqueles que têm trabalhado com esses drivers). Todas as bibliotecas Java necessárias são instaladas com as gems do ActiveRecord-JDBC, então não é preciso mexer com nenhum código Java. Mudar para os drivers ActiveRecord-JDBC, consiste em dois passos:
+Chegou a parte pela qual você esperava! JRuby on Rails. Funciona? A resposta é: Sim, funciona muito bem! Você não precisa se preocupar quando tiver que executar uma aplicação Rails no interpretador JRuby. A única coisa que deve ser alterada na sua aplicação Rails é o arquivo database.yml. É necessário mudar o arquivo de configuração do banco de dados porque os drivers de banco do ActiveRecord não são compatíveis com JRuby, já que muitos deles contêm código nativo. Em vez do driver padrão do ActiveRecord, o JRuby usa alguns drivers ActiveRecord implementados em JDBC do Java. (Muito obrigado ao Nick Sieger e todos aqueles que têm trabalhado nesses drivers). Todas as bibliotecas Java necessárias são instaladas com as gems do ActiveRecord-JDBC, então não é preciso mexer com nenhum código Java. Mudar para os drivers ActiveRecord-JDBC consiste em apenas dois passos:
         
         Primeiro, instale o driver apropriado para o seu banco de dados.
         ActiveRecord-JDBC drivers
         MySQL
         gem - activerecord-jdbcmysql-adapter
+        
         PostgreSQL
         gem - activerecord-jdbcpostgresql-adapter
+        
         Oracle
         gem - activerecord-jdbc-adapter
-        Microsoft SQL Server (missing change_column_default)
+        
+        Microsoft SQL Server (falta change_column_default)
         gem - activerecord-jdbc-adapter
-        DB2 (limited migration support)
+        
+        DB2 (suporte limitado a migrations)
         gem - activerecord-jdbc-adapter
-        FireBird (missing change_column_default and rename_column)
+        
+        FireBird (falta change_column_default e rename_column)
         gem - activerecord-jdbc-adapter
-        Derby (limited migration support)
+        
+        Derby (suporte limitado a migrations)
         gem - activerecord-jdbcderby-adapter
+        
         HSQLDB
         gem - activerecord-jdbchsqldb-adapter
+        
         H2
         gem - activerecord-jdbch2-adapter
-        SQLite3 (work in progress)
+        
+        SQLite3 (em desenvolvimento)
         gem - activerecord-jdbcsqlite3-adapter
-        Informix (fairly complete)
+        
+        Informix (quase pronto)
         gem - activerecord-jdbc-adapter
 
 
-        Uma vez que o driver correto foi instalado, o segundo passo será modificar o arquivo database.yml. Se vocÊ está usando um banco de dados que tem um driver específico (não o genérico activerrecord-jdbc-adapter) então tudo o que você precisará fazer é prefixar a configuração “adapter:" com “jdbc” (veja o exemplo) Veja como isso é rápido e fácil.
-         
-         development:
+Uma vez que o driver correto foi instalado, o segundo passo será modificar o arquivo database.yml. Se você está usando um banco de dados que tem um driver específico (não o genérico activerecord-jdbc-adapter) então tudo o que você precisará fazer é prefixar a configuração “adapter:" com “jdbc” (veja o exemplo). Veja como é rápido e fácil.
+
+       development:
          adapter: jdbcmysql
          encoding: utf8
          database: notes_development
          username: root
          password:
-          
-          Se o banco de dados atual não tem um driver específico (está usando o activerecord-jdbc-adapter), será preciso adicionar a URL e o Driver nas informações de conexão. A URL e o Driver são específicos de cada banco, então consulte a documentação para o driver JDBC que você estiver usando. Aqui está um exemplo de como o seu arquivo database.yml irá ficar: 
 
-          development:
-          adapter: jdbc
-          username: blog
-          password:
-          driver: com.mysql.jdbc.Driver
-          url: jdbc:mysql://localhost:3306/weblog_development
-           
-           Uma vez que o driver do banco de dados tiver sido alterado, todo o fluxo usual de desenvolvimento, execução e testes voltará ao normal, mas lembre-se de toda vez que você for executar um dos scripts dentro da pasta ./script/, deve prefixá-lo com jruby. Inicie o servidor WEBrick com jruby ./script/server e comece!
+Se o banco de dados atual não tem um driver específico (está usando o activerecord-jdbc-adapter), será preciso adicionar a URL e o Driver nas informações de conexão. A URL e o Driver são específicos de cada banco, então consulte a documentação para o driver JDBC que você estiver usando. Aqui está um exemplo de como o seu arquivo database.yml irá ficar: 
 
-           Se você não quiser usar o WEBrick, a alternativa mais rápida é instalar a gem glassfish (jruby -S gem install glassfish). Assim que a gem glassfish estiver instalada, simplesmente vá até o diretório da sua aplicação rails e execute jruby -S glassfish. A gem não é apenas fácil o suficiente para se executar em ambiente de desenvolvimento, mas também pode ser usada como um servidor de produção bem estável. Eu escreverei mais sobre esse tópico, opções de implantação com JRuby, em um artigo futuro.
-           Todas as gems de ActiveRecord-RDBC estão no github, então você precisará adicionar http://gems.github.com na configuração de origems do comando gem, ou adicionar esta opção ao comando gem
+       development:
+         adapter: jdbc
+         username: blog
+         password:
+         driver: com.mysql.jdbc.Driver
+         url: jdbc:mysql://localhost:3306/weblog_development
 
-             jruby -S gem --source http://gems.github.com install gem_name
+Uma vez que o driver do banco de dados tiver sido alterado, tudo funciona normalmente no desenvolvimento, execução e testes na sua aplicação Rails. Você só deve lembrar de escrever jruby na frente toda vez que você for executar um dos scripts da pasta ./script/. Para começar, inicie o servidor WEBrick com "jruby ./script/server"!
 
-              Finalizando Wrap up 
+Se você não quiser usar o WEBrick, a alternativa mais rápida é instalar a gem do glassfish (jruby -S gem install glassfish). Assim que a gem do glassfish estiver instalada, vá até o diretório da sua aplicação rails e execute jruby -S glassfish. Além de ser muito fácil de se executar em ambiente de desenvolvimento, o glassfish também pode ser usado como um servidor de produção, pois é robusto e estável. Eu escreverei mais sobre esse assunto, opções de implantação com JRuby, em um próximo artigo.
+* Todas as gems de ActiveRecord-JDBC estão hospedadas no github, então você precisará adicionar http://gems.github.com nas suas fontes de gems, ou adicionar esta opção ao comando gem
 
+jruby -S gem --source http://gems.github.com install gem_name
 
-              Neste momento, (ao menos é o que eu espero), você já é capaz de instalar e usar o JRuby para desenvolvimento Ruby/Rails. Para mais informações sobre o JRuby, verifique o site do JRuby em: www.jruby.org. O wiki (hospedado no site do JRuby) e a comunidade fornecem ótimos recursos para aqueles que estão precisando de ajuda ou estão procurando mais informações sobre o JRuby. Continuem lendo a Rails Magazine e o próximos artigos de JRuby nesta coluna.
+- Conclusão
 
-              Fontes para pesquisa:
+Agora você já é capaz de instalar e usar o JRuby para desenvolvimento Ruby/Rails. Para mais informações sobre o JRuby, acesse o site do JRuby em: www.jruby.org. O wiki (hospedado no site do JRuby) e a comunidade são ótimos recursos para aqueles que estão precisando de ajuda ou estão procurando mais informações sobre o JRuby. Continuem lendo a Rails Magazine e o próximos artigos de JRuby nesta coluna.
 
+- Veja também:
 
-              ActiveRecord-JDBC home page – http://github.com/nicksieger/activerecord-jdbc-adapter/tree/master
-              JRuby home page – http://www.jruby.org 
-              IRC – #jruby on irc.freenode.net
+Home page do ActiveRecord-JDBC – http://github.com/nicksieger/activerecord-jdbc-adapter/tree/master
+Home page do JRuby – http://www.jruby.org 
+IRC – #jruby on irc.freenode.net
               
-              Discuss: http://railsmagazine.com/1/9
+Tópico no fórum: http://railsmagazine.com/1/9
 
 
 
