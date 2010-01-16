@@ -1,7 +1,7 @@
 O Guia não oficial das novidades do Rails 3
 por Rupak Ganguly
 
-A seguinte falsa lista foi elaborada a partir das notícias iniciais provenientes de pessoas do RailsConf via blogs, tweets e e-mails.
+A seguinte lista falsa foi elaborada a partir das notícias iniciais provenientes de pessoas do RailsConf via blogs, tweets e e-mails.
 
 Perspectivas do Rails 3
 
@@ -11,9 +11,9 @@ Brian Guthrie: Olhando mais a frente para um mais limpo, mais agnóstico #rails3
 
 Brian Guthrie: Aparentemente #rails3 é como chocolate belga. 
 
-Brian Guthrie: Não, espere! #rails3 é como filhotinhos de cachorro! Aaa... filhotinhos.
+Brian Guthrie: Não, espere! #rails3 é como cachorrinhos! Aaa... cachorrinhos.
 
-Matt Aimonetti: Rails3 vai olhar mais como um in-n-out Burger com ingredientes frescos do que a grande mentira do BK ;)
+Matt Aimonetti: Rails3 vai se parece mais como um in-n-out Burger com ingredientes frescos do que a mentira deslavada do BK ;)
 
 Lista de recursos
 
@@ -23,31 +23,31 @@ Filosofia do Rails3
 
 2) sem vacas sagradas
 
-3) produzí-lo da sua maneira
+3) tenha-o da sua maneira
 
-Ilya Grigorik: @dhh promissor sem 'vacas sagradas' em #rails3 .. me permita nomear um: roteamento! matá-lo! reescrevê-lo!
+Ilya Grigorik: @dhh está prometendo que ná haverá 'vacas sagradas' no #rails3 .. me permita nomear uma: roteamento! mateá! reescrevá!
 
-Michael Macasek: filosofia do rails3: 3) fazer alguns hambúrgueres saborosos (produzí-lo da sua maneira)
+Michael Macasek: filosofia do rails3: 3) fazer alguns hambúrgueres saborosos (tenha-o da sua maneira)
 
-Marshall Greer: @dhh slogan para Rails3 "produzí-lo da sua maneira" de repente, eu quero uma grande mentira...
+Marshall Greer: @dhh slogan para Rails3 "tenha-o da sua maneira" de repente, eu quero uma mentira deslavada...
 
-Marc Love: Eu gostaria de saber se o rails3 de hambúrgueres saborosos utiliza carne proveniente de vacas sagradas ou unicórnios
+Marc Love: Eu imagino se os hambúrgueres saborosos do rails3 utiliza carne de vacas sagradas ou unicórnios
 
 Novo roteador para o Rails 3
 
-Jerome Lipowicz: Novo roteador para rails3: mais rápido, por via subdomains, user agents, mais rotas para outros mecanismos rack
+Jerome Lipowicz: Novo roteador para rails3: mais rápido, roteie por sub-domínios, user agents, mais rotas para outros mecanismos rack
 
 Brian Guthrie: roteamento irá permitir que você compartilhe pedaços do seu aplicativo através de diferentes frameworks - por exemplo, Sinatra, talvez até Django
 
 Noel Rappin: Andamento do Rails3: novo roteador, mais rápido e com suporte ao rack. Nova API
 
-Brian Guthrie: API RESTful para roteamento parece *muito* mais limpa baseada em @dhh's slides. Melhoria maravilhosa.
+Brian Guthrie: API RESTful para roteamento parece *muito* mais limpa baseada nos slides do @dhh. Melhoria maravilhosa.
 
 Toda a saída nas views terá escaped em Rails3
 
-Michael Macasek: rails3 saída em todas as views terão escaped, você precisa evitá-lo explicitamente. Boa convenção!
+Michael Macasek: rails3 todas as saídas nas views serão escaped, você precisa evitá-lo explicitamente. Boa convenção!
 
-Ilya Grigorik: todas as saídas nas views terão escaped em #rails3 (<%=h %> por padrão, o novo método: <%=raw .. %>) 
+Ilya Grigorik: todas as saídas nas views serão escaped em #rails3 (<%=h %> por padrão, novo método: <%=raw .. %>) 
 
 Brian Guthrie: #rails3 marcação escaped por padrão (não mais <%= h some.value %>) 
 
