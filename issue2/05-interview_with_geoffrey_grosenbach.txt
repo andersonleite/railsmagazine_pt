@@ -3,11 +3,11 @@
 
 - Rupak: Você poderia por favor nos falar brevemente sobre o seu background, para benefício do leitores?
 
-- Geoffrey: Eu tenho hackeado em computadores desde a quarta série quando eu aprendi BASIC em um TRS-80. Após me graduar em Filosofia, em trabalhei para diversas startups. Eu comecei minha própria empresa em 2005 e desde então mudei meu foco para publicação de tutoriais em vídeo na PeepCode.
+- Geoffrey: Eu tenho hackeado em computadores desde a quarta série quando eu aprendi BASIC em um TRS-80. Após me graduar em Filosofia, eu trabalhei para diversas startups. Eu comecei minha própria empresa em 2005 e desde então mudei meu foco para publicação de screencasts na PeepCode.
 
 - Rupak: Quando e como você se envolveu com Ruby/Rails?
 
-- Geoffrey: Eu originalmente ouvi falar de Ruby em 2001 pelo artigo do Dave Thomas na Dr. Dobbs (http://www.ddj.com/web-development/184404436), mas eu estava feliz com Perl e Objective-C naquela época. Em 2005 eu estava me preparando para retornar para Seattke após ter vivido na Asia e ficava ouvindo falar sobre o Rails, então eu portei uma aplicação existente para Rails e fiquei realmente impressionado. Eu rapidamente encontrei alguns contratos e tenho trabalhado com isso desde então.
+- Geoffrey: Eu originalmente ouvi falar de Ruby em 2001 pelo artigo do Dave Thomas na Dr. Dobbs (http://www.ddj.com/web-development/184404436), mas eu estava feliz com Perl e Objective-C naquela época. Em 2005 eu estava me preparando para retornar para Seattle após ter vivido na Ásia e ouvia falar sobre o Rails, então eu portei uma aplicação existente para Rails e fiquei realmente impressionado. Eu rapidamente encontrei alguns contratos e tenho trabalhado com isso desde então.
 
 - Rupak: O que o faz trabalhar com Rails? O que lhe interessou na plataforma quando você começou e que ainda chama sua atenção?
 
@@ -22,9 +22,9 @@ Geoffrey Grosenbach é o editor dos screencasts do PeepCode (http://peepcode.com
 
 - Geoffrey: Há um ano atrás eu não poderia ter previsto que o Rails e o Merb se uniriam, que o Rubinius seria reescrito e voltaria a rodar o Rails, ou que o Rack seria (finalmente) tão presente na RailsConf.
 
-Mas como uma tentativa eu prevejo que daqui há um ano o Rails vai se unir ao Django, o Rubinius rodará no iPhone e Christian Neukirchen escreverá uma biblioteca Ruby que permite teletransporte, mas que não será amplamente adotada até 4 anos mais tarde.
+Mas como uma tentativa eu prevejo que daqui a um ano o Rails vai se unir ao Django, o Rubinius rodará no iPhone e Christian Neukirchen escreverá uma biblioteca Ruby que permite teletransporte, mas que não será amplamente adotada até 4 anos mais tarde.
 
-- Rupak: Com o Merb se unindo ao Rails 3, quais funcionalidades de outras plataformas ou frameworks você gostaria quw fossem incorporadas ao Rails no futuro?
+- Rupak: Com o Merb se unindo ao Rails 3, quais funcionalidades de outras plataformas ou frameworks você gostaria que fossem incorporadas ao Rails no futuro?
 
 - Geoffrey: Eu gosto da idéia do Django de organizar uma aplicação web em pequenas aplicações independentes. Parece que nós já somos capazes de fazer algo parecido no Rails 2.3.
 
@@ -34,24 +34,24 @@ A única coisa realista que eu espero que aconteça em breve é que o DataMapper
 
 - Rupak: Você acha que existe um risco de que o Rails fique inchado com toda essa funcionalidade? Ou de que ele perca sua facilidade de uso e mágica como o preço a pagar para a nova flexibilidade?
 
-- Geoffrey: Inchar é com certeza um risco para qualquer framework que esteja crescendo. A incorporação do Rack fornece uma opção mais leve para actions que não preciso do Rails inteiro, o que é algo ótimo.
+- Geoffrey: Inchar é com certeza um risco para qualquer framework que esteja crescendo. A incorporação do Rack fornece uma opção mais leve para actions que não precise do Rails inteiro, o que é algo ótimo.
 
-E diversas partes do Rails estão sendo reescritas constantemente. Eu acho que já houveram umas 3 ou 4 reescritas desde o início, e tem ficado cada vez mais rápido.
+E diversas partes do Rails estão sendo reescritas constantemente. Eu acho que já houveram umas 3 ou 4 reescritas do roteador desde o início, e tem ficado cada vez mais rápido.
 
 - Rupak: Se você pudesse dar um conselho para alguém que está começando agora, qual seria? (exceto é claro assistir ao PeepCode e ler a Rails Magazine!)
 
 - Geoffrey: Eu ainda recomendo sentar e ler toda a documentação do Rails (http://api.rubyonrails.org/), método por método, que é como eu comecei. Comece pelo topo de "Classes" e trabalhe através de cada uma delas. Não tente tomar notas ou espere se lembrar ou mesmo entender tudo. Você absorverá muita coisa sobre o que faz parte do Rails e o que está disponível para você.
 
-A outra sugestão é mais difícil: encontre um mentor e trabalhe em algum projeto junto, pessoalmente. Eu recentemente trabalhei em um projeto paralelo com o lendário John Barnette (http://www.jbarnette.com/) e aprendi um monte de coisas sobre como um desenvolvedor experiente projeto e escreve uma aplicação.
+A outra sugestão é mais difícil: encontre um mentor e trabalhe em algum projeto junto, pessoalmente. Eu recentemente trabalhei em um projeto paralelo com o lendário John Barnette (http://www.jbarnette.com/) e aprendi um monte de coisas sobre como um desenvolvedor experiente projeta e escreve uma aplicação.
 
 - Rupak: Como foi a RailsConf para você? Quais tópicos mais lhe interessaram?
 
-- Geoffrey: A RailsConf foi melhor do que eu esperava, apesar de eu ter ficado por lá 48 horas apenas. Eu estava presente em apenas algumas palestras mas gastei bastante tempo com outros desenvolvedores nos halls. Sob o risco de esquecer de algum nome, vou apenas dizer que eu vi algumas demonstrações de diversas aplicações que serão lançadas e encontrei muitos amigos que eu ainda não havia conhecido pessoalmente.
+- Geoffrey: A RailsConf foi melhor do que eu esperava, apesar de eu ter ficado por lá 48 horas apenas. Eu estava presente em apenas algumas palestras mas gastei bastante tempo com outros desenvolvedores nos corredores. Sob o risco de esquecer de algum nome, vou apenas dizer que eu vi algumas demonstrações de diversas aplicações que serão lançadas e encontrei muitos amigos que eu ainda não havia conhecido pessoalmente.
 
 - Rupak: Qual será seu novo tópico no PeepCode?
 
-- Geoffrey: "Conheça o MacRuby" será lançado quando está entrevista sair. O MacRuby ainda não está em um estado no qual possa executar qualquer código Ruby que você jogar nele, mas é fantástico para controlar as APIs Cocoa e escrever aplicações Desktop. E um dia provavelmente irá rodar no Linux também.
+- Geoffrey: "Conheça o MacRuby" será lançado quando esta entrevista sair. O MacRuby ainda não está em um estado no qual possa executar qualquer código Ruby que você jogar nele, mas é fantástico para controlar as APIs Cocoa e escrever aplicações Desktop. E um dia provavelmente irá rodar no Linux também.
 
-Dan Benjamin está concluíndo um screencast para aqueles que nunca utilizaram a linha de comando antes. Nós daremos uma sequência a esse como um screencast mais avançado sobre linha de comando.
+Dan Benjamin está concluindo um screencast para aqueles que nunca utilizaram a linha de comando antes. Nós daremos uma sequência a esse como um screencast mais avançado sobre linha de comando.
 
-Scripts sobre jQuery, PayPal, Advanced Git e Mercurial estão sendo escritos neste exato momento. E eu tenho diveros screencasts relativo a iPhone sendo trabalhados e com os quais estou bastante empolgado.
+Scripts sobre jQuery, PayPal, Git avançado e Mercurial estão sendo escritos por outros autores neste exato momento. E eu tenho diveros screencasts relativo a iPhone sendo trabalhados e com os quais estou bastante empolgado.
