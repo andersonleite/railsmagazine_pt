@@ -4,19 +4,19 @@ Entrevistado por Rupak Ganguly em 9 de Maio de 2009
 
 Rupak: Você pode nos falar brevemente sobre sua experiência, para o benefício dos leitores?
 
-Ryan: Eu comecei a aprender desenvolvimento web dinâmico em torno de 1997 através do WebDNA. Rapidamente percebendo as limitações com isso na época, mudei para PHP, mas não estava satisfeito devido à falta de melhores práticas na estruturação de um grande site. Então Rails entrou em cena, e o resto é história.
+Ryan: Eu comecei a aprender desenvolvimento web dinâmico por volta de 1997 através do WebDNA. Rapidamente percebi as suas limitações na época e mudei para PHP, mas não estava satisfeito devido à falta de melhores práticas para estruturar um site grande. Então Rails entrou em cena, e o resto é história.
 
 Rupak: Como e quando você se envolveu com Ruby / Rails?
 
 Ryan: O que pode ser surpreendente para alguns é que eu não gostei de Rails logo no início. Era muito restritivo e não me permitia trabalhar da maneira que eu queria. Ele também parecia mais complexo que o necessário. No entanto, eu achei Ruby fascinante e levei dois meses para aprender por conta própria.
 
-Um novo projeto surgiu, que exigia um robusto framework web. Eu dei ao Rails uma nova chance. Desta vez, deixando completamente de lado a minha forma ideal de trabalho e adotando as convenções que são fornecidas, logo percebi que a maneira Rails foi muito mais eficiente que qualquer coisa que eu poderia criar. Isso foi no final de 2005.
+Um novo projeto surgiu, que exigia um robusto framework web. Eu dei uma nova chance ao Rails. Desta vez, deixando completamente de lado a minha forma ideal de trabalho e adotando as convenções que são fornecidas, logo percebi que a maneira Rails foi muito mais eficiente que qualquer coisa que eu poderia criar. Isso foi no final de 2005.
 
-Rupak: O que o leva a trabalhar com Rails? O que você tinha elaborado para esta plataforma quando você começou e ainda chama sua atenção?
+Rupak: O que o leva a trabalhar com Rails? O que te atraiu para esta plataforma quando você começou e ainda chama sua atenção?
 
-Ryan: A publicidade exagerada foi inicialmente o que chamou a minha atenção. Um tanto quanto irritante, eu estava esperando secretamente para refutar o exagero em meu olhar inicial no framework. Eu falhei. Depois de terminar meu primeiro projeto, eu estava viciado na velocidade e elegância com que eu poderia produzir aplicações web. O exagero era justificado.
+Ryan: A publicidade exagerada foi inicialmente o que chamou a minha atenção. Estava um tanto quanto irritado com isso, e secretamente eu esperava refutar o exagero na primeira vez que fosse usar framework. Eu falhei. Depois de terminar meu primeiro projeto, eu estava viciado na velocidade e elegância com que eu poderia produzir aplicações web. O exagero era justificado.
 
-Há muitas outras coisas que me mantém trabalhando com Rails hoje: ele usa Ruby, há uma grande comunidade, e tem um grande respeito aos testes, refatoração, e tudo de bom, código limpo. #TODO :melhorar esse final
+Há muitas outras coisas que me mantém trabalhando com Rails hoje: ele usa Ruby, há uma grande comunidade, e tem um grande respeito por testes, refatoração, e no geral, código bom e limpo.
 
 [[image: Participantes na sala de almoço]]
 
@@ -26,7 +26,7 @@ Ryan: Eu não quero prever o futuro, mas posso lhe dizer o que eu espero que ven
 
 Em cinco anos? Ninguém sabe, mas eu espero que Rails não tenha a mesma aparência que tem hoje. Deve permanecer inovador e evoluir, mas também manter a sua natureza opinativa. Em algum momento, sem dúvida, outros frameworks irão tomar o seu lugar, mas isso não é uma coisa ruim. Eles provavelmente serão construídos sobre as bases estabelecidas pelo Rails, e muitas das práticas podem ser transferidas.
 
-[[Caixa com o profile do Ryan Bates]]
+[[Caixa com o perfil do Ryan Bates]]
 ----------------------------------------------------
 Ryan Bates está envolvido com desenvolvimento web desde 1998. Em 2005 começou a trabalhar profissionalmente com Ruby on Rails e agora é mais conhecido pelo seu trabalho no Railscasts, a série gratuita de screencasts sobre Ruby on Rails.
 ----------------------------------------------------
@@ -37,17 +37,17 @@ Ryan: Existem algumas pequenas coisas, mas nada realmente se destaca. Obviamente
 
 Rupak: Você acha que Rails corre o risco de ficar inchado com todas estas funcionalidades? Ou que ele vai perder a sua facilidade de uso e mágica como um preço a se pagar pela flexibilidade recém-descoberta?
 
-Ryan: A maioria das adições e alterações no Rails 3: Eu não iria classificar como inchaço, de fato, completamente o oposto. É cada vez mais modular e, portanto, mais fácil para tirar o excesso que você não quer usar.
+Ryan: A maioria das adições e alterações no Rails 3: eu não classificaria como inchaço, na verdade, muito pelo contrário. Ele está se tornando cada vez mais modular e, portanto, mais fácil para tirar o excesso que você não quer usar.
 
-Uma preocupação válida é: será que esta modularidade adicionada para Rails 3 o deixa menos opinativo? Acho que não. A abordagem convenção sobre configuração será ainda muito usada, e a pilha padrão será a mesma do Rails 2. A flexibilidade adicionada é praticamente invisível a menos que você a queira.
+Uma preocupação válida é: será que esta modularidade adicionada para Rails 3 o deixa menos opinativo? Acho que não. A abordagem convenção sobre configuração será ainda muito usada, e o conjunto de módulos padrão será o mesmo do Rails 2. A flexibilidade adicionada é praticamente invisível a menos que você a queira.
 
 Rupak: Se você pudesse dar uma dica a alguém que está apenas começando, qual seria? (exceto, naturalmente, assistir aos Railscasts e ler a Rails Magazine!)
 
-Ryan: Não tente forçar Rails a se encaixar na sua velha maneira de fazer as coisas. Rails é configurável, mas você perde muito do seu encanto ao fazê-lo. Inicialmente adote as convenções até que as coisas fiquem confortáveis. Você pode descobrir, como eu, que a maneira Rails é muito melhor que o sua antiga maneira.
+Ryan: Não tente forçar Rails a se encaixar na sua velha maneira de fazer as coisas. Rails é configurável, mas você perde muito do seu encanto ao fazê-lo. Inicialmente adote as convenções até que as coisas fiquem confortáveis. Você pode descobrir, como eu, que a maneira Rails é muito melhor que a sua maneira antiga.
 
 Isso não significa que você nunca deve sair das convenções, há casos em que eu as quebro. No entanto, sem a experiência inicial, você não terá a sabedoria para saber quando e onde quebrar as convenções.
 
-Finalmente, não caia na rotina. Continue a explorar novos projetos e ideias para ficar afiado. Em última análise: continuar investindo em si mesmo.
+Finalmente, não caia na rotina. Continue a explorar novos projetos e ideias para ficar afiado. Em última análise: continue investindo em si mesmo.
 
 Rupak: O que você desejaria que existisse no Rails hoje?
 
@@ -59,8 +59,8 @@ Ryan: RailsConf foi demais. Fiquei contente de ver Rack sendo mencionado em vár
 
 Rupak: Qual será o tema para o próximo Railscast?
 
-Ryan: Eu literalmente não sei até o dia em que eu gravá-lo, mas eu tenho muitas ideias amadurecendo. Em geral, eu gostaria de fazer algo mais sobre autorização, otimização, testes, refatoração, e depuração. Claro que estou sempre à procura de sugestões. Por favor, adicione-as ao http://railscasts.uservoice.com.
+Ryan: Eu literalmente não sei até o dia em que eu gravá-lo, mas eu tenho muitas ideias amadurecendo. No geral, eu gostaria de fazer algo mais sobre autorização, otimização, testes, refatoração, e depuração. Claro que estou sempre à procura de sugestões. Por favor, adicione-as a http://railscasts.uservoice.com.
 
 Discussão: http://railsmagazine.com/2/8
 
-[[imagem: Sarah Mei, Lori Olson e Desi McAdam no painel Mulher em Rails]]
+[[imagem: Sarah Mei, Lori Olson e Desi McAdam no painel Mulher no Rails]]
