@@ -50,19 +50,15 @@ Creating Page parts.... OK
 
 Finished.
 
-Once we are through with these questions, we can start up the server in production mode and navigate to the http:// localhost:3000/ to see our application up and running.
-
 Uma vez que respondemos essas questões, nós podemos iniciar o servidor no modo de produção e navegar para http://localhost:3000/ para ver nossa aplicação de pé e rodando.
 
 saurabh@laptop:~/radiant$ script/server -e production
 
-[imagem 1]
-
-We are now ready to manage the content, so we navi- gate to http://localhost:3000/admin/login and login with the credentials we provided during the installation process. Once inside, we are presented with the administrator panel as shown in Figure 2.
+[figura 1]
 
 Agora nós estamos prontos para gerenciar o conteúdo, então nós navegamos para http://localhost:3000/admin/login e logamos com as credenciais que nós informamos durante o processo de instalação. Uma vez dentro, nós somos apresentados ao painel de administrador, como mostrado na figura 2:
 
-[imagem 2]
+[figura 2]
 
 Se familiarizando com a terminologia do Radiant
 
@@ -85,9 +81,50 @@ Snippets
 
 Como o nome diz, snippets são pequenos pedações de código, que realizam pequenas funções que podem ser reutilizadas. Um snippet só precisa ser criado uma vez. Se você algum texto em várias página ou reutiliza algum pedaço de código em diferentes layouts, você pode simplesmente criar um snippet em chamar ele dentro das páginas ou do layout.
 
-We can add a snippet as shown in the code sample below, by navigating to the snippet tab in the admin panel and click- ing on “snippet”. Here is an example of how you can create a reusable snippet:
+Nós podemos adicionar um snippet como mostrado no código de exemplo abaixo, navegando até a aba snippet no painel admin e clicando em "snippet". Aqui uma exemplo de como você pode criar um snipet reutilizável:
 
+Name: table_of_contents
 
+Snippet:
+<r:children:each limit=”10” order=”desc”>
+  <li><r:link /> </li>
+</r:children:each></ul>
 
+Na hora de salvar você tem a opção de manter ele como Markdown ou Textile. Uma vez criado, o snippet pode ser chamado dentre uma página usando uma radius tag como e seguir:
 
+<r:snippet name=”table_of_contents”/>
+
+Layouts
+
+Layouts são como o corpo do HTML. Eles nos ajudam a definir como a página irá aparentar e como os vários elementos vão ser organizados nás paginas. Layouts também são reutilizáveis como Snippets, e podem ser incluídos sobre outros layouts também. As várias partes do layout, como o conteúdo, podem ser escritos em qualquer linguagem que desejarmos, à parte das radius tags, como HTML, XML, JavaScript. A tela para criar o layout pode ser visualizada na figura 3.
+
+[figura 3]
+
+Páginas seguem uma estrutura Pai - Filho. Uma página pai pode ter muitas páginas filhos e elas por sua vez podem ter suas páginas filhos. Esta estrutura torna fácil a organização do site. A figura 4 mostra como a página Admin se parece.
+
+[figura 4]
+
+Páginas são preenchidas por snippets e layouts, ainda assim elas tem seus próprios atributos.
+
+1 Título: Esse é o nome da página em texto simples. Ele aparece na barra de títulos do navegador quando a página é exibida.
+2 Slug: Slug é o link para visualizar a página sendo criada. Este link é geralmente dado automaticamente pelo título da página mas ele pode ser customizado clicando no link "More" e então informando um texto customizado para isso. Espaços não são permitidos porque este texto é parte do URL.
+3 Breadcrumb: Breadcrumb é para o usuário ver a navegação na página. Ele é exibido em um formato como este, uma trilha sequencial é criada a partir do pai da página atual. Ele retrata a hierarquia da estrutura de página.
+
+Outras partes da página Admin são:
+
+• Filtro: É útil para selecionar o tipo de conteúdo para os conteúdos e partes a serem definidos em uma página particular. As opções padrões são Markdown, Smarty pants e Textile.
+• Tipos de página: Tipos de página nos ajudam a definir o tipo das páginas para o site. Páginas podem ser Normal, Blog e Archive. Dependendo da seleção eles são exibidos no output final. Com "File Not Found", página customizada de erro pode ser gerada e utilizada caso ocorram erros pré definidos no site.
+• Status: O status da página retrata se ela foi salva ou publicada pelo usuário. Uma vez publicada, o usuário pode ver a página de acordo com sua definição.
+
+[figura 5]
+
+Extensões
+
+O Radiant, assim como qualquer outro CMS, pode ser extendido facilmente, quando as funcionalidades padrões do framework não são suficientes. Existem muitas extensões disponíveis para o Radiant, as mais comuns são o editor TinyMCE e Latex para exibir fórmulas matemáticas e muito mais.
+
+Conclussão
+
+Radiant, as they say, is a no fluff CMS, provides us with a modular architecture which can be easily played around with. For a Rails programmer or a small rails team, Radiant makes it easier to extend and customize it to the specific needs of the user. Radiant also has a very active open source community.
+
+Radiant, como eles dizem, é um CMS 'não aveludado' que nos provê uma arquitetura modular que pode ser facilmente manipulada. Para um programador Rails ou uma equipe Rails pequena, Radiant torna fácil extendê-lo e customizá-lo para as necessidades específicas do cliente. O Radiant também tem uma comunidade open source bem ativa.
 
