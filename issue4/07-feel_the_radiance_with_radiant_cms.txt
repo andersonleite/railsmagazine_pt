@@ -74,10 +74,20 @@ Radius Tags
 
 Radius tags são tags similares as do HTML, mas específicas para o Radiant CMS. Elas podem ser usadas em qualquer lugar dentro das páginas, Snippets ou layouts, exceto nos nomes. Radius tags são inteligentemente construídas dentro de quatro categorias e isso é o que difere elas de outras tags. Elas são:
 
-1.	Content Tags: These tags refer to the different page attri- butes like title (<r:title/>),or content (<r:snippet />) and are mostly self enclosing in nature.
-1.	Tags that change Page context: These tags refer to a container tag and control from which page the contained tags get their content, e.g. <r:parent>
-2.	Conditional Tags: They start with <r:if_ or <r:unless_ and are container type tags. Only when the conditions defined in the tag are satisfied, the contained content or other ele- ments are rendered.
-3.	Tags that work with collections: They are mostly the tags that do not fall under any other categories.
+1. Tags de conteúdo:  Essas tags se referem a diferentes atributos da página, como título (<r:title/>), ou conteúdo (<r:snippet />) e são na maioria das vezes self enclosing por natureza.
+2. Tags que alteram o contexto da página: Essas tags se referem a uma container tag e controlam de qual página a container tag pega seu conteúdo. Exemplo: <r:parent> 
+3. Tags condicionais: Elas começam com <r:if_ ou <r:unless_ e são um tipo de container tags. O conteúdo da tag ou outro elemento é renderizado somente quando as condições definidas pela tag são satisfeitas.
+4. Tags que trabalham com coleções: São na maioria das vezes tags que não se encaixam dentro de qualquer outra categoria.
+
+Nós podemos também escrever radius tags customizadas buscando extender as funcionalidades do radiant.
+
+Snippets
+
+Como o nome diz, snippets são pequenos pedações de código, que realizam pequenas funções que podem ser reutilizadas. Um snippet só precisa ser criado uma vez. Se você algum texto em várias página ou reutiliza algum pedaço de código em diferentes layouts, você pode simplesmente criar um snippet em chamar ele dentro das páginas ou do layout.
+
+We can add a snippet as shown in the code sample below, by navigating to the snippet tab in the admin panel and click- ing on “snippet”. Here is an example of how you can create a reusable snippet:
+
+
 
 
 
