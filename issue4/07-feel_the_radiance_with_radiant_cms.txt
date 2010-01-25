@@ -1,8 +1,8 @@
 Sinta a radiação com o Radiant CMS
 
-Junto à toda revolução acontecendo na era da Web 2.0, a publicação web também teve uma revolução. Em tempos recentes, o conceito de publicação web (web publishing) evoluiu em um campo maior de desenvolvimento de software e ao longo do mundo todo olhos tem voltado sua atenção a ele. Sistemas de gerenciamento de conteúdo (CMS) foram o resultado desse movimento tanto comercial quanto Open Source. Blogs, Wikis e CMS's como Drupal e Joomla se tornaram extremamente populares por tornar substancialmente fácil publicar conteúdo pela internet, ajudando usuários a se focar no conteúdo mais do que se preocupar com código.
+Junto à toda revolução acontecendo na era da Web 2.0, a publicação web também teve sua revolução. Em tempos recentes, o conceito de publicação web (web publishing) evoluiu em um campo maior de desenvolvimento de software e ao longo do mundo todo olhos tem voltado sua atenção a ele. Sistemas de gerenciamento de conteúdo (CMS) foram o resultado desse movimento tanto comercial quanto Open Source. Blogs, Wikis e CMS's como Drupal e Joomla se tornaram extremamente populares por tornar substancialmente fácil publicar conteúdo pela internet, ajudando usuários a se focar no conteúdo mais do que se preocupar com código.
 
-O Radiant CMD, como seu site define é "Radiant é um sistema de gerenciamento de conteúdo 'não aveludado' para equipes pequenas". Isto quer dizer que ele não se vangloria por ter muitas funcionalidades incríveis, mas provê um framework leve e flexível para o desenvolvimento. Como um artigo introdutório, eu passarei pela instalação do Radiant CMS e então familiarizarei você com a terminologia associada ao sistema.
+O Radiant CMD, como seu site define é "um sistema de gerenciamento de conteúdo 'não aveludado' para equipes pequenas". Isto quer dizer que ele não se vangloria por ter muitas funcionalidades incríveis, mas provê um framework leve e flexível para o desenvolvimento. Como um artigo introdutório, eu passarei pela instalação do Radiant CMS e então familiarizarei você com a terminologia associada ao sistema.
 
 Instalando o Radiant
 
@@ -23,11 +23,11 @@ Como resultado após executar esse comando, você terá uma lista de diretórios
 
 CHANGELOG CONTRIBUTORS INSTALL log	Rakefile script config	db vendor LICENSE public README
 
-Agora nós alteramos o config/database.yml para ajustar nossas configurações do banco de dados. Por padrão, o Radiant precisa do usuário para criar somente o banco de produção, entretanto o usuário pode optar por criar o banco de desenvolvimento e/ou teste também.
+Agora nós alteramos o config/database.yml para ajustar nossas configurações do banco de dados. Por padrão, o Radiant precisa do usuário para criar somente o banco de produção, entretanto o usuário pode optar por criar o banco de desenvolvimento e/ou de teste também.
 
 saurabh@laptop:~/radiant$ rake production db:bootstrap
 
-Uma vez que nós executamos isso no diretório deo nosso projeto, o script bootstrap migrará as tabelas e adicionará elas ao banco de dados. No final do processo, o script perguntará ao usuário algumas questões necessárias à configuração e administração da aplicação.
+Uma vez que nós executamos isso no diretório do nosso projeto, o script bootstrap migrará as tabelas e adicionará elas ao banco de dados. No final do processo, o script perguntará ao usuário algumas questões necessárias à configuração e administração da aplicação.
 
 Create the admin user (press enter for defaults).
 Name (Administrator): saurabh
@@ -72,16 +72,16 @@ Radius tags são tags similares as do HTML, mas específicas para o Radiant CMS.
 
 1. Tags de conteúdo:  Essas tags se referem a diferentes atributos da página, como título (<r:title/>), ou conteúdo (<r:snippet />) e são na maioria das vezes self enclosing por natureza.
 2. Tags que alteram o contexto da página: Essas tags se referem a uma container tag e controlam de qual página a container tag pega seu conteúdo. Exemplo: <r:parent> 
-3. Tags condicionais: Elas começam com <r:if_ ou <r:unless_ e são um tipo de container tags. O conteúdo da tag ou outro elemento é renderizado somente quando as condições definidas pela tag são satisfeitas.
+3. Tags condicionais: Elas começam com <r:if_ ou <r:unless_ e são um tipo de container tags. O conteúdo ou outro elemento dentro da tag é renderizado somente quando as condições definidas pela tag são satisfeitas.
 4. Tags que trabalham com coleções: São na maioria das vezes tags que não se encaixam dentro de qualquer outra categoria.
 
 Nós podemos também escrever radius tags customizadas buscando extender as funcionalidades do radiant.
 
 Snippets
 
-Como o nome diz, snippets são pequenos pedações de código, que realizam pequenas funções que podem ser reutilizadas. Um snippet só precisa ser criado uma vez. Se você algum texto em várias página ou reutiliza algum pedaço de código em diferentes layouts, você pode simplesmente criar um snippet em chamar ele dentro das páginas ou do layout.
+Como o nome diz, snippets são pequenos pedaços de código, que realizam pequenas funções que podem ser reutilizadas. Um snippet só precisa ser criado uma vez. Se você tem algum texto em várias páginas ou reutiliza algum pedaço de código em diferentes layouts, você pode simplesmente criar um snippet e chamar ele dentro das páginas ou do layout.
 
-Nós podemos adicionar um snippet como mostrado no código de exemplo abaixo, navegando até a aba snippet no painel admin e clicando em "snippet". Aqui uma exemplo de como você pode criar um snipet reutilizável:
+Nós podemos adicionar um snippet como mostrado no código de exemplo abaixo, navegando até a aba snippet no painel admin e clicando em "snippet". Aqui um exemplo de como você pode criar um snipet reutilizável:
 
 Name: table_of_contents
 
@@ -90,7 +90,7 @@ Snippet:
   <li><r:link /> </li>
 </r:children:each></ul>
 
-Na hora de salvar você tem a opção de manter ele como Markdown ou Textile. Uma vez criado, o snippet pode ser chamado dentre uma página usando uma radius tag como e seguir:
+Na hora de salvar você tem a opção de manter ele como Markdown ou Textile. Uma vez criado, o snippet pode ser chamado dentre uma página usando uma radius tag como a seguir:
 
 <r:snippet name=”table_of_contents”/>
 
@@ -108,23 +108,25 @@ Páginas são preenchidas por snippets e layouts, ainda assim elas tem seus pró
 
 1 Título: Esse é o nome da página em texto simples. Ele aparece na barra de títulos do navegador quando a página é exibida.
 2 Slug: Slug é o link para visualizar a página sendo criada. Este link é geralmente dado automaticamente pelo título da página mas ele pode ser customizado clicando no link "More" e então informando um texto customizado para isso. Espaços não são permitidos porque este texto é parte do URL.
-3 Breadcrumb: Breadcrumb é para o usuário ver a navegação na página. Ele é exibido em um formato como este, uma trilha sequencial é criada a partir do pai da página atual. Ele retrata a hierarquia da estrutura de página.
+3 Breadcrumb: Breadcrumb é para o usuário ver a navegação na página. Ele é exibido no formato de uma trilha sequencial que é criada a partir do pai da página atual. Ele retrata a hierarquia da estrutura de página.
 
 Outras partes da página Admin são:
 
 • Filtro: É útil para selecionar o tipo de conteúdo para os conteúdos e partes a serem definidos em uma página particular. As opções padrões são Markdown, Smarty pants e Textile.
-• Tipos de página: Tipos de página nos ajudam a definir o tipo das páginas para o site. Páginas podem ser Normal, Blog e Archive. Dependendo da seleção eles são exibidos no output final. Com "File Not Found", página customizada de erro pode ser gerada e utilizada caso ocorram erros pré definidos no site.
+• Tipos de página: Tipos de página nos ajudam a definir o tipo das páginas para o site. Páginas podem ser Normal, Blog e Archive. Dependendo da seleção eles são exibidos no output final. Com "File Not Found", uma página customizada de erro pode ser gerada e utilizada caso ocorram erros pré definidos no site.
 • Status: O status da página retrata se ela foi salva ou publicada pelo usuário. Uma vez publicada, o usuário pode ver a página de acordo com sua definição.
 
 [figura 5]
 
 Extensões
 
-O Radiant, assim como qualquer outro CMS, pode ser extendido facilmente, quando as funcionalidades padrões do framework não são suficientes. Existem muitas extensões disponíveis para o Radiant, as mais comuns são o editor TinyMCE e Latex para exibir fórmulas matemáticas e muito mais.
+O Radiant, assim como qualquer outro CMS, pode ser extendido facilmente quando as funcionalidades padrões do framework não são suficientes. Existem muitas extensões disponíveis para o Radiant, as mais comuns são o editor TinyMCE e Latex para exibir fórmulas matemáticas e muito mais.
 
 Conclussão
 
-Radiant, as they say, is a no fluff CMS, provides us with a modular architecture which can be easily played around with. For a Rails programmer or a small rails team, Radiant makes it easier to extend and customize it to the specific needs of the user. Radiant also has a very active open source community.
-
 Radiant, como eles dizem, é um CMS 'não aveludado' que nos provê uma arquitetura modular que pode ser facilmente manipulada. Para um programador Rails ou uma equipe Rails pequena, Radiant torna fácil extendê-lo e customizá-lo para as necessidades específicas do cliente. O Radiant também tem uma comunidade open source bem ativa.
 
+Recursos
+
+Homepage do Radiant CMS - http://radiantcms.org/
+Radiant Wiki - http://wiki.github.com/radiant/radiant
