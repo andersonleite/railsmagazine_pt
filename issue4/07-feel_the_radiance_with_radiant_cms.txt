@@ -1,0 +1,83 @@
+Sinta a radiação com o Radiant CMS
+
+Junto à toda revolução acontecendo na era da Web 2.0, a publicação web também teve uma revolução. Em tempos recentes, o conceito de publicação web (web publishing) evoluiu em um campo maior de desenvolvimento de software e ao longo do mundo todo olhos tem voltado sua atenção a ele. Sistemas de gerenciamento de conteúdo (CMS) foram o resultado desse movimento tanto comercial quanto Open Source. Blogs, Wikis e CMS's como Drupal e Joomla se tornaram extremamente populares por tornar substancialmente fácil publicar conteúdo pela internet, ajudando usuários a se focar no conteúdo mais do que se preocupar com código.
+
+O Radiant CMD, como seu site define é "Radiant é um sistema de gerenciamento de conteúdo 'não aveludado' para equipes pequenas". Isto quer dizer que ele não se vangloria por ter muitas funcionalidades incríveis, mas provê um framework leve e flexível para o desenvolvimento. Como um artigo introdutório, eu passarei pela instalação do Radiant CMS e então familiarizarei você com a terminologia associada ao sistema.
+
+Instalando o Radiant
+
+Qualquer um com até mesmo um conhecimento básico do Rails pode configurar o Radiant facilmente. Eu começarei a instalação em minha máquina local, com um Ubuntu 8.10. Os pré-requisitos para a instalação são Ruby 1.8.6 ou posterior, Rails 2.1, MySQL/PostgreSQL/SQLite3 e RubyGems.
+
+saurabh@laptop:~$ gem install radiant
+
+Uma vez que a gem está instalada, crie o diretório do seu projeto e vá para ele:
+
+saurabh@laptop:~$ mkdir radiant
+saurabh@laptop:~$ cd radiant/
+
+O comando radiant com o parâmetro para escolher o banco de dados cria uma aplicação Rails Radiant para você. Você pode então selecionar o banco de dados como MySQL, Postgres e SQLite3, o qual irá alterar o arquivo config/daabase.yml de acordo com o banco selecionado. No meu caso, minha escolha foi MySQL.
+
+saurabh@laptop:~/radiant$ radiant --database mysql /home/saurabh/radiant/
+
+Como resultado após executar esse comando, você terá uma lista de diretórios criados justamente como um aplicação Rails. Aqui estão os diretórios criados com esse comando:
+
+CHANGELOG CONTRIBUTORS INSTALL log	Rakefile script config	db vendor LICENSE public README
+
+Agora nós alteramos o config/database.yml para ajustar nossas configurações do banco de dados. Por padrão, o Radiant precisa do usuário para criar somente o banco de produção, entretanto o usuário pode optar por criar o banco de desenvolvimento e/ou teste também.
+
+saurabh@laptop:~/radiant$ rake production db:bootstrap
+
+Uma vez que nós executamos isso no diretório deo nosso projeto, o script bootstrap migrará as tabelas e adicionará elas ao banco de dados. No final do processo, o script perguntará ao usuário algumas questões necessárias à configuração e administração da aplicação.
+
+Create the admin user (press enter for defaults).
+Name (Administrator): saurabh
+Username (admin): admin
+Password (radiant):
+
+Initializing configuration.........OK
+
+Select a database template:
+1. Empty
+2. Roasters (a coffee-themed blog / brochure)
+3. Simple Blog
+4. Styled Blog
+[1-4]: 4
+
+Creating Snippets.... OK
+Creating Pages.... OK
+Creating Layouts.... OK
+Creating Page parts.... OK
+
+Finished.
+
+Once we are through with these questions, we can start up the server in production mode and navigate to the http:// localhost:3000/ to see our application up and running.
+
+Uma vez que respondemos essas questões, nós podemos iniciar o servidor no modo de produção e navegar para http://localhost:3000/ para ver nossa aplicação de pé e rodando.
+
+saurabh@laptop:~/radiant$ script/server -e production
+
+[imagem 1]
+
+We are now ready to manage the content, so we navi- gate to http://localhost:3000/admin/login and login with the credentials we provided during the installation process. Once inside, we are presented with the administrator panel as shown in Figure 2.
+
+Agora nós estamos prontos para gerenciar o conteúdo, então nós navegamos para http://localhost:3000/admin/login e logamos com as credenciais que nós informamos durante o processo de instalação. Uma vez dentro, nós somos apresentados ao painel de administrador, como mostrado na figura 2:
+
+[imagem 2]
+
+Se familiarizando com a terminologia do Radiant
+
+O primeiro encontro com o Radiant pode confundir você, mas uma vez que você entenda a organização dos componentes nele, você pode então destravar o real poder do Radiant, que é alta modularidade e reutilização dos componentes.
+
+Nós vamos primeiro nos familiarizar com os componentes pequenos que formam uma página no Radiant, e então mergulhar em como essas páginas são formadas utilizando esses sub-componentes.
+
+Radius Tags
+
+Radius tags são tags similares as do HTML, mas específicas para o Radiant CMS. Elas podem ser usadas em qualquer lugar dentro das páginas, Snippets ou layouts, exceto nos nomes. Radius tags são inteligentemente construídas dentro de quatro categorias e isso é o que difere elas de outras tags. Elas são:
+
+1.	Content Tags: These tags refer to the different page attri- butes like title (<r:title/>),or content (<r:snippet />) and are mostly self enclosing in nature.
+1.	Tags that change Page context: These tags refer to a container tag and control from which page the contained tags get their content, e.g. <r:parent>
+2.	Conditional Tags: They start with <r:if_ or <r:unless_ and are container type tags. Only when the conditions defined in the tag are satisfied, the contained content or other ele- ments are rendered.
+3.	Tags that work with collections: They are mostly the tags that do not fall under any other categories.
+
+
+

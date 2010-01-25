@@ -1,0 +1,5 @@
+Bruno Grasselli mora em São Paulo, Brasil.
+
+Desenvolvimento de sistemas sempre foi seu hobby e sua profissão, principalmente desenvolvimento voltado para a web. Trabalha com Ruby e Rails atualmente e acredita muito no potencial da linguagem e do framework.
+
+Pode ser encontrado através do e-mail bruno.grasselli@gmail.com ou pelo blog http://brunograsselli.com.br.
