@@ -1,0 +1,7 @@
+Thiago Scalone
+
+Scalone é desenvolvedor em São Paulo. Trabalha efetivamente com RubyOnRails desde 2007 quando participou da migração de um ERP em PHP com Zend para RubyOnRails. Hoje Scalone trabalha na AutoSeg desenvolvendo ferramentas de gestão de segurança em RubyOnRails. Participante ativo das comunidades rubistas, e entusiasta ágil e de novas tecnologias.
+                
+==================================================================
+
+Scalone is a developer in Sao Paulo. Working with RubyOnRails since 2007 when participated in a migration of a ERP in PHP/Zend for RubyOnRails. Today works in AutoSEG developing tools for security management in RubyOnRails. Active participant in the community ruby and enthusiastic agile and of new technologies.
