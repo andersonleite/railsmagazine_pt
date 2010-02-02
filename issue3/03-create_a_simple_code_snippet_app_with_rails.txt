@@ -1,0 +1,2 @@
+Criando um sistema de trechos de código com Rails
+por Michelangelo Altamore

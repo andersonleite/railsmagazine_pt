@@ -1,0 +1,2 @@
+Trabalhando em um projeto Rails de código aberto
+por Dmitry Amelchenko

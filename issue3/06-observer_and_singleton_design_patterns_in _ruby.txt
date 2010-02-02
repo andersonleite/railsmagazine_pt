@@ -1,0 +1,2 @@
+Os padrões de projeto Observer e Singleton no Ruby
+por Khaled al Habache

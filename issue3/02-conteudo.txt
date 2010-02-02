@@ -15,7 +15,7 @@ por James Stewart
 Os padrões de projeto Observer e Singleton no Ruby  17
 por Khaled al Habache
 
-Dica de JRuby: Monitorando com JMX ................ 20
+Dica de JRuby: Monitoramento com JMX .............. 20
 por Joshua Moore
 
 Soluções de Workflow com AASM ..................... 22
@@ -34,7 +34,7 @@ por Arturo Fernandez
 Construíndo um Negócio com Open Source ............ 42
 por Chris Wanstrath
 
-Entrevista com with Carl Mercier................... 46
-Entrevista com Ilya Grigorik....................... 48
-Entrevista com Ryan Singer......................... 50
+Entrevista com with Carl Mercier .................. 46
+Entrevista com Ilya Grigorik ...................... 48
+Entrevista com Ryan Singer ........................ 50
 (entrevistas por Rupak Ganguly)

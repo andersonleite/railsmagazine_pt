@@ -1,4 +1,4 @@
-Como implementar testes automatizados
+Como Implementar Testes Automatizados
 por Eric Anderson
 
 Você não vai encontrar escassez de discussão sobre quais as ferramentas que você deve usar para implementar a sua suite de testes automatizados. O que muitas vezes falta é discussão de exatamente como e o que testar. O objetivo deste artigo é fornecer esta informação.
