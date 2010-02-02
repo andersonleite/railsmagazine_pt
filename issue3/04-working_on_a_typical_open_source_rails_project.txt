@@ -1,2 +1,2 @@
-Trabalhando em um projeto Rails de código aberto
+Trabalhando em um projeto Rails de cÃ³digo aberto
 por Dmitry Amelchenko

@@ -1,2 +1,2 @@
-Os padrıes de projeto Observer e Singleton no Ruby
+Os padr√µes de projeto Observer e Singleton no Ruby
 por Khaled al Habache
