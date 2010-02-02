@@ -1,0 +1,40 @@
+Conteúdo
+
+Editorial..........................................  3
+por Olimpiu Metiu
+
+Criando um sistema de trechos de código com Rails .  4
+por Michelangelo Altamore
+
+Trabalhando em um projeto Rails de código aberto .. 12
+por Dmitry Amelchenko
+
+Suporte a temas ................................... 16
+por James Stewart
+
+Os padrões de projeto Observer e Singleton no Ruby  17
+por Khaled al Habache
+
+Dica de JRuby: Monitorando com JMX ................ 20
+por Joshua Moore
+
+Soluções de Workflow com AASM ..................... 22
+por Chee Yeo
+
+Frameworks Web em Ruby: Um mergulho no Waves ...... 26
+por Carlo Pecchia
+
+Como Implementar Testes Automatizados ............. 32
+por Eric Anderson
+
+Ruby on Rails & Flex:
+Construindo uma nova geração de software .......... 35
+por Arturo Fernandez
+
+Construíndo um Negócio com Open Source ............ 42
+por Chris Wanstrath
+
+Entrevista com with Carl Mercier................... 46
+Entrevista com Ilya Grigorik....................... 48
+Entrevista com Ryan Singer......................... 50
+(entrevistas por Rupak Ganguly)
