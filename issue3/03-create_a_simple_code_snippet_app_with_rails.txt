@@ -1,2 +1,682 @@
 Criando um sistema de trechos de código com Rails
 por Michelangelo Altamore
+
+
+In this article you will see how to create a basic source 
+code snippet application. I will use tests to drive development 
+step by step and provide a practical example. 
+
+I assume that you are familiar with Ruby on Rails basic 
+concepts . You should have a working environment with a 
+recent version of Ruby (>= 1.8.7), RubyGems (>=1.3.0) and, 
+of course, Rails (>=2.1). 
+
+- Initial Sketching 
+
+We create a new rails application called Snippety: 
+$ rails snippety; cd snippety 
+
+and install nifty_generators by Ryan Bates as a plugin by 
+running: 
+$ script/plugin install git://github.com/ryanb/nifty- 
+generators.git 
+
+so that we can quickly generate a simple layout with the 
+command: 
+$ script/generate nifty_layout 
+
+A code snippet will have the following attributes: 
+- name 
+- language 
+- body 
+	 
+Let’s scaffold a basic model: 
+$ script/generate nifty_scaffold snippet name:string 
+language:string body:text 
+
+Migrate the database with rake	db:migrate, start your 
+web server with script/server and point your browser to local- 
+host:3000/snippets to see a functional snippet view. 
+
+Soon after playing with the web interface we realize that 
+our fresh Snippety is lacking a few things: 
+1. language is in a free text field instead of a selectable list of 
+available languages 
+2. snippet name, language and body are not required nei- 
+ther on create nor on update 
+3. snippet body is not highlighted according to the snippet 
+language 
+4. two different snippets can have the same name 
+5. the list of snippet show a tabular list instead of a list of 
+snippets 
+
+These functionalities represent Snippety’s business value. 
+We can start by constraining a snippet to have a unique name, 
+a language and a body; after that we will try to get syntax 
+highlighting. 
+
+In general you should not care too much about the order 
+of activities when the sequence is not critical, and this is the 
+case since we can’t ship a unit of work missing either syntax 
+highlighting or with a potentially inconsistent snippet collec- 
+tion. 
+
+Before start, I rearrange our previous list according to 
+their priority and express each as an expectation: 
+1. each snippet should have a mandatory unique name, 
+language and body 
+2. each snippet body should be rendered highlighted ac- 
+cording to its language 
+3. index action should list snippets in a blog-style way 
+4. snippet language should be chosen from a selectable list 
+of languages instead of free text 
+
+Now that we know where to head for, we can start our first 
+iteration. 
+
+- Task 1: Snippet Validation 
+
+The business logic of Snippet requires a mandatory unique 
+name, a stated programming language and a body. We will 
+implement this starting with tests. 
+
+Test Driven Development (TDD) basically means that for 
+any new requirement we first add a new test asserting what 
+should happen for a case and then we will implement code so 
+that the new test, and all of the old tests, are satisfied. 
+
+Let’s start by editing test/unit/snippet_test.rb and imple- 
+menting a test method named test_should_have_a_name that fails 
+when the snippet’s name is not present: 
+1   require ‘test_helper’ 
+2   
+3   class SnippetTest < ActiveSupport::TestCase 
+4     def test_should_have_a_name 
+5       snippet = Snippet.new 
+6       assert_nil snippet.name 
+7       snippet.valid? 
+8       assert_not_nil snippet.errors.on(:name) 
+9     end 
+10  end 
+
+Take a break to understand what this test is saying. On 
+line 5 we are instantiating a new snippet. On the next line we 
+assert that our snippet has no default name, that is snippet. 
+name should evaluate to nil. Then we run the active record 
+validation on line 7 by sending the valid? message on the 
+snippet object. 
+
+We have fulfilled our preconditions, so on line 8 we assert 
+that we should have an error for the snippet object on the 
+name symbol. 
+
+That is sufficient to express that a snippet validation 
+should fail when it has no name. Run rake test:units on your 
+console to see the following failure: 
+
+1) Failure: 
+test_should_have_a_name(SnippetTest) 
+[./test/unit/snippet_test.rb:8:in `test_should_have_a_ 
+name’ 
+<nil> expected to not be nil. 
+1 tests, 2 assertions, 1 failures, 0 errors 
+
+The next step is to make the test pass by implementing the 
+simplest thing that could possibly work . Let’s modify app/mod- 
+els/snippet.rb so that it looks like that: 
+class Snippet < ActiveRecord::Base 
+  validates_presence_of :name 
+end 
+
+and run rake test:units again. 
+Started 
+. 
+Finished in 0.076376 seconds. 
+1 tests, 2 assertions, 0 failures, 0 errors 
+
+The test passes! We are done with that iteration. Now it’s 
+your turn: using the above code as a guide try to write a test 
+that fails when the language attribute is not set on a snippet 
+object. Then implement the simplest thing that makes your 
+test pass. Do the same for the body attribute and finally con- 
+front your snippet unit test suite with mine. 
+
+To accomplish task 1 we still need a unique name attribute 
+for our snippets. Consider the following test method: 
+25  def test_should_have_a_unique_name 
+26    snippet_one = Snippet.create(:name => ‘Hello 
+World’, :language => “ruby”, :body => “puts \”Hello 
+World\””) 
+27    assert_nil snippet_one.errors.on(:name) 
+28    snippet_two = Snippet.create(:name => snip- 
+pet_one.name, :language => “ruby”, :body => “def hello; 
+#{snippet_one.body}; end”) 
+29    assert_not_nil snippet_two.errors.on(:name) 
+30  end 
+
+We instantiate two snippet objects, we assert that the first 
+one is created and saved without errors on name in line 27, 
+while the second one on line 28 is expected to have an error 
+on name, having the same of the first. Run the usual rake 
+test:units to see: 
+Started 
+…F 
+Finished in 0.099406 seconds. 
+1) Failure: 
+test_should_have_a_unique_name(SnippetTest) 
+[./test/unit/snippet_test.rb:33:in `test_should_have_a_ 
+unique_name’ 
+<nil> expected to not be nil. 
+4 tests, 8 assertions, 1 failures, 0 errors 
+
+As you may have guessed we need to change app/models/ 
+snippet.rb like that: 
+class Snippet < ActiveRecord::Base 
+  validates_presence_of :name, :language, :body 
+  validates_uniqueness_of :name 
+end 
+
+Let’s try our tests again: 
+Started 
+…. 
+Finished in 0.095361 seconds. 
+4 tests, 8 assertions, 0 failures, 0 errors 
+
+All tests are passing now. We have validation for our snip- 
+pets and the first task is complete. 
+
+Time to move on the next one. 
+
+- Task 2: Snippet Highlighting 
+
+For this task we will use the library CodeRay by Kornelius 
+Kalnbach. Check if it is already installed on your system with 
+gem list coderay. If it is not listed you can install by running: 
+$ sudo gem install coderay. 
+
+Our aim is to let Snippety being able to use the coderay 
+gem to render an highlighted version of a snippet body ac- 
+cording to its language syntax. 
+So we configure that dependency in config/environment.rb by 
+adding the line: 
+config.gem "coderay" 
+
+We still don’t know how to interact with that library. How- 
+ever that knowledge is not that far away, by running ri CodeRay 
+you can see its usage; I report here what is relevant for us: 
+
+Highlight Ruby code in a string as html 
+require ‘coderay’ 
+print CodeRay.scan(‘puts “Hello, world!”’, :ruby).html 
+# prints something like this: 
+puts <span class=”s”>&quot;Hello, world!&quot;</span> 
+Highlight C code from a file in a html div 
+require ‘coderay’ 
+print CodeRay.scan(File.read(‘ruby.h’), :c).div 
+print CodeRay.scan_file(‘ruby.h’).html.div 
+You can include this div in your page. The used CSS 
+styles can be 
+printed with 
+% coderay_stylesheet 
+... 
+
+The documentation tells us that: 
+1. we can obtain coderay’s stylesheet with the command 
+coderay_stylesheet 
+2. we can highlight a string calling scan method on the 
+CodeRay class 
+
+In order to integrate coderay stylesheet we run the follow- 
+ing inside root folder of Snippety: 
+$ coderay_stylesheet > public/stylesheets/coderay.css 
+
+You should obtain the stylesheet file. To get it loaded we 
+must modify application layout, as you can see on line 6 in 
+app/views/layouts/application.html.erb file: 
+... 
+4   <head> 
+5     <title><%= h(yield(:title) || “Untitled”) %></ 
+title> 
+6     <%= stylesheet_link_tag ‘coderay’, ‘application’ 
+%> 
+7     <%= yield(:head) %> 
+8   </head> 
+... 
+
+The stylesheet should be loaded now (you can look at the 
+source to be sure). 
+
+*Código HTML dentro de uma imagem*
+
+Now it’s time to explore CodeRay from the Rails console: 
+$ script/console 
+Loading development environment (Rails 2.2.2) 
+>> CodeRay 
+=> CodeRay 
+
+The gem has been correctly loaded if you can see that. 
+Let’s try now to get syntax highlighting using the same ex- 
+ample as the user manual: 
+>> CodeRay.scan(‘puts “Hello, world!”’, :ruby).html 
+=> “puts <span class=\”s\”><span class=\”dl\”>&quot;</ 
+span><span class=\”k\”>Hello, world!</span><span 
+class=\”dl\”>&quot;</span></span>” 
+
+We see a bunch of span tags with their own CSS class, but 
+we would need a div mentioning a CodeRay CSS class. Let’s 
+try again calling the div method on it: 
+>> CodeRay.scan(‘puts “Hello, world!”’, :ruby).html.div 
+=> “<div class=\”CodeRay\”>\n <div 
+class=\”code\”><pre>puts <span class=\”s\”><span 
+class=\”dl\”>&quot;</span><span class=\”k\”>Hello, 
+world!</span><span class=\”dl\”>&quot;</span></span></ 
+pre></div>\n</div>\n” 
+
+It looks much better now. It has a div with a CodeRay class 
+and the code is inside a pre tag so that multiline code will be 
+shown on separate lines. 
+
+We now have enough ingredients for the following test: 
+def test_should_render_highlighted_html 
+  plain_body = %Q(puts “Hello, world!”) 
+  hightlighted_body = %Q(<div class=\”CodeRay\”>\n 
+<div class=\”code\”><pre>puts <span class=\”s\”><span 
+class=\”dl\”>&quot;</span><span class=\”k\”>Hello, 
+world!</span><span class=\”dl\”>&quot;</span></span></ 
+pre></div>\n</div>\n) 
+ 
+  snippet = Snippet.new(:name => “Hello”, :language => 
+“ruby”, :body => plain_body) 
+  assert_equal hightlighted_body, snippet.highlight 
+end 
+
+First we instantiate a Ruby snippet with the content of 
+puts	“Hello, world!” as body and with the requirement that 
+it should be rendered by the same markup that we last saw in 
+the console. We run our unit test suite as usual and we get: 
+Started 
+….E 
+Finished in 0.098842 seconds. 
+1) Error: 
+test_should_render_highlighted_html(SnippetTest): 
+NoMethodError: undefined method `highlight’ for 
+#<Snippet:0×211b460> 
+ ./test/unit/snippet_test.rb:44:in `test_should_ren- 
+der_highlighted_html’ 
+5 tests, 8 assertions, 0 failures, 1 errors 
+
+It complains since we do not still have any highlight 
+method. So we add it to app/models/snippet.rb: 
+def highlight 
+end 
+
+===================================================
+Michelangelo Altamore is an Italian Ruby 
+on Rails evangelist with a passion for expressive 
+beautiful code. He holds a B.S. in Computer Science 
+from Catania University, Italy. 
+Michelangelo has more than 3 years of experience 
+in software development and offers his services 
+from Convergent.it (http://convergent.it)
+===================================================
+
+Rerun the test to find that now we’ve got a different prob- 
+lem: 
+Started 
+….F 
+Finished in 0.102812 seconds. 
+1) Failure: 
+test_should_render_highlighted_html(SnippetTest) 
+[./test/unit/snippet_test.rb:44:in `test_should_ren- 
+der_highlighted_html’ 
+<”<div class=\”CodeRay\”>\n <div 
+class=\”code\”><pre>puts <span class=\”s\”><span 
+class=\”dl\”>&quot;</span><span class=\”k\”>Hello, 
+world!</span><span class=\”dl\”>&quot;</span></span></ 
+pre></div>\n</div>\n”> 
+ expected but was 
+<nil> 
+5 tests, 9 assertions, 1 failures, 0 errors 
+
+It fails since the highlight method actually returns nil. We 
+are ready to implement source highlighting by writing the 
+implementation that we have already seen using the console 
+and hopefully making the tests pass: 
+def highlight 
+  CodeRay.scan(self.body, self.language).html.div 
+end 
+
+We try our tests again: 
+Started 
+….. 
+Finished in 0.111017 seconds. 
+5 tests, 9 assertions, 0 failures, 0 errors 
+
+And they pass! We can highlight source code snippets 
+now and we have a test that confirms that. However, we can’t 
+show highlight source code for anyone until we modify the 
+snippet views. 
+
+Your first instinct could be to look for snippet views, 
+manually customize them and finish the work. 
+
+That would be great, however you will end up without any 
+tests for your controller or views, and that is not good. We 
+instead maintain discipline and proceed with the next task. 
+
+- Task 3: Action Views Customization 
+
+Let’s explore functional tests with rake test:functionals: 
+Started 
+……… 
+Finished in 0.259097 seconds. 
+9 tests, 10 assertions, 0 failures, 0 errors 
+
+You may wonder how it is possible that you already have a 
+suite of 9 different passing functional tests without even writ- 
+ing a single one. 
+
+You should thank Ryan for this, he is so good that nifty_ 
+generators comes with functional tests not only for Test::Unit 
+but also for Shoulda and RSpec. 
+
+That simply means that our work for functional tests will 
+be less than expected. So open test/functionals/snippets_con- 
+troller_test.rb with your editor and have a look at the first 
+method: 
+1   require ‘test_helper’ 
+2   
+3   class SnippetsControllerTest < 
+ActionController::TestCase 
+4     def test_index 
+5       get :index 
+6       assert_template ‘index’ 
+7     end 
+ ... 
+
+As the name suggests, the method is testing the index ac- 
+tion of the snippets controller. On line 5, there is a call to an 
+HTTP request, in particular the get method; the symbol index, 
+that actually stands for the index action of our snippets view, 
+is passed as an argument to the get request. That request is 
+expected to produce a response rendering the index template 
+view for the snippet controller. This is fine and it works, we 
+just would like to add the expectation that a list of snippets is 
+rendered on the template. To do that we modify the method 
+in that way: 
+4   def test_index 
+5     get :index 
+6     assert_template ‘index’ 
+7     snippets = assigns(:snippets) 
+8     assert_select ‘div#snippets’ do 
+9     assert_select ‘div.CodeRay’, :count => snippets. 
+size 
+10  end 
+... 
+
+On line 7 we are assigning to snippets the fixtures set 
+contained in snippets.yml that you can see under the test/ 
+fixtures directory, and we expect that our template contains a 
+snippets id div tag, and inside it, a number of div with Cod- 
+eRay class matching the number of the snippets. 
+
+Running our functional tests we see: 
+Started 
+….F…. 
+Finished in 0.227583 seconds. 
+1) Failure: 
+test_index(SnippetsControllerTest) 
+Expected at least 1 element matching “div#snippets”, 
+found 0. 
+<false> is not true. 
+9 tests, 11 assertions, 1 failures, 0 errors 
+Our test is failing. Indeed, we have no div#snippets for our 
+view. We can implement that and produce the div.CodeRay 
+listing with the following index.html.erb: 
+<% title “Snippety” %> 
+<h2><%= link_to “Create a new code snippet”, new_snip- 
+pet_path %></h2> 
+  <hr/> 
+ 
+<h2>View available code snippets</h2> 
+<div id=”snippets”> 
+  <% for snippet in @snippets %> 
+  <h3> 
+   <%=h snippet.name %> – <%=h snippet.language % 
+  </h3> 
+  <small> 
+  <%= link_to “Show”, snippet %> | 
+  <%= link_to “Edit”, edit_snippet_path(snippet) %> | 
+  <%= link_to “Destroy”, snippet, :confirm => ‘Are you 
+sure?’, :method => :delete %> 
+  </small> 
+  <%= snippet.highlight %> 
+  <hr/> 
+  <% end %> 
+</div> 
+
+Check our functional tests: 
+Started 
+……… 
+Finished in 0.22947 seconds. 
+9 tests, 13 assertions, 0 failures, 0 errors 
+
+And they pass. In fact, you can now see div#snippets and 
+div.CodeRay by looking at the source code of the index page.
+
+By the way, we’ve just finished our 3rd requirement. Now, 
+let’s try to modify our show action to properly display a snip- 
+pet. We add line 16 in snippets_controller_test.rb: 
+13  def test_show 
+14    get :show, :id => Snippet.first 
+15    assert_template ‘show’ 
+16    assert_select ‘div.CodeRay’, :count => 1 
+17  end 
+
+Here we expect a div.CodeRay	element on our page. The 
+test fails since our generated show view action does not know 
+anything about syntax highlighting, as you can see: 
+Started 
+……F.. 
+Finished in 0.306102 seconds. 
+1) Failure: 
+test_show(SnippetsControllerTest) 
+Expected at most 1 element matching “div.CodeRay”, 
+found 0. 
+<false> is not true. 
+9 tests, 14 assertions, 1 failures, 0 errors 
+
+Now we produce the following template for show.html.erb: 
+<% title “#{snippet</span>.name<span class=”idl”>}</ 
+span></span><span class=”k”> - </span><span 
+class=”il”><span class=”idl”>#{</span><span 
+class=”iv”>snippet.language}” %> 
+<small> 
+ <%= link_to “Edit”, edit_snippet_path(snippet</span>) 
+<span class=”idl”>%&gt;</span></span> | 
+ <span class=”il”><span class=”idl”>&lt;%=</span> link_ 
+to <span class=”s”><span class=”dl”>&quot;</span><span 
+class=”k”>Destroy</span><span class=”dl”>&quot;</span></ 
+span>, <span class=”iv”>snippet, :confirm => ‘Are you 
+sure?’, :method => :delete %> | 
+ <%= link_to “View All”, snippets_path %> 
+</small> 
+<%= @snippet.highlight %> 
+
+Finally, our tests are now happily passing: 
+Started 
+……… 
+Finished in 0.271848 seconds. 
+9 tests, 15 assertions, 0 failures, 0 errors 
+
+We can take a break now and have a look at our applica- 
+tion’s front end. After the creation of a couple of code snip- 
+pets, Snippety now looks like this: 
+
+*Screenshot*
+
+While editing or creating a code snippet we have no 
+selectable list of available languages. It’s time to address the 
+issue. 
+
+We start by adding the requirement that a language should 
+be presented inside a select box by placing that assertion on 
+line 22 of snippets_controller_test.rb: 
+19  def test_new 
+20    get :new 
+21    assert_template ‘new’ 
+22    assert_select ‘select#snippet_language’ 
+23  end 
+
+The above expresses that a template should contain a 
+select element with snippet_language id and a parameter cor- 
+responding to the language attribute in the snippet model. 
+
+Having no select box in our view, rake test:functionals fails 
+as shown: 
+Started 
+…..F… 
+Finished in 0.282672 seconds. 
+1) Failure: 
+test_new(SnippetsControllerTest) 
+Expected at least 1 element matching “select#snippet_ 
+language”, found 0. 
+<false> is not true. 
+9 tests, 16 assertions, 1 failures, 0 errors 
+
+We find that the relevant code to modify is placed inside 
+_form.html.erb, a view partial: 
+1   <% form_for @snippet do |f| %> 
+2     <%= f.error_messages %> 
+3     <p> 
+4       <%= f.label :name %><br /> 
+5       <%= f.text_field :name %> 
+6     </p> 
+7     <p> 
+8       <%= f.label :language %><br /> 
+9       <%= f.text_field :language %> 
+10    </p> 
+11    <p> 
+12      <%= f.label :body %><br /> 
+13      <%= f.text_area :body %> 
+14    </p> 
+15    <p><%= f.submit “Submit” %></p> 
+16  <% end %> 
+
+We change creating a local variable holding an array of 
+languages on line 8 and changing the text_field into a select 
+box on line 11, as follows: 
+8   <% form_for snippet</span> <span class=”r”>do</ 
+span> |f| <span class=”idl”>%&gt;</span></span> 
+<span class=”no”> 2</span> <span class=”il”><span 
+class=”idl”>&lt;%=</span> f.error_messages <span 
+class=”idl”>%&gt;</span></span> 
+<span class=”no”> 3</span> <span class=”ta”>&lt;p&gt;</ 
+span> 
+<span class=”no”> 4</span> <span class=”il”><span 
+class=”idl”>&lt;%=</span> f.label <span class=”sy”>:name</ 
+span> <span class=”idl”>%&gt;</span></span><span 
+class=”ta”>&lt;br</span> <span class=”ta”>/&gt;</span> 
+<span class=”no”> 5</span> <span class=”il”><span 
+class=”idl”>&lt;%=</span> f.text_field <span 
+class=”sy”>:name</span> <span class=”idl”>%&gt;</span></ 
+span> 
+<span class=”no”> 6</span> <span class=”ta”>&lt;/ 
+p&gt;</span> 
+<span class=”no”> 7</span> <span class=”ta”>&lt;p&gt;</ 
+span> 
+<span class=”no”> 8</span> <span class=”il”><span 
+class=”idl”>&lt;%</span> <span class=”iv”>languages = [ 
+“Ruby”,”JavaScript”,”Java”,”C”] %> 
+9   <p> 
+10    <%= f.label :language %> 
+11    <%= f.select :language, @languages %> 
+12  </p> 
+13  <p> 
+14    <%= f.label :body %><br /> 
+15    <%= f.text_area :body %> 
+16  </p> 
+17  <p><%= f.submit “Submit” %></p> 
+18  <% end %> 
+
+rake	test:functionals says that: 
+Started 
+……… 
+Finished in 0.3083 seconds. 
+
+*Screenshot*
+9 tests, 16 assertions, 0 failures, 0 errors 
+
+We have no failures. It means that we have a working 
+select list: 
+
+We have caused some eyebrow raising since a good can- 
+didate model property is placed inside a local variable of the 
+view layer. 
+
+We should refactor it and refactor it without making the 
+tests fail. You can see how in snippet.rb: 
+1   class Snippet < ActiveRecord::Base 
+2     LANGUAGES = %w(Ruby JavaScript Java C) 
+... 
+4   end 
+And in _form.html.erb: 
+7   <p> 
+8     <%= f.label :language %> 
+9     <%= f.select :language, Snippet::LANGUAGES %> 
+10  </p> 
+
+Sure enough, we see that the tests are still passing: 
+Started 
+……… 
+Finished in 0.43375 seconds. 
+9 tests, 16 assertions, 0 failures, 0 errors 
+
+As a side effect, the form partial change also provided a 
+working implementation for the edit action, without its own 
+test. As a simple exercise you can modify the test_edit meth- 
+ods on your functional test suite for covering that action. If 
+you are tired of using rake to launch your test suite, you can 
+take a look at autotest. 
+
+- Conclusion 
+
+Initial requirements for snippety have been fulfilled. If it 
+this exercise were real, it would be now released to the users 
+and we would await feedback from them. Maybe they would 
+like more languages, the addition of line numbers, etc. 
+
+What is important is that now you should be more famil- 
+iar with TDD. As you have seen, the concept is easy to grasp 
+and you can use it effectively on your own projects. 
+
+Indeed Test::Unit is great but some people are happier 
+when they can minimize Ruby’s syntactic sugar impact on 
+tests, still using it to express their tests in a readable language 
+that is meaningful for the application. Shoulda by Thoughtbot 
+addresses this issue. You can learn by their nice tutorial. 
+
+I can’t close without mentioning RSpec, the original Be- 
+haviour Driven Development framework for Ruby. If you feel 
+curious, you could have a look at a great talk by Dave Astels 
+and David Chelimsky where it is explained what BDD is, and 
+where it comes from. By the way, if you are interested, The 
+RSpec Book (beta) has been recently published. 
+
+I hope you’ve find it useful and thank you for your time. 
+
+- Resources 
+http://github.com/ryanb/nifty-generators/tree/master 
+http://github.com/ryanb 
+http://coderay.rubychan.de/ 
+http://railscasts.com/ 
+http://github.com/thoughtbot/shoulda/tree/master 
+http://github.com/dchelimsky/rspec/tree/master 
+http://ph7spot.com/articles/getting_started_with_autotest 
+http://thoughtbot.com/ 
+http://rubyconf2007.confreaks.com/d3t1p2_rspec.html 
+http://blog.daveastels.com/ 
+http://blog.davidchelimsky.net/ 
+http://www.pragprog.com/titles/achbd/the-rspec-book
+
+Discuss: http://railsmagazine.com/3/2 
