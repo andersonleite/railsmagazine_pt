@@ -1,7 +1,7 @@
 ﻿Ruby on Rails & Flex: Construindo uma nova geração de software
 por Arturo Fernandez
 
-Introdução
+- Introdução
 
 Uma nova geração de aplicações está conquistando desenvolvedores e usuários através de sua bela interface e das grandes possibilidades que ela oferece.
 Estamos falando sobre RIA (Rich Internet Application), um novo tipo de software que combina o melhor das aplicações web e desktop.
@@ -23,7 +23,7 @@ Além disso, o SDK Flex permite desenvolver em diferentes sistemas operacionais 
 Enquanto você pode desenvolver suas aplicações Flex sem comprar nada, a Adobe também oferece uma ferramenta de desenvolvimento adicional chamada Flex Builder.
 Uma moderna IDE (Integrated Development Enviroment) visual construída sob o Eclipse. Apesar do seu custo, o Flex Builder é muito útil para desenvolver a interface do usuário da sua aplicação.
 
-Porque precisamos de aplicações RIA?
+- Porque precisamos de aplicações RIA?
 
 Uma aplicação desktop clássica geralmente roda em um PC ou Mac e não necessita de uma conexão de rede. Um bom exemplo seria um editor de textos como o Apple Pages, Microsoft Word ou OpenOffice Writer. Por outro lado, uma aplicação web roda em um servidor, e muitos clientes acessam ela simultaneamente usando browsers web.
 
@@ -39,36 +39,146 @@ Desenvolvendo uma aplicação RIA podemos juntar o melhor do desktop com o melho
 
 Agora vamos dar uma olhada em como podemos usar o Adobe Flex e Rails para desenvolver uma ótima aplicação em pouco tempo.
 
-Front-End e Back-End
+- Front-End e Back-End
 
-Uma tipica aplicacao web rica e composta por 2 componentes principais: um front-end que e o cliente e um back-end que contem logica de negocios e dados.
+Uma típica aplicação web rica é composta por 2 componentes principais: um front-end que é o cliente e um back-end que contém lógica de negocios e dados.
 
-Quando voce escreve uma aplicacao em Adobe Flex, voce tera um executavel que roda no Adobe Flash Player, pode ser dentro de um browser ou em qualquer outro dispositivo.
+Quando você escrever uma aplicação em Adobe Flex, você terá um executável que roda no Adobe Flash Player, pode ser dentro de um browser ou em qualquer outro dispositivo.
 
-O back-end e uma aplicacao web feita usando qualquer tecnologia como J2EE (Java Enterprise Edition), PHP ou Rails. Vamos usar Rails porque e nosso framework favorito e porque ele e um bom complemento para o Flex.
+O back-end é uma aplicação web feita usando qualquer tecnologia como J2EE (Java Enterprise Edition), PHP ou Rails. Vamos usar Rails porque é nosso framework favorito e porque ele é um bom complemento para o Flex.
 
-O proximo passo e conhecer como o front-end se comunica com o back-end. Vamos entrar nos codigos!
+O próximo passo é conhecer como o front-end se comunica com o back-end. Vamos codificar!
 
 - Como o Flex se comunita com o Rails
 
-Existem duas maneiras de fazer a comunicacao entre Flex e Rails. A primeira e o AMF (Action Message Format), um protocolo de troca de dados atraves do tradicional RPC (Remote Procedure Call). A segunda e via HTTPService, um mecanismo que permite que o Flex faca uma chamada para o back-end usando o protocolo HTTP.
+Existem duas maneiras de fazer a comunicação entre Flex e Rails. A primeira é por AMF (Action Message Format), um protocolo de troca de dados através do tradicional RPC (Remote Procedure Call). A segunda é via HTTPService, um mecanismo que permite que o Flex faça uma chamada para o back-end usando o protocolo HTTP.
 
-AMF e bom para mapear objetos no servidor com objetos no cliente. Usando AMF conseguimos mapear um objeto ActionScript com um objeto Ruby, como uma instancia do modelo. Ele possibilita tambem fazer uma chamada a um metodo controller direto do ActionScript, enviando um objeto como parametro.
+AMF é bom para mapear objetos no servidor com objetos no cliente. Usando AMF conseguimos mapear um objeto ActionScript com um objeto Ruby, como uma instância do modelo. Ele possibilita também fazer uma chamada a um método controller direto do ActionScript, enviando um objeto como parâmetro.
 
-Vamos ver como usar AMF e HTTPService com Flex na pratica.
+Vamos ver como usar AMF e HTTPService com Flex na prática.
 
-Como exemplo, vamos criar uma aplicacao com operacoes de CRUD (Create, Read, Update e Delete) de uma tabela de Produtos de um banco de dados. Primeiro, vamos criar um front-end em Flex, e depois um back-end em Rails.
+Como exemplo, vamos criar uma aplicação com operações de CRUD (Create, Read, Update e Delete) de uma tabela de Produtos de um banco de dados. Primeiro, vamos criar um front-end em Flex, e depois um back-end em Rails.
 
-Primeiro, precisamos criar um novo projeto Flex. A forma mais facil para se fazer isso e usar o Flex Builder. Selecione File > New > Flex Project. Nomeie o projeto e o MXML principal de rails_magazine. Certifique-se de checkar a opcao "Web Application (Runs on Flash Player)", como mostrado na figura 1. Esse wizard ira criar todos os arquivos necessarios pela aplicacao.
+Primeiro, precisamos criar um novo projeto Flex. A forma mais fácil para se fazer isso é usar o Flex Builder. Selecione File > New > Flex Project. Nomeie o projeto e o MXML principal de rails_magazine. Certifique-se de checkar a opção "Web Application (Runs on Flash Player)", como mostrado na figura 1. Esse wizard irá criar todos os arquivos necessários pela aplicação.
 
-O diretorio mais importante para nos e o src/. Aqui e onde nosso codigo vai ficar. Usando Flex Builder, podemos construir nossa GUI rapidamente via drag & drop. Os componentes estao na esquerda e workspace e a area principal. O Datagrid e um otimo componente fornecido pelo Flex. Ele e usado para exibir os dados carregados do banco de dados e possibilita as operacoes basicas como ordenacao e filtro.
+O diretório mais importante para nós e o src/. Aqui é onde nosso código vai ficar. Usando Flex Builder, podemos construir nossa GUI rapidamente via drag & drop. Os componentes ficam na esquerda e workspace é a área principal. O Datagrid é um ótimo componente fornecido pelo Flex. Ele é usado para exibir os dados carregados do banco de dados e possibilita as operações básicas como ordenação e filtro.
 
-Os arquivos binarios do Flex precisando ficar acessiveis via web. Entao vamos coloca-los no diretorio public da nossa aplicacao Rails. Isso e facil, so precisamos selecionar esse diretorio como Output folder, como mostrado na figura 2. Finalizado a GUI, podemos criar o back-end.
+Os arquivos binários do Flex precisam ficar acessíveis via web. Então vamos colocá-los no diretório public da nossa aplicação Rails. Isso é fácil, só precisamos selecionar esse diretório como Output folder, como mostrado na figura 2. Finalizado a GUI, podemos criar o back-end.
 
-Primeiro, vamos criar uma aplicacao Rails usando o comando rails. Segundo, vamos precisar de um modelo para armazenar os dados dos produtos. Para isso execute esse comando:
+Primeiro, vamos criar uma aplicação Rails usando o comando rails. Segundo, vamos precisar de um modelo para armazenar os dados dos produtos. Para isso execute esse comando:
 
 $ script/generate model Product name:string description:string price:float
 
-Agora precisamos configurar nosso banco de dados. Por default o Rails oferece uma configuracao simples do banco de dados SQLite, entao iremos usar este. O proximo passo e executar a migration:
+Agora precisamos configurar nosso banco de dados. Por default o Rails oferece uma configuração simples do banco de dados SQLite, então iremos usar este. O próximo passo é executar a migration:
 
 $ rake db:migrate
+
+Agora precisamos de um controller para gerenciar as requisições request do cliente:
+
+$script/generate controller products
+
+Nosso backend está pronto. O próximo passo é configurar uma conexão entre ele e o front-end.
+
+- RubyAMF
+
+Neste exemplo, criamos dois datagrids (Figura 3). Um irá usar AMF para a comunicação com o servidor. O outro usará HTTPService. Iremos ver o AMF primeiro.
+
+Felizmente para desenvolvedores Rails, temos o plugin RubyAMF que irá fazer todo o trabalho pesado. A instalação é muito fácil. Digite o seguinte:
+
+$ script/plugin install http://rubyamf.googlecode.com/svn/tags/current/rubyamf
+
+Quando a instalação finalizar estaremos prontos para escrever um pouco de código para nossa aplicação Rails. Na pasta config vamos encontrar um arquivo chamado rubyamf_config.rb que possui o mapeamento entre a nossa classe ActiveRecord e nossa classe ActionScript.
+
+Mas não temos uma classe ActionScript! Vamos escrever uma. Isso irá mapear o model product que acabamos de criar no Rails. No projeto Flex, cria uma nova subpasta dentro da pasta src chamada valueobject, e dentro dela uma nova classe ActionScript chamada Product. Esse é o código para o novo arquivo Product.as:
+
+package valueobj
+{
+
+  [RemoteClass(alias="Product")]
+
+  public class Product
+  {
+    public var id:int;
+    public var name:String;
+    public var description:String;
+    public var price:Number;
+    public var createdAt:Date;
+    public var updatedAt:Date;
+
+    /**
+     * Constructor
+     */
+    public function Product()
+    {
+    }
+  }
+}
+
+Repare que os atributos públicos dessa classe casam com os do model do Rails. Também declaramos que o RemoteClass é nossa classe Product do Rails.
+
+Agora volte para o rubyamf_config.rb e adicione as seguintes linhas:
+
+ClassMappings.register(
+  :actionscript => 'Product',
+  :ruby => 'Product',
+  :type => 'active_record',
+  :attributes => ["id", "name", "description", "prince", "created_at", "updated_at"]
+)
+
+Agora que mapeamos a classe Product do Flex com a classe Product do Rails, podemos carregar os dados na nossa grid. Você só precisa setar a propriedade dataProvider do componente datagrid:
+
+<mx:DataGrid id=”dg” dataProvider=”{products}” x=”10” y=”100” width=”457”>
+  <mx:columns>
+    <mx:DataGridColumn dataField=”id” headerText=”ID”/>
+    <mx:DataGridColumn dataField=”name” headerText=”Name”/>
+    <mx:DataGridColumn dataField=”description” headerText=”Description”/>
+    <mx:DataGridColumn dataField=”price” headerText=”Price”/>
+  </mx:columns>
+</mx:DataGrid>
+
+products precisa ser um array de produtos, para isso vamos precisar de uma variável ActionScript para armazenar os dados recebidos do banco de dados:
+
+  [Bindable]
+  private var products:Array = new Array();
+
+Note que estamos usando o modificador Bindable para indicar que esta variável é necessária pelo datagrid. É muito importante indicar no código Flex que precisamos do AMF para invocar os métodos remotos. Então vamos escrever o seguinte código:
+
+<mx:RemoteObject id=”productService” destination=”rubyamf”
+  endpoint=”http://localhost:3000/rubyamf_gateway/”
+  source=”ProductsController”
+  showBusyCursor=”true”
+  result=”resultHandler(event)”
+  fault=”faultHandler(event)” />
+
+RemoteObject é um componente fornecido pelo Flex para gerenciar a comunicação com o backend. Propriedades como result e fault irá invocar diferentes funções ActionScript. O retorno result indica o que fazer quando o request está completo. Neste caso vamos armazenar o resultado de cada request no array ActionScript products. O retorno fault serve para tratar os erros. Adicione esse código em rails_magazine.mxml:
+
+private function resultHandler(event:ResultEvent):void 
+{
+  products = event.result as Array;
+}
+
+Lembre-se, products é um array bindable, que está associado ao nosso datagrid. A conexão entre os componentes é automática. É importante, no entando, ter em mente que a comunicação com o backend é assíncrona.
+
+As operações CRUD estão acessíveis pelos botões da GUI. Quando clicado, cada botão invoca uma ação Rails correspondente. Por exemplo, para listar todos os produtos no datagrid, precisamos chamar o método load_all da classe controller. Pra fazer isso, podemos escrever uma função ActionScript e setar ela como retorno do botão Refresh:
+
+private function load():void {
+  var token:AsyncToken = AsyncToken(productService.load_all());
+}
+
+Também é possível enviar um objeto com dados do Flex para o Rails. Para salvar os dados no banco de dados precisamos dessa função ActionScript:
+
+private function save():void {
+  var prod:Product = new Product();
+  prod.id = dg.selectedItem.id;
+  prod.name = Name.text;
+  prod.description = Description.text;
+  prod.price = parseFloat(Price.text);
+  var token:AsyncToken = AsyncToken(productService.
+  update(prod));
+}
+
+
+
+
+
+
