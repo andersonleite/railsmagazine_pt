@@ -1,67 +1,28 @@
-Suporte a temas
+Suporte a Temas
 por James Stewart
 
-It’s the ideal scenario really. You’ve spent many, many 
-hours into your project, crafted the business logic so it’s just 
-right, and tuned it all to perfection. And then you realize that 
-with just slightly tweaked views and a change of stylesheets, 
-that same app could serve a different audience. 
+Realmente este é o cenário ideal. Você tem gasto muitas, muitas horas no seu projeto, elaborado as regras de negócio para assim ela estar correta e ajustada com perfeição. Depois você realiza isso com apenas um rapido refinamento nas views e uma mudança de stylesheets, então essa mesma aplicação poderia servir um público diferente.
 
-Or perhaps that’s rather rare, but you’re busy designing an 
-app that from the outset will need to serve multiple clients, 
-each of whom will need a bit more customization than a 
-simple choice of logo and colour scheme provide. 
+Ou talvez isso seja bastante raro, mas você está ocupado projetando um aplicativo que desde o início que terá de servir inúmeros
+clientes, cada um dos quais vai precisar de um pouco mais de personalização do que uma simples escolha de logotipo e esquema de cores proporcionam.
 
-===========================================================
-James Stewart is a freelance web developer 
-and consultant, based in London and primarily 
-working with arts organizations and non-profits 
-to develop their web presences and improve their 
-business processes. Though officially tech-agnostic 
-he’s usually happiest building web applications with 
-Rails or Merb. Outside of work he’s enjoying the new 
-experience of fatherhood, and dabbles in concert promotion. 
-===========================================================
+---------------------
+James Stewart é um desenvolvedor web freelancer e consultor, com sede em Londres e trabalhando principalmente com organizações de artes sem fins lucrativos para desenvolver a sua presença na web e melhorar seus processos de negócio. Embora oficialmente seja um tech-agnóstico, ele geralmente é mais feliz criando aplicativos web com Rails ou Merb. Fora do trabalho ele está gostando da nova experiência da parternidade e tem interesse em promover concertos.
+---------------------
 
-In either case you could get round it with careful use of 
-layouts, partials and other tricks from the Rails toolkit, but 
-that can quickly become cumbersome and isn’t going to scale 
-if you need to change different elements for different clients. 
-That’s where theme_support plugin comes in. 
+Em ambos os casos você pode contorná-la com o uso cuidadoso de layouts, partials e outros truques que o Rails oferece, mas que rapidamente pode tornar-se incômodo e não vai escalar se você precisar alterar elementos diferentes para clientes diferentes. É onde entra plugin theme_support.
 
-Originally released by Matt McCray based on code used in 
-the Typo blogging engine by Tobias Luetke, theme_support pro- 
-vides support for any number of themes which can override 
-any view (whether a full view or a partial) from your main ap- 
-plication, and have their own set of assets. So once you’ve got 
-your main site set up, all you need to do is add an appropriate 
-folder, add some declarations to your ApplicationController to 
-identify the right theme, and override where necessary. The 
-README file covers most of the particulars. 
+Lançado originalmente pelo Matt McCray baseado no código usado no Typo blogging engine criado por Tobias Luetke, theme_support fornece
+suporte para qualquer número de temas que podem substituir qualquer view (uma view completa ou parcial) de sua aplicação principal e têm também seu próprio conjunto de habilidades. Portanto, uma vez que você tenha seu site principal criado, tudo que você precisa fazer é adicionar uma determinada pasta, adicione algumas declarações no seu ApplicationController para identificar o tema correto e substitua quando necessário. O arquivo README abrange a maioria das particularidades do projeto.
 
-Before you rush out and start theming your application, 
-there’s something else you ought to know. The plugin keeps 
-breaking. It’s not that the code is buggy, but simply that 
-goes fairly deeply into Rails, and for a variety of (very good) 
-reasons Rails API keep changing. It’s the sort of problem that 
-we can all hope will disappear once we have Rails 3 and the 
-defined public API, but for the time being some workarounds 
-are necessary to get it working for subsequent Rails releases. 
+Antes que você se apresse e comece a incluir diversos temas na sua aplicação, tem outra coisa que você deveria saber. O plugin continua quebrado. Não é que o código é bugado, mas simplesmente que ele vai muito profundo no Rails e por uma variedade de (ótimas) razões a API do Rails vive mudando. É o tipo de problema que nós temos muita expectativa que vai desaparecer assim que tivermos o Rails 3 e a sua API pública definida, mas por enquanto algumas soluções são necessárias para fazê-lo funcionar em versões posteriores do Rails.
 
-So in that great open source tradition, a few of us have 
-begun experimenting with the plugin over on github. It began 
-when I created a fork and found a workaround to serve my
-fairly modest needs. Since then a couple more forks have 
-sprung up and we’re working on resolving them. I also man- 
-aged to make a test suit that can help checking the state of the 
-plugin with your installed rails version. 
+Então na nobre tradição open source, alguns de nós começaram a experimentar o plugin no github. Tudo começou quando eu criei um fork e encontrei uma solução para atender as minhas modestas necessidades. Desde então, mais de um par de forks surgiram e estamos trabalhando para resolvê-los. Eu também conseguiu fazer uma suíte de testes que pode ajudar a verificar o estado do plugin com a versão do rails instalada.
 
-
-- Resources 
-
-Project page 
-http://github.com/jystewart/theme_support/tree/master/ 
-Test Application 
+Recursos
+Página do projeto
+http://github.com/jystewart/theme_support/tree/master/
+Aplicação de Teste
 http://github.com/jystewart/theme_support_test_app/
- 
-Discuss: http://railsmagazine.com/3/4
+
+Discuta: http://railsmagazine.com/3/4
