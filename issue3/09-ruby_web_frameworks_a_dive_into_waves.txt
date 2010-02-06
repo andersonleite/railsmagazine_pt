@@ -1,2 +1,494 @@
 Frameworks Web em Ruby: Um mergulho no Waves
 por Carlo Pecchia
+
+In this article we introduce the Waves framework, mainly 
+based on the concept of “resources” to provide web applica- 
+tions. No prior knowledge is needed in order to understand 
+everything, though some experience with Ruby and Ruby On 
+Rails could help. 
+
+- Introduction 
+
+Being a ruby programmer implies, more or less, to being 
+also curios, to love experimentations… so we like to explore 
+emerging web framework, particularly the ones based on 
+Ruby. 
+
+Now it’s time for Waves. It’s defined by its developers as a 
+Resource Oriented Architecture (ROA) framework. 
+
+But what does that mean? 
+
+Starting from the following facts, they derive that the MVC 
+way is only one of the possibilities to build and code web ap- 
+plications: 
+
+- The Web itself is based on resources, and the spreading 
+of REST over other “protocols” is a clear symptom of 
+that. 
+- Reasoning in terms of resources give you the possibility 
+to use all the (huge) existing infrastructures of the web 
+(caching, URI, MIME types, RSS, and so on). 
+- When properly structured, a ROA application can be 
+less costly to maintain and to integrate with other ap- 
+plications. 
+- After all, HTTP has demonstrated to be a good choice 
+for that: a protocol that calls methods on resources. 
+- Methods: GET, PUT, POST, DELETE, … 
+Resource: “things” identified and accessed by an URI 
+
+So, the most interesting things about this framework can 
+be summarized here: 
+- Embrace of resources approach: the key of Waves are 
+resource, and the routing features heavily work with 
+that. 
+- The application behaves like a proxy of resources: we 
+can have multiple request paths invoking the same set 
+of resources. 
+- It’s based, like Rails (at least with 2.3 version) and Merb, 
+on Rack. 
+- It runs on JRuby. 
+
+In Waves we can see an application basically as a com- 
+posed stack of functionalities: 
+
+* Image: Application, Layer(s), FOundation *
+
+- Application: is built on Layers 
+- Layers: mix-in features to help build your application 
+(eg: MVC support) 
+- Foundation: is a Layer that provides at least the mini- 
+mal features set required for an application. 
+
+In fact, Waves authors speak in terms of Layers and Foun- 
+dation. Of course there aren’t any magical approaches on 
+that, we can do almost the same with Rails (or Merb, Sinatra, 
+Ramaze, etc), but this “change of mind” is interesting and 
+worth experimenting a little. 
+
+In this article we’ll explore the surface of the framework 
+that is still on version 0.8.x. After installing it, we’ll write a 
+simple application in order to illustrate how Waves works. 
+
+- Installation 
+
+Of course a gem is provided, so we simply need to type: 
+$ sudo gem install waves 
+
+and adding some dependencies if they aren’t already pres- 
+ent in our system. 
+
+- A simple application 
+
+Let’s create a simple application for managing personal 
+ToDo’s list. 
+$ waves generate --name=todo_manager --orm=sequel 
+
+Waves can use whatever ORM we prefer, in this case we 
+choose to experiment with Sequel. 
+
+Previous command generates our application skeleton: 
+Rakefile 
+startup.rb 
+configurations/ 
+controllers/ 
+helpers/ 
+lib/ 
+    tasks/ 
+models/ 
+public/ 
+resources/ 
+schema/ 
+    migrations/ 
+templates/ 
+tmp/ 
+views/ 
+
+As we can see the directory structure looks familiar to 
+Rails one. Particularly important is the startup.rb file, when a 
+Waves application starts: 
+## startup.rb 
+require ‘foundations/classic’ 
+require ‘layers/orm/providers/sequel’ 
+module TodoManager 
+  include Waves::Foundations::Classic 
+  include Waves::Layers::ORM::Sequel 
+end 
+
+Now, let’s create a migration for our basic resource: 
+$ rake schema:migration name=create_items 
+
+that generates the file schema/migrations/001_create_items.rb 
+we’ll fill with: 
+## schema/migrations/001_create_items.rb 
+class CreateItems < Sequel::Migration 
+  def up 
+    create_table :items do 
+      primary_key :id 
+            string :name 
+      string :content 
+      string :status 
+      timestamp :updated_on 
+    end 
+  end 
+  def down 
+    drop_table :items 
+  end 
+end 
+
+As told before here we are using Sequel ORM, but of course 
+we can choose whatever fits our needs (ActiveRecord, Data- 
+Mapper, etc). 
+
+Now we can launch the migration with: 
+$ rake schema:migrate 
+
+But wait! Where is the database configuration?! All con- 
+figuration options live in configurations/*.rb, namely: 
+default.rb 
+development.rb 
+production.rb 
+
+=======================================
+Carlo Pecchia is an IT engineer living in Italy. 
+Its main interests are related to Open Source 
+ecosystems, Ruby, web application development, 
+code quality. He can be reached through his blog 
+or on Twitter. 
+http://carlopecchia.eu  
+http://twitter.com/carlopecchia.
+=======================================
+
+Development and production modes inherit from default 
+setups. In development we find: 
+## configurations/development.rb 
+module TodoManager 
+  module Configurations 
+    class Development < Default 
+      database :adapter => ‘sqlite’, :data- 
+base => ‘todomanager’ 
+      reloadable [ TodoManager ] 
+      log :level => :debug 
+      host ‘127.0.0.1’ 
+      port 3000 
+      dependencies [] 
+      application do 
+        use ::Rack::ShowExceptions 
+        use ::Rack::Static, 
+                                :urls => [‘/ 
+css/’, ‘/javascript/’, ‘/favicon.ico’], 
+                                :root => 
+‘public’ 
+        run ::Waves::Dispatchers::Default.new 
+      end 
+      server Waves::Servers::Mongrel 
+    end 
+  end 
+end 
+
+And in fact, after running the migration a new file con- 
+taining the Sqlite development database is generated (todoman- 
+ager). 
+
+Now it’s time to put in some HTML and CSS code. 
+
+We do it using Markaby, the default system assumed by 
+Waves (but of course we can switch to another templating 
+system). It’s an interesting way of generate HTML code by 
+only writing Ruby snippets. 
+## templates/layouts/default.mab 
+doctype :html4_strict 
+html do 
+  head do 
+    title @title 
+    link :href => ‘/css/site.css’, :rel => 
+‘stylesheet’, :type => ‘text/css’ 
+  end 
+  body do 
+    h1 { a ‘ToDo manager’, :href => ‘/items’ 
+} 
+    div.main do 
+        layout_content 
+    end 
+  end 
+end 
+## public/css/style.css 
+/* it’s up to you to put some content here... 
+*/ 
+
+Ok, it’s finally time to start Waves server to ensuring us 
+everything is set up properly: 
+$ waves server 
+
+And pointing out browser on http://localhost:3000 we see 
+the 404 error: 
+
+* Image: 404 error on red background *
+
+Of course, we haven’t yet defined any request path pro- 
+cessing. Let’s do it in main entry point, that’s the resources/ 
+map.rb file: 
+## resources/map.rb 
+module TodoManager 
+  module Resources 
+    class Map 
+      include Waves::Resources::Mixin 
+      on( true ) { “Hi, I manage your To-Dos...” } 
+    end 
+  end 
+end 
+
+Basically here we are saying that all request are served by a 
+string as content. Let’s see if, and how, it works in practice: 
+
+Let’s add one line: 
+on( true ) { “Hi, I manage your ToDos...” } 
+on( :get ) { “Hi, I manage your ToDos... 
+again!” } 
+
+Refreshing the browser we can see the second string 
+rendered. This is how, basically, routes work in Waves. At the 
+end of this article we’ll show how we can use this nice DSL 
+(domain specific language) here to express routes. 
+
+Introducing RESTful behaviour 
+
+Ok, now we have to define routes for “items” like that: 
+- GET /items displays the items list (of things to do…) 
+- GET /items/:id displays the item identified by :id 
+- POST /items creates a fresh new item 
+- PUT /items/:id modifies item identified by :id 
+- DELETE /items/:id deletes item identified by :id 
+
+But first we need to define Item model: 
+## models/item.rb 
+module TodoManager 
+  module Models 
+    class Item < Default 
+      before_save do 
+        set_with_params(:updated_on => Time. 
+now) 
+      end 
+      after_save do 
+        set_with_params(:name => self.id) 
+      end 
+      def date 
+        updated_on.strftime(‘%d.%m.%Y’) 
+      end 
+    end 
+  end 
+end 
+
+Due to implementation of find methods for the control- 
+ler (maybe broken?), we have to define a name column in the 
+model, and be sure it acts like an id field. 
+
+Let’s insert some data using the console: 
+$ waves console 
+>> t = TodoManager::Models::Item.new 
+=> #<TodoManager::Models::Item @values={}> 
+>> t.content = ‘finish waves introductory 
+article’ 
+=> “finish waves introductory article” 
+>> t.status = ‘todo’ 
+=> “todo” 
+>> t.save 
+=> #<TodoManager::Models::Item @ 
+values={:content=>”finish waves introductory 
+article”, 
+        :status=>”todo”, :id=>1, :updated_ 
+on=>Mon Dec 29 12:00:00 +0100 2008}> 
+>> t 
+=> #<TodoManager::Models::Item @ 
+values={:content=>”finish waves introductory 
+article”, 
+        :status=>”todo”, :id=>1, :updated_ 
+on=>Mon Dec 29 12:00:01 +0100 2008}> 
+>> t.id 
+It’s time to define the “correct” request mappings: 
+## resources/map.rb 
+module TodoManager 
+  module Resources 
+    class Map 
+      include Waves::Resources::Mixin 
+      # redirect ‘/’ request do ‘/items’ 
+      on ( :get, [] ) { redirect ‘/items’ } 
+      # ‘GET /items’ 
+      on ( :get, [‘items’] ) do 
+        items = controller(:item).all 
+        view(:item).list(:items => items) 
+      end 
+    end 
+  end 
+end
+
+It’s clear that the first path declaration redirects to ‘/items’, 
+that is handled by the second path, when we invoke the ren- 
+der of templates/item/list.mab: 
+## templates/item/list.mab 
+layout :default do 
+    ul do 
+        @items.each do |i| 
+          li do 
+                i.content + ‘ (‘ + a(‘view’, 
+:href => “/items/#{i.id}”) + ‘)’ 
+            end 
+        end 
+    end 
+end 
+
+- A little explanation. 
+
+When defining the route, we see that controllers are very 
+tiny pieces in Waves: they simply tie the request parameters 
+to the appropriate ORM model. Don’t bother because we see 
+“controller logic” placed in resources/map.rb, after we’ll put it in 
+its own space. 
+
+The line: 
+view(:item).list(:items => items) 
+
+tells the controller to render the file list (with appropri- 
+ate extension) found under templates/item (coming from :item) 
+passing it a parameter named :items populated with some 
+values (retrieved by the controller) 
+
+Pointing our browser on “http://localhost:3000/items” we 
+can see: 
+
+* Image: ToDo manager *
+
+- Keeping separate concerns: resource delegation 
+
+The only resource in our application is Map and that 
+handles requests for “items” too. Of course we should avoid 
+that and delegate some route paths to appropriate resource.
+
+So, let’s generate a resource for items: 
+## resources/item.rb 
+module TodoManager 
+  module Resources 
+    class Item < Default 
+      # ‘GET /items’ 
+      on(:get, [‘items’]) do 
+        items = controller.all 
+        view.list(:items => items) 
+      end 
+    end 
+  end 
+end 
+
+and keep resources/map.rb smaller: 
+## resources/map.rb 
+module TodoManager 
+  module Resources 
+    class Map 
+      include Waves::Resources::Mixin 
+      # redirect ‘/’ request do ‘/items’ 
+      on ( :get, [] ) { redirect ‘/items’ } 
+      # delegate to item resource any path 
+like ‘/items’ 
+      on (true, [“items”]) { to :item } 
+      # delegate to item resource any path 
+like ‘/items/<something_here>’ 
+      on (true, [“items”, true]) { to :item }      
+    end 
+  end 
+end 
+
+Hitting the refresh button on our browser shows us that 
+everything works as expected. 
+
+Now we can inject the full REST behaviour to our “item” 
+resource. 
+
+Let’s add the handling for GET /items/<id> in resources/item. 
+rb: 
+# ‘GET /items/<id>’ 
+on(:get, [‘items’, :name]) do 
+  item = controller.find(captured.name) 
+  view.show(:item => item) 
+end
+
+And see how it is rendered in our browser: 
+
+* Image *
+
+So it’s easy to continue defining all the other “REST meth- 
+ods” (exercise for the readers!). Don’t forget that the PUT and 
+DELETE methods are not currently supported by the browsers, 
+so one of the best way is to mimic them with POST and some 
+hidden parameters (that is the way it is done in Rails, for 
+instance). 
+
+Basically here we can see how routing works. A path is 
+defined as an array of “chunks”: 
+# /items/past/1234 
+[ “items”, “past”, {:name => /\d+/} ] 
+# /items/some-slug-here/and_something_else 
+[ “items”, “past”, :name ] 
+
+- Conclusion 
+
+As promised before, we’d like to shortly show how the DSL 
+for defining routes work. Well, it’s based on the concept of 
+“Functor”: 
+fib = Functor.new do 
+    given( 0 ) { 1 } 
+    given( 1 ) { 1 } 
+    given( Integer ) do |n| 
+        self.call( n-1 ) + self.call( n-2 ) 
+    end 
+end 
+
+So we can easily create a “request functor”, that is a functor 
+defined on a resource class to match a given request pattern. 
+So, for example: 
+class Item 
+  include Waves::Resources::Mixin 
+    on( :get, [‘name’] ) { “default item 
+here” } 
+end 
+
+With that it is easy to define routes based on parameters 
+matching (an expressive technique used, for example, in lan- 
+guages like Erlang). 
+
+Waves is a work in progress, so we can’t rely too much 
+on it for daily activities (but maybe someone will do…). 
+Anyways, we found it really interesting, particularly on the 
+concepts of layers: we can use MVC pattern if needed, but we 
+are not forced to mold our solution on it. 
+
+Moreover, a strong “separation of concerns” can be done 
+at resource levels clearly assuring, for example, that some 
+filters are applied for a given set of resources. 
+
+Happy coding! 
+
+- Resources 
+Dan Yoder’s talk at RubyConf2008 
+http://rubyconf2008.confreaks.com/ 
+waves-a-resource-oriented-framework.html 
+
+Waves 
+http://rubywaves.com 
+
+Rack 
+http://rack.rubyforge.org 
+
+Merb 
+http://merbivore.com 
+
+Sinatra 
+http://sinatra.rubyforge.org 
+
+Ramaze 
+http://ramaze.net 
+
+Sequel 
+http://sequel.rubyforge.org 
+
+Markaby 
+http://github.com/why/markaby 
+Discuss: http://railsmagazine.com/3/8 
