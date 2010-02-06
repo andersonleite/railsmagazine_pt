@@ -1,18 +1,20 @@
 Frameworks Web em Ruby: Um mergulho no Waves
 por Carlo Pecchia
 
-In this article we introduce the Waves framework, mainly 
-based on the concept of “resources” to provide web applica- 
-tions. No prior knowledge is needed in order to understand 
-everything, though some experience with Ruby and Ruby On 
-Rails could help. 
+Nesse artigo vamos apresentar o framework Waves, baseado
+no conceito de "recursos" para construir aplicações web.
+Não há nenhum pré-requisito para que você possa entendê-lo,
+mas se você conheçe Ruby e Ruby on Rails vai ser mais
+fácil.
 
-- Introduction 
+- Introdução
 
-Being a ruby programmer implies, more or less, to being 
-also curios, to love experimentations… so we like to explore 
-emerging web framework, particularly the ones based on 
-Ruby. 
+* Image: waves *
+
+Programar em Ruby implica, mais ou menos, em ser também
+curioso, em gostar de fazer experiências... Consequentemente
+nós gostamos de conheçer novos frameworks web, principalmente
+os feitos em Ruby.
 
 Now it’s time for Waves. It’s defined by its developers as a 
 Resource Oriented Architecture (ROA) framework. 
