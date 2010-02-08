@@ -177,8 +177,97 @@ private function save():void {
   update(prod));
 }
 
+Voltando para nosso controller Rails, precisamos adicionar alguns métodos CRUD. Por Exemplo:
+
+def load_all
+  @products = Product.find(:all)
+  respond_to do |format|
+    format.amf { render :amf => Product.find(:all) }
+    format.xml { render :xml => @products.to_xml }
+  end
+end
+
+def update
+  @product = Product.find(params[0].id)
+  @product.name = params[0].name
+  @product.description = params[0].description
+  @product.price = params[0].price
+  respond_to do |format|
+    if @product.save!
+      format.amf { render :amf => @product }
+    else
+      format.amf { render :amf => FaultObject.new(“Error updating product”) }
+    end
+  end
+end
+
+Utilizamos render :amf para indicar que estamos usando o protocolo AMF. Antes de testar nosso trabalho, vamos ver como o Flex se comunica com o Rails usando HTTPService.
+
+- HTTPService
+
+Esse método é mais simples porém menos flexível que AMF. Nesse nosso exemplo vamos colocar um novo DataGrid para ligar ao componente HTTPService. Aqui vai o código:
+
+<mx:DataGrid id=”dg0” dataProvider=”{productHttpService.lastResult.products.product}” x=”203” y=”262” width=”361”>
+  <mx:columns>
+    <mx:DataGridColumn dataField=”id” headerText=”ID”/>
+    <mx:DataGridColumn dataField=”name” headerText=”Name”/>
+  </mx:columns>
+</mx:DataGrid>
+
+Note que usamos um valor diferente para a propriedade dataProvider. Agora precisamos declarar o componente productHttpService no Flex:
+
+<mx:HTTPService id=”productHttpService” url=”http://local-host:3000/products/load_all” />
+
+Requests HTTPService consome XML normal. Se você olhar no método do controller load_all, verá de onde vem o XML.
+
+Finalmente, iremos adicionar um botão carregará o request HTTPServices.
+
+<mx:Button label=”Load using HTTPService” click=”productHttpService.send();”/>
+
+Isso é tudo pessoal! Finalizamos todos os códigos, vamos agora checar.
+
+- Executando
+
+Agora estamos prontos para testar nossa aplicação. Clicando no botão play do FlexBuilder será gerado o arquivo binário no formato SWF e uma página HTML que invoca esse binário diretamente no diretório public da nossa aplicação Rails. O FlexBuilder abrirá um browser com a URL e poderemos ver nossa aplicação, como na Figura 4.
+
+---------------
+Figura 4. Executando nossa aplicação Flex
+---------------
+
+Sinta-se a vontade para clicar em qualquer botão para ver como a aplicação trafega os dados do front-end para o back-end.
+
+---------------
+Figura 5. Exibindo os dados de um produto selecionado
+---------------
+
+--------------
+Figura 6. Carregando dados via HTTPService
+---------------
+
+Parabéns! Sua primeira aplicação RIA com Flex e Rails está pronta e rodando.
+
+- Conclusões
+
+Flex é uma tecnologia em crescimento e Rails pode fazer um grande papel proporcionando um sólido, robusto e estável back-end. Nós apenas arranhamos a superfície do que você pode fazer com Rails e Flex. Confira nossas referências para aprender mais. Você está pronto ? Comece a codificar.
 
 
 
-
-
+-------------------------------------------------
+Referências
+Página do Flex
+http://www.adobe.com/products/flex/
+Informações sobre a linguagem de programação ActionScript
+http://www.adobe.com/devnet/actionscript/
+Principais funcionalidades do FlexBuilder
+http://www.adobe.com/products/flex/features/flex_builder/
+Informações completas sobre MXML
+http://learn.adobe.com/wiki/display/Flex/MXML
+Blog sobre Flex e Rails
+http://flexonrails.net/
+Definição na Wikipedia sobre AMF
+http://en.wikipedia.org/wiki/Action_Message_Format
+Página do RubyAMF
+http://code.google.com/p/rubyamf/
+Página do OpenLaszlo
+http://www.openlaszlo.org/
+------------------------------------------------------
