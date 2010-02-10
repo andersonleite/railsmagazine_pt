@@ -16,28 +16,26 @@ curioso, em gostar de fazer experiências... Consequentemente
 nós gostamos de conheçer novos frameworks web, principalmente
 os feitos em Ruby.
 
-Now it’s time for Waves. It’s defined by its developers as a 
-Resource Oriented Architecture (ROA) framework. 
+Hoje vamos conheçer o Wave. Seus desenvolvedores o definem como
+um framework de Arquitetura Orientada a Recursos (ROA).
 
-But what does that mean? 
+Mas o que isso significa?
 
-Starting from the following facts, they derive that the MVC 
-way is only one of the possibilities to build and code web ap- 
-plications: 
+De acordo com os seguintes fatos, o modelo MVC é só uma das
+opções para construir e implementar aplicativos web:
 
-- The Web itself is based on resources, and the spreading 
-of REST over other “protocols” is a clear symptom of 
-that. 
-- Reasoning in terms of resources give you the possibility 
-to use all the (huge) existing infrastructures of the web 
-(caching, URI, MIME types, RSS, and so on). 
-- When properly structured, a ROA application can be 
-less costly to maintain and to integrate with other ap- 
-plications. 
-- After all, HTTP has demonstrated to be a good choice 
-for that: a protocol that calls methods on resources. 
-- Methods: GET, PUT, POST, DELETE, … 
-Resource: “things” identified and accessed by an URI 
+- A Web é baseada em recursos, e o avanço do REST sobre
+outros "protocolos" está mostrando isso.
+- Pensar em recursos te permite usar toda a (completíssima)
+infra estrutura da web (cache, URI, MIME types, RSS, e por
+aí vai).
+- Quando bem estruturada, uma aplicação ROA pode ser mais
+fácil de manter e de integrar com outras aplicações.
+- Além disso, o HTTP mostrou ser uma boa escolha pra isso:
+ele é um protocolo que chama métodos em recursos.
+- Métodos: GET, PUT, POST, DELETE, ...
+Recursos: "coisas" identificadas e acessadas através de
+uma URI.
 
 So, the most interesting things about this framework can 
 be summarized here: 
@@ -54,7 +52,7 @@ on Rack.
 In Waves we can see an application basically as a com- 
 posed stack of functionalities: 
 
-* Image: Application, Layer(s), FOundation *
+* Image: Application, Layer(s), Foundation *
 
 - Application: is built on Layers 
 - Layers: mix-in features to help build your application 
