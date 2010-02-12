@@ -1,2 +1,239 @@
 Soluções de Workflow com AASM
 por Chee Yeo
+
+
+- Workfow Defnition
+A workfow is an abstract representation of real work 
+undertaken by a single or complex group of individuals 
+or mechanisms. It describes a system of activities enabled 
+through a collection of resources and information fows. 
+Workfows are primarily used to achieve some form of pro-
+cessing intentions, such as data processing.
+Tere are two main forms of workfows: sequential and 
+state-machine. Sequential workfows are predictable. Tey 
+utilize the rules and conditions we provide at the beginning 
+to progress a process forward. Te workfow is in control of 
+the process.
+A state-machine workfow is the reverse. It is driven by 
+external events to its completion. We defne the states and 
+required transitions between those states. Te workfow sits 
+and waits for an external event to occur before transitioning 
+to one of the defned states. Te decision making process hap-
+pens externally outside of the workfow – there is a structure 
+to be followed still like a sequential workfow but control is 
+passed to its external environment. 
+
+- What is a state machine?
+Te diagram below is a simple example of a state machine. 
+It has three main properties: states, events and transitions.
+
+-Event
+A state represents a particular situation. Te state machine
+above has two main states – ‘Power On’ and ‘Power Of’. Te 
+machine will be in one of these two states at any point in 
+time.
+Tere is only one main event in the state machine above 
+– a button click. An event describes an external stimulus or 
+input into the system. In this instance, a button click will 
+either ‘power on’ the state machine or power it of and both 
+states shown above respond to the same event. 
+A transition moves the state machine from one state to 
+the next. In the diagram above, following a button click, if 
+the machine is in a ‘power on’ state it will transition to the 
+‘power of’ state and vice versa. Not all transitions move the 
+state machine to a new state – it is possible to loop back to the 
+same state.
+A state machine does not just store states and events 
+alone.  It can also execute code when an event arrives. In the 
+example above, the state machine can be designed to control 
+electricity fow when it transitions to a new state following a 
+button click event.
+
+-State Machine in Rails
+Sometimes you need to track the state of a model in an 
+application and the transitions between a set of pre-defned 
+states which are triggered based on certain events. Or you 
+might need to express the business logic of your application 
+using a workfow to illustrate the fow of state changes based 
+on its events. 
+For example, you might have an ap-
+plication that allows the user to upload fles 
+for processing and you need to provide 
+some form of mechanism to track the fle 
+while it is added to a queue for processing 
+and to provide some form of feedback to 
+inform the user of the status of the out-
+come (success or an error) and the relevant 
+action to take based on the outcome (if an 
+error occurred, inform the user).
+Tis can be modelled by adding a ‘state’ 
+or ‘status’ column in your model table and 
+updating it as you go along. However, it 
+becomes tedious and error prone when 
+multiple states are involved. 
+Te acts_as_state_machine (AASM) plugin converts any 
+model into a Finite State Machine capable of remembering 
+which state it is in at any point in time and the transitions it 
+is allowed to go through between those states and the actions 
+that are to be triggered when a specifc state is reached.
+
+-Setting It Up
+To utilise the plugin in a Rails application, simply install it:
+ruby script/plugin install http://elitists.textdriven.com/
+svn/plugins/acts_as_state_machine/trunk/ acts_as_state_machine
+You would also require a state string column in the model 
+table – this is where AASM stores the state of the object. 
+
+-An Example
+For illustration purposes, say we have  an application 
+which allows the user to upload video fles for processing and 
+there is a Video model. 
+Within the Video.rb model add the following code to in-
+stantiate the plugin:
+
+# inside Video.rb
+Class Video < AR::Base
+  acts_as_state_machine, :initial => :original
+ 
+  state :original
+  state  :processing
+  state  :processed, :enter => :set_processed_attributes
+  state  :error, :enter => :inform_user
+  event :convert do
+    transitions :from => :original, :to => : processing
+  end
+  event :converted do
+    transitions :from => :processing, :to => : processed
+  end
+  event :failure do
+    transitions :from => :processing, :to => : error
+  end
+  def set_processed_attributes
+    # update name of file; move file to permanent storage 
+location etc
+  end
+  def inform_user
+    # pass message to user to inform of error with error code 
+etc
+ end
+  end # end of Video model
+  
+Te acts_as_state_machine directive includes the plugin with 
+an initial state of :original. When a new video fle is uploaded
+and a new video object created, this is the frst state it will be 
+in. Note that although the plugin looks for a column called 
+state in the database table, this can be overridden in the 
+directive like so:
+acts_as_state_machine, :initial => :original, :column => 
+‘my_state_column’
+Te diagram below illustrates the current state machine of 
+the video model.
+Te three main components which the AASM plugin 
+needs to make it work are states, events and callbacks.
+
+------------------------
+Chee Yeo is a 30 year old open source enthusiast 
+from the United Kingdom. He is currently a Ruby 
+on Rails developer and has produced and launched 
+small to medium sized applications. He enjoys 
+blogging and writing articles about Rails and 
+contributing to open source.
+Chee is also the founder of 29 Steps, a web agency specializing 
+in Ruby, Rails and web development. See how they can help at 
+http://29steps.co.uk. 
+---------------------------
+
+-States
+Te possible states an object can be in are defned using 
+the state keyword. Te name of the state is expressed as a 
+symbol. Tis generates an additional method of <state>? to 
+query the state of the object:
+@video.processed? # returns true or false
+
+-Events
+Events move or transition the object from one state to the
+next. Tese are declared in the example above using the event
+action:
+event :convert do
+    transitions :from => :original, :to => : processing
+end
+Tis automatically adds an instance method of <event>! to
+the Video class as an instance method. To call an event, simply
+call your object instance with the event name followed by an 
+exclamation mark. 
+In our example above, suppose we have a method which 
+picks a video out of a queue for processing:
+def some_method
+  begin
+    @video.convert! # calls convert event; moves video from 
+’original’ state to ’processing’ state 
+    
+    # video has been successfully converted
+    @video.converted! # calls converted event; moves video 
+from ‘processing’ state to ‘processed’ state
+  
+  rescue
+    @video.failure! # calls the failure event
+  end
+end
+It is possible to have multiple transitions statement in one 
+event block – the frst one which matches the current state of 
+the object will be called.
+Sometimes it might be necessary to do some validation 
+in an event loop before moving that object to the next state. 
+Tese are known as guards and can be used in an event block 
+like so:
+event :convert do
+   transitions :from => :original, :to => : processing, 
+      :guard => Proc.new { |video|  video.accepted_format? }
+end
+Te example above ensures that the uploaded fle is of a 
+specifc format via the accepted_format method and state tran-
+sition will not be continued if it fails (if it returns false).
+
+-Callbacks
+Te :enter action at the end of a state statement is used 
+to defne a callback. Callbacks are defned to trigger code 
+once the object is transitioning into that particular state. 
+Tese could be either methods or Proc objects. If a callback is 
+defned as a symbol, like in the example above, the instance 
+method of the object with the same name will be called.
+In the Video example, when the object has reached the 
+‘processed’ state, it fres a method called set_processed_attri-
+butes which updates the object accordingly. Tere are two 
+other actions which could be used in a state declaration: 
+:after and :exit. Te after callback gets triggered afer the 
+model has already transitioned into that state and exit gets 
+called once the object leaves that state. We could make our 
+Video example more expressive by defning two additional 
+callback methods to be triggered once the object has reached 
+the processed state:
+state  :processed, 
+           :enter => :set_processed_attributes,
+           :after => Proc.new {|video| video.move_file}
+           :exit =>  :delete_tmp_files
+In the example above, I declared a Proc which calls an 
+instance method of move_file afer the object has entered 
+the processed state and its attributes have been updated. Te 
+instance method delete_tmp_files removes all temporary video 
+fles afer processing and will be called once the object leaves 
+the block. One can create very complex states and behaviours 
+by delegating callbacks to relevant actions within a single 
+state.
+
+-Conclusion
+Te AASM plugin is a great tool to have when you need 
+to implement state based behaviours in your application. 
+Although the same could be achieved by rolling your own, 
+the expressiveness of the plugin syntax itself makes it really 
+straightforward to understand. 
+
+-------
+Discuss: http://railsmagazine.com/3/7
+----------
+
+Resources
+http://elitists.textdriven.com/svn/plugins/acts_as_state_machine/trunk/
+rails.aizatto.com/2007/05/24/ruby-on-rails-fnite-state-machine-plugin-acts_as_state_machine/
+justbarebones.blogspot.com/2007/11/actsasstatemachine-enhancements.html
+http://github.com/ryan-allen/workfow/tree/master
