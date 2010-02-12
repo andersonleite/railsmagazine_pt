@@ -3,95 +3,188 @@ por Arturo Fernandez
 
 - Introdução
 
-Uma nova geração de aplicações está conquistando desenvolvedores e usuários através de sua bela interface e das grandes possibilidades que ela oferece.
-Estamos falando sobre RIA (Rich Internet Application), um novo tipo de software que combina o melhor das aplicações web e desktop.
+Uma nova geração de aplicações está conquistando desenvolvedores e usuários
+através de sua bela interface e das grandes possibilidades que ela oferece.
+Estamos falando sobre RIA (Rich Internet Application), um novo tipo de software
+que combina o melhor das aplicações web e desktop.
 
-Existem muitas situações onde poderíamos nos beneficiar da combinação da usabilidade do desktop com os recursos de uma aplicação web.
-Considere um programa que organiza sua coleção de MP3. Obviamente, será necessário que ele acesse os arquivos do sistema. Mas também não seria ótimo que ele pudesse acessar algumas informações da internet, como a biografia do artista ou as notas da trilha ? Parece legal, você não acha ?
+Existem muitas situações onde poderíamos nos beneficiar da combinação da
+usabilidade do desktop com os recursos de uma aplicação web.
+Considere um programa que organiza sua coleção de MP3. Obviamente, será
+necessário que ele acesse os arquivos do sistema. Mas também não seria ótimo que
+ele pudesse acessar algumas informações da internet, como a biografia do artista
+ou as notas da trilha ? Parece legal, você não acha ?
 
-Rich internet applications são mais complexas que aplicações web normais. Por isso, elas geralmente são desenvolvidas com a ajuda de um framework.
+Rich internet applications são mais complexas que aplicações web normais. Por
+isso, elas geralmente são desenvolvidas com a ajuda de um framework.
 
-Atualmente, temos várias opções para escolher, tanto open-source como proprietária. Para desenvolvedores Java, Open-Laszlo e JavaFX vale dar uma olhada. Se você prefere tecnologias Microsoft, existe o Silverlight. Mas, nos últimos dois anos um framwork em particular vem crescento muito rápido: Adobe Flex.
+Atualmente, temos várias opções para escolher, tanto open-source como proprietária. Para desenvolvedores Java, vale a pena dar uma olhada em Open-Laszlo e JavaFX. Se você prefere tecnologias Microsoft, existe o Silverlight. Mas, nos
+últimos dois anos um framwork em particular vem crescendo muito rápido: Adobe
+Flex.
 
-Flex é um framework RIA open source desenvolvido pela Adobe. Ele possibilita que você construa aplicações RIA usando uma linguagem de programação parecida com ActionScript e uma linguagem de markup chamada MXML para a interface. Foi inicialmente lançado em 2004 e sua última versão 3 foi lançada em Março de 2009.
+Flex é um framework RIA open source desenvolvido pela Adobe. Ele possibilita que
+você construa aplicações RIA usando uma linguagem de programação parecida com
+ActionScript e uma linguagem de markup chamada MXML para a interface. Foi
+inicialmente lançado em 2004 e sua última versão 3 foi lançada em Março de 2009.
 
-O Flex possui dois componentes: um SDK (Software Development Kit) e um runtime onde cada aplicação é visualizada. O SDK é open source (lançado sobre a Licensa Mozilla Public), enquanto a runtime é o famoso Adobe Flash Player que tem sua licensa proprietária.
+O Flex possui dois componentes: um SDK (Software Development Kit) e um runtime
+onde cada aplicação é visualizada. O SDK é open source (lançado sobre a Licensa
+Mozilla Public), enquanto a runtime é o famoso Adobe Flash Player que tem sua
+licensa proprietária.
 
-Por sua runtime ser baseada no flash, aplicações Flex são cross-platform por default. E eles funcionam não somente em desktops mas também em vários dispositivos móveis como celulares e PDAs.
-Além disso, o SDK Flex permite desenvolver em diferentes sistemas operacionais como GNU/Linux, MS Windows e Mac OS X, já que os binários gerados também são cross-platform.
+Por sua runtime ser baseada no flash, aplicações Flex são por padrão cross-platform. E elas funcionam não somente em desktops mas também em vários
+dispositivos móveis como celulares e PDAs.
+Além disso, o SDK Flex permite desenvolver em diferentes sistemas operacionais
+como GNU/Linux, MS Windows e Mac OS X, já que os binários gerados também são
+cross-platform.
 
-Enquanto você pode desenvolver suas aplicações Flex sem comprar nada, a Adobe também oferece uma ferramenta de desenvolvimento adicional chamada Flex Builder.
-Uma moderna IDE (Integrated Development Enviroment) visual construída sob o Eclipse. Apesar do seu custo, o Flex Builder é muito útil para desenvolver a interface do usuário da sua aplicação.
+Enquanto você pode desenvolver suas aplicações Flex sem comprar nada, a Adobe
+também oferece uma ferramenta de desenvolvimento adicional chamada Flex Builder.
+Uma moderna IDE (Integrated Development Enviroment) visual construída sob o
+Eclipse. Apesar do seu custo, o Flex Builder é muito útil para desenvolver a
+interface do usuário de sua aplicação.
 
 - Porque precisamos de aplicações RIA?
 
-Uma aplicação desktop clássica geralmente roda em um PC ou Mac e não necessita de uma conexão de rede. Um bom exemplo seria um editor de textos como o Apple Pages, Microsoft Word ou OpenOffice Writer. Por outro lado, uma aplicação web roda em um servidor, e muitos clientes acessam ela simultaneamente usando browsers web.
+Uma aplicação desktop clássica geralmente roda em um PC ou Mac e não necessita
+de uma conexão de rede. Um bom exemplo seria um editor de textos como o Apple
+Pages, Microsoft Word ou OpenOffice Writer. Por outro lado, uma aplicação web
+roda em um servidor, e muitos clientes acessam ela simultaneamente usando
+browsers web.
 
-Esses dois tipos de aplicação tem suas vantagens e desvantagens. Obviamente são diferentes de um ponto de vista técnico. Aplicações Desktops tem todo o poder de vários toolkits para criar interfaces ricas. E são as mais rápidas. E você não tem as inconsistências de renderização como em uma aplicação baseada em browser. Por outro lado as aplicações web são fáceis de fazer deploy e rodam em qualquer plataforma.
+Esses dois tipos de aplicação tem suas vantagens e desvantagens. Obviamente são
+diferentes de um ponto de vista técnico. Aplicações Desktops tem todo o poder de
+vários toolkits para criar interfaces ricas. E são as mais rápidas. E você não
+tem as inconsistências de renderização como em uma aplicação baseada em browser.
+Por outro lado as aplicações web são fáceis de fazer deploy e rodam em qualquer
+plataforma.
 
 ------------------------
-Arturo Fernandez é um empresário, engenheiro de software, escritor técnico e entusiasta de software free/open-source. Sua experiência profissional inclui serviços como engenheiro de software, consultor, administrador de sistemas e gerente de projeto trabalhando com tecnologias como J2EE, PHP e Rails. Atualmente elemora em Andalucia, Espanha onde ele fundou a BSNUX Software Factory (http://www.bsnux.com), uma empresa especializada em RIA e aplicações móveis. Ele pode ser contactado em arturo@bsnux.com.
+Arturo Fernandez é um empresário, engenheiro de software, escritor técnico e
+entusiasta de software free/open-source. Sua experiência profissional inclui
+serviços como engenheiro de software, consultor, administrador de sistemas e
+gerente de projetos trabalhando com tecnologias como J2EE, PHP e Rails.
+Atualmente ele mora em Andalucia, Espanha onde ele fundou a BSNUX Software
+Factory (http://www.bsnux.com), uma empresa especializada em RIA e aplicações
+móveis. Ele pode ser contactado em arturo@bsnux.com.
 --------------------------
 
-Tecnologias como AJAX trás aplicações web um pouco mais perto da performance de uma aplicação desktop, ao custo de uma alta complexidade. Desenvolvedores são forçados a trabalhar em múltiplas linguagens: JavaScript para o front-end e uma outra linguagem como Ruby para o back-end. Mas com Flex, você pode desenvolver uma aplicação do começo ao fim em apenas uma linguagem.
+Tecnologias como AJAX trás aplicações web um pouco mais perto da performance de
+uma aplicação desktop, ao custo de uma alta complexidade. Desenvolvedores são
+forçados a trabalhar em múltiplas linguagens: JavaScript para o front-end e uma
+outra linguagem como Ruby para o back-end. Mas com Flex, você pode desenvolver
+uma aplicação do começo ao fim em apenas uma linguagem.
 
-Desenvolvendo uma aplicação RIA podemos juntar o melhor do desktop com o melhor da web, resultando numa aplicação multi-plataforma com uma interface boa e flexível que pode trocar dados com uma outra aplicação usando protocolos padrões e tecnologias través da internet.
+Desenvolvendo uma aplicação RIA podemos juntar o melhor do desktop com o melhor
+da web, resultando numa aplicação multi-plataforma com uma interface boa e
+flexível que pode trocar dados com uma outra aplicação usando protocolos padrões
+e tecnologias través da internet.
 
-Agora vamos dar uma olhada em como podemos usar o Adobe Flex e Rails para desenvolver uma ótima aplicação em pouco tempo.
+Agora vamos dar uma olhada em como podemos usar o Adobe Flex e Rails para
+desenvolver uma ótima aplicação em pouco tempo.
 
 - Front-End e Back-End
 
-Uma típica aplicação web rica é composta por 2 componentes principais: um front-end que é o cliente e um back-end que contém lógica de negocios e dados.
+Uma típica aplicação web rica é composta por 2 componentes principais: um
+front-end que é o cliente e um back-end que contém lógica de negocios e dados.
 
-Quando você escrever uma aplicação em Adobe Flex, você terá um executável que roda no Adobe Flash Player, pode ser dentro de um browser ou em qualquer outro dispositivo.
+Quando você escrever uma aplicação em Adobe Flex, você terá um executável Adobe Flash Player, que pode executá-lo dentro de um browser ou em qualquer outro
+dispositivo.
 
-O back-end é uma aplicação web feita usando qualquer tecnologia como J2EE (Java Enterprise Edition), PHP ou Rails. Vamos usar Rails porque é nosso framework favorito e porque ele é um bom complemento para o Flex.
+O back-end é uma aplicação web feita usando qualquer tecnologia como J2EE (Java
+Enterprise Edition), PHP ou Rails. Vamos usar Rails porque é nosso framework
+favorito e porque ele é um bom complemento para o Flex.
 
-O próximo passo é conhecer como o front-end se comunica com o back-end. Vamos codificar!
+O próximo passo é conhecer como o front-end se comunica com o back-end. Vamos
+codificar!
 
 - Como o Flex se comunita com o Rails
 
-Existem duas maneiras de fazer a comunicação entre Flex e Rails. A primeira é por AMF (Action Message Format), um protocolo de troca de dados através do tradicional RPC (Remote Procedure Call). A segunda é via HTTPService, um mecanismo que permite que o Flex faça uma chamada para o back-end usando o protocolo HTTP.
+Existem duas maneiras de fazer a comunicação entre Flex e Rails. A primeira é
+por AMF (Action Message Format), um protocolo de troca de dados através do
+tradicional RPC (Remote Procedure Call). A segunda é via HTTPService, um
+mecanismo que permite que o Flex faça uma chamada para o back-end usando o
+protocolo HTTP.
 
-AMF é bom para mapear objetos no servidor com objetos no cliente. Usando AMF conseguimos mapear um objeto ActionScript com um objeto Ruby, como uma instância do modelo. Ele possibilita também fazer uma chamada a um método controller direto do ActionScript, enviando um objeto como parâmetro.
+AMF é bom para mapear objetos no servidor com objetos no cliente. Usando AMF
+conseguimos mapear um objeto ActionScript com um objeto Ruby, como uma instância
+do modelo. Ele possibilita também fazer uma chamada a um método controller
+direto do ActionScript, enviando um objeto como parâmetro.
 
 Vamos ver como usar AMF e HTTPService com Flex na prática.
 
-Como exemplo, vamos criar uma aplicação com operações de CRUD (Create, Read, Update e Delete) de uma tabela de Produtos de um banco de dados. Primeiro, vamos criar um front-end em Flex, e depois um back-end em Rails.
+Como exemplo, vamos criar uma aplicação com operações de CRUD (Create, Read,
+Update e Delete) de uma tabela de Produtos em um banco de dados. Primeiro, vamos
+criar um front-end em Flex, e depois um back-end em Rails.
 
-Primeiro, precisamos criar um novo projeto Flex. A forma mais fácil para se fazer isso é usar o Flex Builder. Selecione File > New > Flex Project. Nomeie o projeto e o MXML principal de rails_magazine. Certifique-se de checkar a opção "Web Application (Runs on Flash Player)", como mostrado na figura 1. Esse wizard irá criar todos os arquivos necessários pela aplicação.
+Primeiro, precisamos criar um novo projeto Flex. A forma mais fácil para se
+fazer isso é usar o Flex Builder. Selecione File > New > Flex Project. Nomeie o
+projeto e o MXML principal de rails_magazine. Certifique-se de checkar a opção
+"Web Application (Runs on Flash Player)", como mostrado na figura 1. Esse wizard
+irá criar todos os arquivos necessários pela aplicação.
 
-O diretório mais importante para nós e o src/. Aqui é onde nosso código vai ficar. Usando Flex Builder, podemos construir nossa GUI rapidamente via drag & drop. Os componentes ficam na esquerda e workspace é a área principal. O Datagrid é um ótimo componente fornecido pelo Flex. Ele é usado para exibir os dados carregados do banco de dados e possibilita as operações básicas como ordenação e filtro.
+O diretório mais importante para nós e o src/. Aqui é onde nosso código vai
+ficar. Usando Flex Builder, podemos construir nossa GUI rapidamente via drag &
+drop. Os componentes ficam na esquerda e workspace é a área principal. O
+Datagrid é um ótimo componente fornecido pelo Flex. Ele é usado para exibir os
+dados carregados do banco de dados e possibilita as operações básicas como
+ordenação e filtro.
 
-Os arquivos binários do Flex precisam ficar acessíveis via web. Então vamos colocá-los no diretório public da nossa aplicação Rails. Isso é fácil, só precisamos selecionar esse diretório como Output folder, como mostrado na figura 2. Finalizado a GUI, podemos criar o back-end.
+[Figura 1. Criando um novo projeto Flex]
 
-Primeiro, vamos criar uma aplicação Rails usando o comando rails. Segundo, vamos precisar de um modelo para armazenar os dados dos produtos. Para isso execute esse comando:
+[Figura 2. Selecionando um diretório público]
+
+[Figura 3. Construindo uma GUI para nossa aplicação]
+
+Os arquivos binários do Flex precisam ficar acessíveis via web. Então vamos
+colocá-los no diretório public da nossa aplicação Rails. Isso é fácil, só
+precisamos selecionar esse diretório como Output folder, como mostrado na figura
+2. Finalizado a GUI, podemos criar o back-end.
+
+Primeiro, vamos criar uma aplicação Rails usando o comando rails. Segundo, vamos
+precisar de um modelo para armazenar os dados dos produtos. Para isso execute
+esse comando:
 
 $ script/generate model Product name:string description:string price:float
 
-Agora precisamos configurar nosso banco de dados. Por default o Rails oferece uma configuração simples do banco de dados SQLite, então iremos usar este. O próximo passo é executar a migration:
+Agora precisamos configurar nosso banco de dados. Por default o Rails oferece
+uma configuração simples do banco de dados SQLite, então iremos usar este. O
+próximo passo é executar a migration:
 
 $ rake db:migrate
 
-Agora precisamos de um controller para gerenciar as requisições request do cliente:
+Agora precisamos de um controller para gerenciar as requisições request do
+cliente:
 
 $script/generate controller products
 
-Nosso backend está pronto. O próximo passo é configurar uma conexão entre ele e o front-end.
+Nosso backend está pronto. O próximo passo é configurar uma conexão entre ele e
+o front-end.
+
+[Asas para a Lua]
 
 - RubyAMF
 
-Neste exemplo, criamos dois datagrids (Figura 3). Um irá usar AMF para a comunicação com o servidor. O outro usará HTTPService. Iremos ver o AMF primeiro.
+Neste exemplo, criamos dois datagrids (Figura 3). Um irá usar AMF para a
+comunicação com o servidor. O outro usará HTTPService. Iremos ver o AMF
+primeiro.
 
-Felizmente para desenvolvedores Rails, temos o plugin RubyAMF que irá fazer todo o trabalho pesado. A instalação é muito fácil. Digite o seguinte:
+Felizmente para desenvolvedores Rails, temos o plugin RubyAMF que irá fazer todo
+o trabalho pesado. A instalação é muito fácil. Digite o seguinte:
 
 $ script/plugin install http://rubyamf.googlecode.com/svn/tags/current/rubyamf
 
-Quando a instalação finalizar estaremos prontos para escrever um pouco de código para nossa aplicação Rails. Na pasta config vamos encontrar um arquivo chamado rubyamf_config.rb que possui o mapeamento entre a nossa classe ActiveRecord e nossa classe ActionScript.
+Quando a instalação finalizar estaremos prontos para escrever um pouco de código
+para nossa aplicação Rails. Na pasta config vamos encontrar um arquivo chamado
+rubyamf_config.rb que possui o mapeamento entre a nossa classe ActiveRecord e
+nossa classe ActionScript.
 
-Mas não temos uma classe ActionScript! Vamos escrever uma. Isso irá mapear o model product que acabamos de criar no Rails. No projeto Flex, cria uma nova subpasta dentro da pasta src chamada valueobject, e dentro dela uma nova classe ActionScript chamada Product. Esse é o código para o novo arquivo Product.as:
+Mas não temos uma classe ActionScript! Vamos escrever uma. Isso irá mapear o
+model product que acabamos de criar no Rails. No projeto Flex, crie uma nova
+subpasta dentro da pasta src chamada valueobject, e dentro dela uma nova classe
+ActionScript chamada Product. Esse é o código para o novo arquivo Product.as:
 
-package valueobj
+package valueobject
 {
 
   [RemoteClass(alias="Product")]
@@ -114,7 +207,8 @@ package valueobj
   }
 }
 
-Repare que os atributos públicos dessa classe casam com os do model do Rails. Também declaramos que o RemoteClass é nossa classe Product do Rails.
+Repare que os atributos públicos dessa classe são iguais aos do model do Rails.
+Também declaramos que o RemoteClass é nossa classe Product do Rails.
 
 Agora volte para o rubyamf_config.rb e adicione as seguintes linhas:
 
@@ -122,10 +216,13 @@ ClassMappings.register(
   :actionscript => 'Product',
   :ruby => 'Product',
   :type => 'active_record',
-  :attributes => ["id", "name", "description", "prince", "created_at", "updated_at"]
+  :attributes => ["id", "name", "description", "prince", "created_at",
+"updated_at"]
 )
 
-Agora que mapeamos a classe Product do Flex com a classe Product do Rails, podemos carregar os dados na nossa grid. Você só precisa setar a propriedade dataProvider do componente datagrid:
+Agora que mapeamos a classe Product do Flex com a classe Product do Rails,
+podemos carregar os dados na nossa grid. Você só precisa setar a propriedade
+dataProvider do componente datagrid:
 
 <mx:DataGrid id=”dg” dataProvider=”{products}” x=”10” y=”100” width=”457”>
   <mx:columns>
@@ -136,12 +233,16 @@ Agora que mapeamos a classe Product do Flex com a classe Product do Rails, podem
   </mx:columns>
 </mx:DataGrid>
 
-products precisa ser um array de produtos, para isso vamos precisar de uma variável ActionScript para armazenar os dados recebidos do banco de dados:
+products precisa ser um array de produtos, para isso vamos precisar de uma
+variável ActionScript para armazenar os dados recebidos do banco de dados:
 
   [Bindable]
   private var products:Array = new Array();
 
-Note que estamos usando o modificador Bindable para indicar que esta variável é necessária pelo datagrid. É muito importante indicar no código Flex que precisamos do AMF para invocar os métodos remotos. Então vamos escrever o seguinte código:
+Note que estamos usando o modificador Bindable para indicar que esta variável é
+necessária pelo datagrid. É muito importante indicar no código Flex que
+precisamos do AMF para invocar os métodos remotos. Então vamos escrever o
+seguinte código:
 
 <mx:RemoteObject id=”productService” destination=”rubyamf”
   endpoint=”http://localhost:3000/rubyamf_gateway/”
@@ -150,22 +251,34 @@ Note que estamos usando o modificador Bindable para indicar que esta variável �
   result=”resultHandler(event)”
   fault=”faultHandler(event)” />
 
-RemoteObject é um componente fornecido pelo Flex para gerenciar a comunicação com o backend. Propriedades como result e fault irá invocar diferentes funções ActionScript. O retorno result indica o que fazer quando o request está completo. Neste caso vamos armazenar o resultado de cada request no array ActionScript products. O retorno fault serve para tratar os erros. Adicione esse código em rails_magazine.mxml:
+RemoteObject é um componente fornecido pelo Flex para gerenciar a comunicação
+com o backend. Propriedades como result e fault irá invocar diferentes funções
+ActionScript. O retorno result indica o que fazer quando o request está
+completo. Neste caso vamos armazenar o resultado de cada request no array
+ActionScript products. O retorno fault serve para tratar os erros. Adicione esse
+código em rails_magazine.mxml:
 
 private function resultHandler(event:ResultEvent):void 
 {
   products = event.result as Array;
 }
 
-Lembre-se, products é um array bindable, que está associado ao nosso datagrid. A conexão entre os componentes é automática. É importante, no entando, ter em mente que a comunicação com o backend é assíncrona.
+Lembre-se, products é um array bindable, que está associado ao nosso datagrid. A
+conexão entre os componentes é automática. É importante, no entando, ter em
+mente que a comunicação com o backend é assíncrona.
 
-As operações CRUD estão acessíveis pelos botões da GUI. Quando clicado, cada botão invoca uma ação Rails correspondente. Por exemplo, para listar todos os produtos no datagrid, precisamos chamar o método load_all da classe controller. Pra fazer isso, podemos escrever uma função ActionScript e setar ela como retorno do botão Refresh:
+As operações CRUD estão acessíveis pelos botões da GUI. Quando clicado, cada
+botão invoca uma ação Rails correspondente. Por exemplo, para listar todos os
+produtos no datagrid, precisamos chamar o método load_all da classe controller.
+Pra fazer isso, podemos escrever uma função ActionScript e setar ela como
+retorno do botão Refresh:
 
 private function load():void {
   var token:AsyncToken = AsyncToken(productService.load_all());
 }
 
-Também é possível enviar um objeto com dados do Flex para o Rails. Para salvar os dados no banco de dados precisamos dessa função ActionScript:
+Também é possível enviar um objeto com dados do Flex para o Rails. Para salvar
+os dados no banco de dados precisamos dessa função ActionScript:
 
 private function save():void {
   var prod:Product = new Product();
@@ -177,7 +290,8 @@ private function save():void {
   update(prod));
 }
 
-Voltando para nosso controller Rails, precisamos adicionar alguns métodos CRUD. Por Exemplo:
+Voltando para nosso controller Rails, precisamos adicionar alguns métodos CRUD.
+Por Exemplo:
 
 def load_all
   @products = Product.find(:all)
@@ -201,26 +315,35 @@ def update
   end
 end
 
-Utilizamos render :amf para indicar que estamos usando o protocolo AMF. Antes de testar nosso trabalho, vamos ver como o Flex se comunica com o Rails usando HTTPService.
+Utilizamos render :amf para indicar que estamos usando o protocolo AMF. Antes de
+testar nosso trabalho, vamos ver como o Flex se comunica com o Rails usando
+HTTPService.
 
 - HTTPService
 
-Esse método é mais simples porém menos flexível que AMF. Nesse nosso exemplo vamos colocar um novo DataGrid para ligar ao componente HTTPService. Aqui vai o código:
+Esse método é mais simples porém menos flexível que AMF. Nesse nosso exemplo
+vamos colocar um novo DataGrid para ligar ao componente HTTPService. Aqui vai o
+código:
 
-<mx:DataGrid id=”dg0” dataProvider=”{productHttpService.lastResult.products.product}” x=”203” y=”262” width=”361”>
+<mx:DataGrid id=”dg0”
+dataProvider=”{productHttpService.lastResult.products.product}” x=”203” y=”262”
+width=”361”>
   <mx:columns>
     <mx:DataGridColumn dataField=”id” headerText=”ID”/>
     <mx:DataGridColumn dataField=”name” headerText=”Name”/>
   </mx:columns>
 </mx:DataGrid>
 
-Note que usamos um valor diferente para a propriedade dataProvider. Agora precisamos declarar o componente productHttpService no Flex:
+Note que usamos um valor diferente para a propriedade dataProvider. Agora
+precisamos declarar o componente productHttpService no Flex:
 
-<mx:HTTPService id=”productHttpService” url=”http://local-host:3000/products/load_all” />
+<mx:HTTPService id=”productHttpService”
+url=”http://local-host:3000/products/load_all” />
 
-Requests HTTPService consome XML normal. Se você olhar no método do controller load_all, verá de onde vem o XML.
+Requests HTTPService consome XML normal. Se você olhar no método do controller
+load_all, verá de onde vem o XML.
 
-Finalmente, iremos adicionar um botão carregará o request HTTPServices.
+Finalmente, iremos adicionar um botão que carregará o request HTTPServices.
 
 <mx:Button label=”Load using HTTPService” click=”productHttpService.send();”/>
 
@@ -228,29 +351,32 @@ Isso é tudo pessoal! Finalizamos todos os códigos, vamos agora checar.
 
 - Executando
 
-Agora estamos prontos para testar nossa aplicação. Clicando no botão play do FlexBuilder será gerado o arquivo binário no formato SWF e uma página HTML que invoca esse binário diretamente no diretório public da nossa aplicação Rails. O FlexBuilder abrirá um browser com a URL e poderemos ver nossa aplicação, como na Figura 4.
+Agora estamos prontos para testar nossa aplicação. Clicando no botão play do
+FlexBuilder será gerado o arquivo binário no formato SWF e uma página HTML que
+invoca esse binário diretamente no diretório public da nossa aplicação Rails. O
+FlexBuilder abrirá um browser com a URL e poderemos ver nossa aplicação, como na
+Figura 4.
 
----------------
-Figura 4. Executando nossa aplicação Flex
----------------
+[Figura 4. Executando nossa aplicação Flex]
 
-Sinta-se a vontade para clicar em qualquer botão para ver como a aplicação trafega os dados do front-end para o back-end.
+Sinta-se a vontade para clicar em qualquer botão para ver como a aplicação
+trafega os dados do front-end para o back-end.
 
----------------
-Figura 5. Exibindo os dados de um produto selecionado
----------------
+[Figura 5. Exibindo os dados de um produto selecionado]
 
---------------
-Figura 6. Carregando dados via HTTPService
----------------
+[Figura 6. Carregando dados via HTTPService]
 
 Parabéns! Sua primeira aplicação RIA com Flex e Rails está pronta e rodando.
 
 - Conclusões
 
-Flex é uma tecnologia em crescimento e Rails pode fazer um grande papel proporcionando um sólido, robusto e estável back-end. Nós apenas arranhamos a superfície do que você pode fazer com Rails e Flex. Confira nossas referências para aprender mais. Você está pronto ? Comece a codificar.
+Flex é uma tecnologia em crescimento e Rails pode fazer um grande papel
+proporcionando um sólido, robusto e estável back-end. Nós apenas arranhamos a
+superfície do que você pode fazer com Rails e Flex. Confira nossas referências
+para aprender mais. Você está pronto ? Comece a codificar.
 
 
+[Discussão: http://railsmagazine.com/3/10]
 
 -------------------------------------------------
 Referências
@@ -271,3 +397,5 @@ http://code.google.com/p/rubyamf/
 Página do OpenLaszlo
 http://www.openlaszlo.org/
 ------------------------------------------------------
+
+
