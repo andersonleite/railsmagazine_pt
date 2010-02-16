@@ -31,10 +31,10 @@ Ruby on Rails & Flex:
 Construindo uma nova geração de software .......... 35
 por Arturo Fernandez
 
-Construíndo um Negócio com Open Source ............ 42
+Construindo um Negócio com Open Source ............ 42
 por Chris Wanstrath
 
-Entrevista com with Carl Mercier .................. 46
+Entrevista com Carl Mercier ....................... 46
 Entrevista com Ilya Grigorik ...................... 48
 Entrevista com Ryan Singer ........................ 50
 (entrevistas por Rupak Ganguly)

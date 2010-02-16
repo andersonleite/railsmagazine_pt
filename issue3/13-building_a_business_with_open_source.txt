@@ -1,2 +1,2 @@
-Construíndo um Negócio com Open Source
+Construindo um Negócio com Open Source
 por Chris Wanstrath
