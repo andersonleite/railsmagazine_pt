@@ -14,32 +14,32 @@ bulldog francês.
 
 [[Entrevista]]
 
-Rupak: Você pode por favor nos falar acerca de suas experiências, brevemente,
- para benefício dos leitores? Como e quando você se envolveu como Ruby/Rails?
+Rupak: Você pode nos falar brevemente sobre sua experiência, para o benefício dos leitores?
+Como e quando você se envolveu com Ruby/Rails?
 
 Ryan: Eu comecei com design para web quando eu era adolescente e fazia trabalhos
-autônomos até entrar na 37signals em 2003. Naquele tempo nós éramos uma consultoria de
+freelance até entrar na 37signals em 2003. Naquele tempo nós éramos uma consultoria de
 design de interfaces para usuário (UI's), principalmente refazendo designs de sites
 existentes. Logo depois de eu entrar nós começamos a projetar o Basecamp e entrar em
 contato com o DHH (David Heinemeier Hansson). Após o lançamento do Basecamp em 2004
-e o Rails que foi extraído, nos encontramos focados em escrever aplicações
-ao invés de prestar consultoria para clientes. Paralelamente à transição da companhia,
+e do Rails ser extraído, nos focamos em escrever aplicações
+ao invés de prestar consultoria para clientes. Paralelamente à transição da empresa,
 eu também comecei a me interessar mais em software e achei meu papel
-como designer de interfaces indo além de "web design" para designer de software.
+como designer de interfaces, indo além de "web design" para design de software.
 
-Rupak: O que levou você a trabalhar com Rails? O que você tinha elaborado para
-esta plataforma quando você começou e o que ainda chama sua atenção?
+Rupak: O que o leva a trabalhar com Rails? O que te atraiu para esta plataforma
+quando você começou e ainda chama sua atenção?
 
 Ryan: O aspecto chave sobre Rails é que ele me permite trabalhar no nível correto de
-abstração. A variedade de implementações que eu tenho para pensar sobre algo é pequena
-suficiente que eu sinto como se estivesse tocando o modelo diretamente e as views
+abstração. O tamanho da implementação que eu tenho para pensar é tão pequeno
+que eu sinto como se estivesse tocando o modelo diretamente e as views
 são 90% HTML. Também o padrão MVC é um dos grandes suportes para nosso trabalho na
-37signals, como uma companhia focada na interface para usuário (UI). Projetar UI
+37signals, como uma empresa focada na interface para usuário (UI). Projetar UI
 num rascunho de aplicação Rails funcionando é então muito melhor que escrever um mock
-HTML de uma tela independente porque eu posso ver como um design se comporta com
-com dados reais e como eu o construo. Trabalhando com partials e helpers significa
+HTML de uma tela independente, porque eu posso ver como um design se comporta com
+com dados reais enquanto eu o construo. Trabalhar com partials e helpers significa
 também que meus templates fazem muito sem sacrificar a legibilidade. Eu sou um grande
-fã do Eric Evans (autor do livro "Domain-Driven Design") e eu sinto como Ruby e Rails
+fã do Eric Evans (autor do livro "Domain-Driven Design") e eu sinto que Ruby e Rails
 são um ambiente ideal para trabalhar com estes padrões.
 
 [[Imagem com nuvem de termos: "pulso da comunidade". Alguém vai colar a imagem aqui??]]
@@ -48,16 +48,16 @@ são um ambiente ideal para trabalhar com estes padrões.
 "Rails Magazine Team". O que vai ficar no lugar??]]
 
 Rupak: Você arriscaria uma previsão do futuro do Rails?
-Em um ano a partir de agora? Cinco?
+Daqui a um ano? Cinco?
 
-Ryan: Eu posso somente torcer para que as pessoas aproveitem as raras
-oportunidades que Rails proporciona, conforme o tempo que passa para elas. Rails torna
-mais fácil para desenvolvedores e designers a colaboração, então eu torço para nós
-vermos mais designers de UI envolvidos em design de software. Eu gostaria de ver mais
+Ryan: Eu posso somente esperar, com o passar do tempo, que as pessoas aproveitem as raras
+oportunidades que o Rails proporciona. Rails torna
+mais fácil para desenvolvedores e designers a colaboração, então espero
+ver mais designers de UI envolvidos com design de software. Eu gostaria de ver mais
 discussões acontecendo sobre a relação entre modelagem e UI, e talvez mais conversas
-sobre visões de convenção de código. Muitos de nós, do lado da interface de usuário, estão
-confiando nos padrões que nós herdamos de modelos do "movimento CSS", o qual é uma boa base
-mas eles não são também suficientes. Eu estou fazendo o meu melhor para compartilhar estes
+sobre convenção de código para views. Muitos de nós, do lado da interface de usuário, estão
+confiando nos padrões que nós herdamos de modelos do "movimento padrões web/CSS", que é uma boa base
+mas não é o suficiente. Eu estou fazendo o meu melhor para compartilhar estes
 padrões que eu tenho achado como as oportunidades se apresentam.
 
 Rupak: Com o Merb se fundindo com o Rails 3, quais funcionalidades de outras plataformas
@@ -75,11 +75,11 @@ Rupak: Se você pudesse dar uma dica a alguém que está apenas começando, qual
 
 Ryan: Eu aconselho qualquer um que faz interface de usuário para aplicações Rails a
 tomar responsabilidade pelos diretórios de views. Compartilhe o código fonte,
-os próprios diretórios, e não dependa de programadores para implementar seus projetos.
-Partindo disso já é um pequeno passo para encontrar de onde as variáveis de instância
-estão vindo, o que é um modelo, ou como helpers podem ajudá-lo.
+aproprie-se dos diretórios, e não dependa de programadores para implementar seus designs.
+Partindo disso já é um pequeno passo para descobrir de onde as variáveis de instância
+estão vindo, o que é um modelo, ou como os helpers podem ajudá-lo.
 Designers de interface de usuário não tem que se tornar programadores, mas nós devemos
-saber o que é MVC e onde nós estamos presentes.
+saber o que é MVC e onde nós devemos estar nele.
 
 Rupak: O que você desejaria que estivesse presente hoje no Rails?
 
