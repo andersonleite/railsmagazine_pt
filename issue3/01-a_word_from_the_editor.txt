@@ -1,46 +1,46 @@
 Uma palavra do editor
-por Olimpiu Metiu 
+por Olimpiu Metiu
 
-Bem-vindos a maior edição que a Rails Magazine já teve!
+Bem-vindos à maior edição que a Rails Magazine já teve!
 
 Os últimos meses foram bons como de costume, com nosso time crescendo para 7 pessoas
 (http://railsmagazine.com/team), não incluindo nossos principais autores e colunistas
 (http://railsmagazine.com/authors).
 
-Se você encontrar um artigo que julgar útil ou interessante, por favor considere enviar 
+Se você encontrar um artigo que julgar útil ou interessante, por favor considere enviar
 seus agradeciomentos ao respectivo autor ou editor - eles trabalharam consideravelmente
 para compartilhar seus conhecimentos de uma maneira profissional.
 
 Para ajudar a fazer com que a revista continue, nós estamos procurando por ajuda extra -
 por favor entre em contato caso tenha interesse.
-                                          
+
 
 
 Olimpiu Metiu é um arquiteto e estrategista web de Toronto. Ele lidera o grupo
 Emergent Technologies em Bell Canada nos últimos anos, e seu trabalho
-inclue muitos dos maiores web sites e portais de intranet do Canada.
+inclui muitos dos maiores web sites e portais de intranet do Canadá.
 Recentemente, Olimpiu se juntou ao Research in Motion (criadores do BlackBerry),
 onde é responsável pela arquitetura de uma incrível plataforma de colaboração.
 
 Por muito tempo sendo um entusiasta em Rails, ele fundou a Rails Magazine
 como uma forma de retribuir a essa comunidade incrível.
 
-Siga no Twitter: http://twitter.com/olimpiu            
+Siga no Twitter: http://twitter.com/olimpiu
 LinkeIn: http://www.linkedin.com/in/ometiu
 
 
 
 Nossa edição da RailsConf 2009, inicialmente idealizada como um relatório de 2 páginas,
 ganhou vida e terminou com 12 páginas de cobertura exclusiva, informações sobre
-Rails 3 e entrevistas com uma série de rubystas importantes.
+Rails 3 e entrevistas com uma série de rubistas importantes.
 
-É claro, estamos vivendo um tempo interessante para toda comunidade Rails:
-Passenger para NGinx, MacRuby/HotCocoa, compatibilidade da gem Ruby 1.9
-e rumores sobre Rails 3 são algumas das coisas que mantém todos ocupados.
-Além disso, o acontecimento do Matt-gate leva-nos a uma reflexão e a criação
+É claro, estamos vivendo um período interessante para toda a comunidade Rails:
+Passenger para Nginx, MacRuby/HotCocoa, compatibilidade de gems para Ruby 1.9
+e rumores sobre Rails 3 são algumas das coisas que mantêm todos ocupados.
+Além disso, o acontecimento do Matt-gate nos leva a uma reflexão e a criação
 do Railsbridge.org - uma comunidade que temos esperança que mostre muitas
 novidades e complemente os esforços no Rails.
 
 Sem mais, vamos a Rails Magazine edição 3 ...
-Discuss: http://railsmagazine.com/3/1 
 
+Discuta: http://railsmagazine.com/3/1

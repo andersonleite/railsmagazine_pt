@@ -1,33 +1,33 @@
-meshU 
-Rails Magazine 
+meshU
+Rails Magazine
 Cobertura exclusiva
 meshU é um evento de 1 dia de workshops focados em design,
-desenvolvimento e gerenciamento de equipe feito por aqueles que 
+desenvolvimento e gerenciamento de equipe feito por aqueles que
 aprenderam e fizeram por merecer no mundo das startups.
-Pessoas que podem falar concientemente sobre tudo desde design de interfaces 
+Pessoas que podem falar conscientemente sobre tudo desde design de interfaces
 até utilizar o S3 da Amazon.
 
-Os palestrantes da meshU 2009 incluem 
-Chris Wanstrath, Ilya Grigorik,  
-Carl Mercier e Ryan Singer  – 
-para nomear apenas alguns que entrevistamos.
+Os palestrantes da meshU 2009 incluem
+Chris Wanstrath, Ilya Grigorik,
+Carl Mercier e Ryan Singer  –
+para nomear apenas aqueles que entrevistamos.
 
-meshU aconteceu em 6 de Abril de 2009 MaRS Collaboration Centre 
+meshU aconteceu em 6 de Abril de 2009 no MaRS Collaboration Centre
 em Toronto.
-Web-site oficial:
-http://www.meshu.ca/ 
+Website oficial:
+http://www.meshu.ca/
 Palestras e programação:
-http://www.meshu.ca/speakers-2009/ 
+http://www.meshu.ca/speakers-2009/
 
-Pete Forde, Unspace 
-É um iPhone no seu bolso, 
-ou você está apenas feliz em me ver? 
+Pete Forde, Unspace
+É um iPhone no seu bolso,
+ou você está apenas feliz em me ver?
 
-Ilya Grigorik, AideRSS 
-Event-Driven  
-Architectures 
+Brydon Gilliss, Brainpark
+Construindo software como Obama
 
+Ilya Grigorik, AideRSS
+Arquiteturas Orientadas a Eventos
 
-Chris Wanstrath, GitHub 
-Building a Business  
-with Open Source 
+Chris Wanstrath, GitHub
+Construindo um Negócio com Open Source
