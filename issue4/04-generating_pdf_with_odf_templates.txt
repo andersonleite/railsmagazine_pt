@@ -1,0 +1,241 @@
+Gerando arquivos PDF com templates ODF
+por Rodrigo Rosenfeld Rosas
+
+Existem diversas maneiras de se gerar uma saída PDF com o Rails. Especificamente com o Ruby,
+ou melhor ainda, em qualquer framework ou linguagem. Algumas técnicas incluem templates 
+escritos em Latex [1] or DocBook [2], enquanto outras requerem a geração manual do PDF. 
+Contudo, isso não é uma solução prática para a maioria dos ambientes no mundo real, nem 
+segue o princípio de separação MVC.
+
+Background e motivação
+
+No início de 2007, comecei a trabalhar para a FAPES (http://www/fapes.es.gov.br), uma 
+fundação governamental que incentiva a pesquisa em ciência e tecnologia no Espírito Santo, o 
+estado em que moro. A mim foi dado o trabalho de criar um site para nossa fundação recém 
+criada. Tal site foi criado em conjunto com a SECT, a Secretaria de Tecnologia de nosso 
+estado, por volta de 2005, sem mesmo termos um espaço físico disponível.
+
+
+---------------------------------------------------------------------
+Rodrigo Rosenfeld Rosas é um engenheiro elétrico que mora em Vitória - ES, Brasil. Ele 
+desenvolveu um framework de tempo real para sistemas móveis robóticos baseados em Linux
++Xenomai para sua tese de mestrado em 2006, na UFES. Para fins de validação, ele também 
+desenvolveu um robô e uma módulo capturador de quadros em tempo real. Atualmente ele 
+trabalha na Geocontrol (http://www.geocontrol.com.br) e descobriu Ruby em 2007, enquanto 
+avaliava Rails para o desenvolvimento web, tendo experiência anterior com C/C++. Delphi, 
+Perl entre outras linguagens.
+Ele ama sua esposa e ainda não tem filhos (crinças são legais, mas sem pressa).
+Gosta de surfar, de música brasileira (samba, choro, seresta) e tocar violão, e está tentando
+aprender novos instrumentos: cavaco. bandolim, pandeiro flauta e violino (talvez sax e clarinete no futuro).
+E-mail: rr_rosas@yahoo.com.br
+---------------------------------------------------------------------
+
+Visto que é uma fundação pequena, fui responsável por tudo relacionado a TI, incluindo a 
+infra-estrutura de rede, help-desk e programação. Na época, solicitaram que eu desse 
+manutença ao NOSSABOLSA, um sistema web implementado em ASP, que era (e ainda é) um 
+importante programa da FAPES/SECT para financiar estudos em colégios particulares para 
+estudantes de famílias de baixa renda. Até então, eu não sabia nada sobre ASP ou Rails.
+
+Minha experiência anterior séria com programação web (alguns anos antes desse trabalho) era com Perl. Eu não trabalhei com programação web por muitos anos depois disso. No meio de 2007, tinha desenvolvido um novo site para promover um evento que estávamos organizando e que precisava de um sistema de registros, junto com um monte de informação estática. Visto que eu tinha um servidor Linux disponível, não precisava implementá-lo em ASP, o que teria levado muitos dias e eu tinha apenas uma semana para desenvolver tal site.
+
+Comecei a procurar na web então por frameworks web modernos. Olhei alguns frameworks em Perl, claro, J2EE, .Net, TurboGears, Django, Rails e muitos outros. Ficou claro que o Rails era a escolha certa. Então aprendi Rails e senvolvi todo o site em uma semana. Como era um site temporário, não me importei em experimentar um novo framework. Fiquei tão empolgado com o Rails e especialmente pelo Ruby, que, quando precisei de um site novo e permanente para a FAPES, foi a escolha mais lógica.
+
+Pouco depois da criação do site, existia a necessidade de se gerar contratos baseados na entrada de formulários web que poderiam ser impressos e entregas à FAPES. Existiam vários problemas na geração de contratos com HTML. CSS não foi bem pensado para impressão. Era difícil (se é que era possível) configurar cabeçalhos e rodapés e, na verdade, a impressão depende muito das configurações do navegador e dos motores de renderização. Como resultado, as versões impressas não seguiam um layout único, o que era um problema para nós. Então, comecei a pensar na saída em PDF. Li a respeito das técnicas mais comuns de geração de PDF,
+mas nenhuma delas parecia se adequar as minhas necessidades.
+
+
+Visão Geral da Solução Proposta
+
+O problema era que existiam diversos tipos de contrato e eles eram um pouco longos, o que fazia com que se levasse muito tempo para prepará-los sem um bom sistema de templates. Eu sabia que o departamento jurídico não poderia me dar modelos de contrato formatados em LaTeX ou DocBook. Eles sabiam apenas MS Word e eu teria que conviver com isso. Também não havia muito tempo para implementar a geração de contratos.
+
+Parece-me que, quando pressionados, somos extremamente criativos. Felizmente, eu me lembrei que o formato ODF era, na verdade, um arquivo XML, além de outros arquivos armazenas em uma estrutura de pastas compactados em um arquivo ODF. Eu extraí o arquivo e dei uma olhada em um arquivo especial, chamado content.xml. Então percebi que era possível (e muito fácil) de se substituir alguns templates com campos de formulário submetidos ao servidor web. Era também bastante fácil de se importar documentos do MS Word no OpenOffice.org [3] e salvá-los no formato ODT. E eu não teria que ensinar o departamento jurídico a usar nenhuma técnica nova para escrita de documentos como Latex ou DocBook. Eles poderiam usar aquilo com que já estavam acostumados.
+
+Além disso, existiam algumas ferramentas que poderiam converter ODF para PDF, usando o OpenOffice.org em um ambiente "sem cabeça", o que significava que eu poderia rodá-lo como um daemon em background sem mesmo ter um ambiente gráfico instalado. Esse deamon poderia rodar no mesmo servidor que a aplicação ou em um outro servidor dedicado, se você preferisse. Aqui está um possível uso do OpenOffice.org como um daemon, escutando na porta 3003:
+
+soffice -accept=”socket,host=localhost,port=3003;urp” -norestore -headless -invisible -nofirststartwizard&
+
+Então, qualquer software habilitado com UNO [4] poderia converter qualquer arquivo ODF em qualquer um dos formatos de saída suportados pelo OpenOffice.org, incluindo PDF. Como exemplo, você poderia usar o PyODConverter [5] para converter um documento ODT para PDF:
+
+/opt/openoffice.org3/program/python DocumentConverter.py document.odt output.pdf
+
+Apenas tenha certaza de editar o arquivo DocumentConverter.py, alterando a porta de modo a refletir aquela em que o OpenOffice.org está escutando, visto que a porta não pode ser passada como parâmetro. Seguindo o exemplo acima, isso significa:
+
+DEFAULT_OPENOFFICE_PORT = 3003
+
+A ideia geral é ilustrana na figura a seguir:
+
+IMAGE
+
+
+Uma Implementação Possível
+
+Eu estava bastante feliz por ter encontrado a solução para meus problemas e só precisava de algum tempo para implementar a solução. Esta técnica, na verdade, pode ser implementada com facilidade em qualquer linguagem. Pelo menos no Ruby, tudo parecia fácil de se implementar. Aqui está o que eu uso para gerar os contratos em PDF (salve isso em config/initializers/contract.rb):
+
+require ‘rexml/document’
+
+module Contract
+
+  CONST_FIELDS = {‘DirectorName’ => ‘Name of Director’, ‘FAPES_Account’ => ‘Account Information’}
+  CONTRACTS_URL=’/contracts’; CONTRACTS_DIR = Rails.public_path+CONTRACTS_URL
+  ATTACHMENTS_DIR = “#{CONTRACTS_DIR}/attachments/”
+  OUTPUT_DIR = “#{CONTRACTS_DIR}/generated/”; TEMPLATES_DIR = “#{CONTRACTS_DIR}/templates/”
+
+  class << self
+
+    # Salva o arquivo do template em public/contracts/templates/scholarship.odt e então chama:
+    # Contract::generate(‘scholarship’, {‘student_name’ => ‘Rodrigo Rosenfeld’}, ‘scholarships/1’)
+    # public/contracts/generated/scholarships/1.pdf será criado, A saída é um endereço com o link para o PDF
+    def generate (template_file, fields, output_file, options={})
+      fields.merge!(CONST_FIELDS)
+      template_file = TEMPLATES_DIR+template_file+’.odt’
+
+      # substitui caracteres não alfanuméricos para underscore. Segurança é responsabilidade do método que chama.
+      output_file.gsub! /[^\\\/\w\.\-]/, ‘_’
+      pdf_output_filename = OUTPUT_DIR+output_file+’.pdf’
+      pdf_output_filename_temp = options[:attachment] ? OUTPUT_DIR+output_file+’_without_attachment.pdf’ : pdf_output_filename
+
+      output_file = OUTPUT_DIR+output_file+’.odt’
+      output_dir = File.dirname(output_file); FileUtils.mkdir_p(output_dir)
+
+      Kernel.system “unzip -o #{template_file} content.xml -d #{output_dir}” or return nil
+      content_file = “#{File.readlines(“#{output_dir}/content.xml”)}”
+
+      # antes de substituir expressões, gera os templates das tabelas
+      options[:tables].each {|t| content_file=generate_table(content_file,
+      t[:table_name], t[:line], t[:fields])} if options[:tables]
+      replace_expressions(content_file, fields)
+
+      File.open(“#{output_dir}/content.xml”, ‘w’) { |f| f.write content_file }
+      FileUtils.cp_r template_file, output_file
+
+      #pdf-converter é um script que atualmente usa o PyODConverter (DEFAULT_OPENOFFICE_PORT=3003):
+      #/opt/openoffice.org3/program/python /usr/local/bin/DocumentConverter.py $@
+      Kernel.system(“zip -j #{output_file} #{output_dir}/content.xml; pdf-converter #{output_file} #{pdf_output_filename_temp}”) or return nil
+
+      return merge_pdf(pdf_output_filename_temp, ATTACHMENTS_DIR + options[:attachment], pdf_output_filename) if options[:attachment]
+      pdf_output_filename.sub /\Apublic/, ‘’
+    end
+
+    def replace_expressions(str, fields)
+
+      # O padrão “#{student_name#U}” será substituído por ‘RODRIGO ROSENFELD’
+      str.gsub!(/#\{(.*?)(#(.))?\}/) do
+        result = (fields[$1] or ‘’)
+        case $3
+        when ‘U’; result.mb_chars.upcase.to_s
+        when ‘d’; result.mb_chars.downcase.to_s
+        when ‘C’; result.mb_chars.capitalize.to_s
+        # vários outros formatadores aqui para escrever o número por extenso, como moeda, etc.
+        else; result # não se altera
+        end
+      end
+    end
+
+    # isto gera tabelas dinâmicas nos templates ODF. É necessário definir um nome para a tabela no OpenOffice.
+    # 'line' inicia em 1.
+    # generate_table(content_string, ‘Items’, 2, [{‘n’ => 1, ‘item’ => ‘Desktop computer’}, {‘n’ => 2, ‘item’ => ‘Laser printer’}])
+    def generate_table(content_xml, table_name, line, fields)
+      document = REXML::Document.new(content_xml)
+      template_line = document.root.elements[“//table:table[@table:name=’#{table_name}’]/table:table-row[#{line}]”].to_s
+      document.to_s.sub(template_line, fields.collect {|f| replace_expressions(template_line.dup, f)}.join)
+    end
+
+    # retorna a URL para o arquivo a ser juntado ou nil se ele não pode ser gerado
+    def merge_pdf(contract, attachment, output)
+      [contract, attachment].each {|f| return nil unless File.exist?(f)}
+      Kernel.system(“pdftk #{contract} #{attachment} cat output #{output}”) or return nil
+      output.sub(Rails.public_path, ‘’)
+    end
+
+  end
+  
+end
+
+
+A implementação não é realmente importante e não falarei muito sobre ela, já que tenho certeza que muitos plugins com 
+opções melhores e implementações serão criados usando tal técnica. A maior parte da implementação é trivial de se 
+compreender. Otimizações podem ser feitas, claro. Por exemplo, não deve ser necessário descompactar content.xml do 
+template antes de cada conversão.
+
+Apenas gasterei algum tempo para explicar algumas partes que podem não ser óbvias para alguns leitores.
+
+template_line = document.root.elements[“//table:table[@table:name=’#{table_name}’]/table:table-row[#{line}]”].to_s
+
+document.to_s.sub(template_line, fields.collect {|f| replace_expressions(template_line.dup, f)}.join)
+
+O suporte a tabelas simples é desejável. Padrões devem ser escritos em uma linha, que então seria substituída por algumas
+linhas contendo uma coleção de dados pegados da web, como por exemplo Itens a serem comprados, ou qualquer outra coisa.
+É necessário nomear a tabela (veja as propriedades rda tabela no OpenOffice) e contar ao método qual linha deve ser usada
+como template. A primeira linha é a número um.
+
+Há também um método helper usado para se juntar dois PDFs, para que um PDF especial seja anexado no final de um dinâmico
+caso seja necessário. A implementação pode ser alterada para aceitar outros parâmetros para especificar um cabeçalho e
+um rodapé no PDF. A implementação usa o pdftk [6] para juntá-los.
+
+Como você provavelmente notou, você pode escrever arquivos ODT com padrões como "Eu, #{student_name#U}, concordo..." que
+será substituído por "Eu, RODRIGO ROSENFELD, concordo...", quando "Rodrigo Rosenfeld" for submetido ao servidor em um
+formulário.
+
+Casos de Teste
+
+Você deve também escrever um teste unitário para se assegurar que a saída foi gerada corretamente. Aqui está um possível
+teste unitários (test/unit/contract_test.rb)
+
+
+require ‘test_helper’
+class ContractTest < ActiveSupport::TestCase
+
+  # Este teste não é definitivo, visto que ele não testa o conteúdo pdf gerado. Mas as chances são boas que ele estará
+  # correto se content.xml estiver correto e o arquivo é um PDF (começa com '%PDF'). Entretanto este teste não testa
+  # para saber se o processo de juntar dois arquivos está bom, embora ele garanta que vários dos passos estejam OK.
+  
+  test ‘generate contract’ do
+    FileUtils::rm_rf Rails.public_path + ‘/contracts/generated/scholarships/test/’
+    assert_equal ‘/contracts/generated/scholarships/test/rodrigo.pdf’,
+      Contract::generate(‘scholarship’, {‘student_name’ => ‘Rodrigo Rosenfeld’, ‘address’ => ‘R. Nascimento Silva, 107’,
+      ‘total’ => 4090.49}, ‘scholarships/test/rodrigo’,
+      :tables => [{:table_name => ‘Items’, :line => 2, :fields => [{‘name’ => ‘Books’, ‘value’=> 90.49},
+      {‘name’ => ‘Airline Ticketings for International Congress’, ‘value’ => 4000.00}]}],
+      :attachment => ‘scholarships/contract_terms.pdf’)
+    
+    assert FileUtils::identical?(Rails.root.to_s + ‘/
+      test/fixtures/expected_content.xml’,
+      Rails.public_path + ‘/contracts/generated/scholarships/
+      test/content.xml’)
+      f = File.new(Rails.public_path + ‘/contracts/generated/
+      scholarships/test/rodrigo.pdf’)
+      
+    assert_equal ‘%PDF’, f.read(4) # A saída é mesmo um PDF?
+  end
+end
+
+
+Conclusão
+
+Gerar PDFs a partir de templates se provou uma tarefa simples. Aproveite seu tempo livre, agora que você pode economizar
+bastante tempo não tendo que preparar a geração de PDFs! Ou use ele para gerar um bom plugin para geração de PDF usando
+esta técnica. :)
+
+Recentemente um novo plugin para geração de ODF escrito em RUby, está disponível em http://github.com/sandrods/odf-report/tree/
+master. Este plugin usa a idea apresentada nesse arquivo para geração de ODF, usando o gem rubyzpi para compactar/descompactar,
+ao invés de executar um programa externo para essa tarefa. Para leitores interessados em implementar um plugin para a geração
+de PDF em Ruby, eu recomendaria dar uma olhada nosse gerador de ODF e adaptá-lo para a integração com o OpenOffice.org e
+com o PyODFConverter como demonstrado nesse artigo.
+
+Recursos
+[1] Latex - http://www.latex-project.org
+[2] DocBook.org - http://www.docbook.org
+[3] OpenOffice.org - http://www.openoffice.org
+[4] UNO - http://wiki.services.openoffice.org/wiki/Uno
+[5] PyODConverter - http://www.artofsolving.com/opensource/
+pyodconverter
+[6] pdftk - http://www.pdfhacks.com/pdftk
+
+Código fonte: http://github.com/railsmagazine/rmag_downloads
+
+Discuta: http://railsmagazine.com/4/3
+
+
+
+
+
