@@ -1,11 +1,11 @@
 Vinicius Baggio Fuentes
 
 Vinicius Baggio Fuentes é desenvolvedor de software na região de São
-Paulo, capital. Brinca com Web desde 2002 com PHP e Python e desde o
+Paulo, capital. Brinca com Web, PHP e Python desde 2002 e, desde o
 começo de 2008, dedica-se profissionalmente a Ruby e Rails e seu ecossistema.
 
 =================================================================
 
 Vinicius Baggio Fuentes is a software developer in São Paulo region.
-Plays with Web since 2002 with PHP and Python and since the beginning
+Plays with Web, PHP and Python since 2002 and, since the beginning
 of 2008, works professionally with Ruby and Rails and its ecosystem.

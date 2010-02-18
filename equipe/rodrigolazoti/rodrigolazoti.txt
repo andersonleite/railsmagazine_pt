@@ -1,6 +1,6 @@
 Rodrigo Lazoti
                                                                   
-Rodrigo Lazoti é bacharel em Sistemas de Informação desde 2008 pela faculdade Drummond. Atua como desenvolvedor de software desde 2001 e atualmente vive em São Paulo, Brasil. Ele trabalha principalmente como desenvolvedor Java, mas desenvolve em muitas outras linguages como Ruby, Objective-C e Javascript. Tem blog em http://www.rodrigolazoti.com.br
+Rodrigo Lazoti é bacharel em Sistemas de Informação desde 2008 pela faculdade Drummond. Atua como desenvolvedor de software desde 2001 e atualmente vive em São Paulo, Brasil. Ele trabalha principalmente como desenvolvedor Java, mas desenvolve em muitas outras linguagens como Ruby, Objective-C e Javascript. Tem blog em http://www.rodrigolazoti.com.br
 
 ==================================================================
 Rodrigo Lazoti has a bachelors degree in Information Systems since 2008, from Faculdade Drummond. He is software developer since 2001 and he currently lives in Sao Paulo, Brazil. He is mainly a Java developer, but he develops in many others languages like Ruby, Objective-C and Javascript. He has a blog at http://www.rodrigolazoti.com.br

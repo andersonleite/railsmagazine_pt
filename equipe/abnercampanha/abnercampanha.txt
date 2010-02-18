@@ -1,15 +1,15 @@
 Abner Campanha
 
-Abner Campanhã mora em Bauru, interior de São Paulo. Com mais de 10
+Abner Campanha mora em Bauru, interior de São Paulo. Com mais de 10
 anos de experiência em desenvolvimento de software, já trabalhou com
-c, delphi, java e c#. Atualmente trabalha com java, ruby e flex na
+C, Delphi, Java e C#. Atualmente trabalha com Java, Ruby e Flex na
 área de automação industrial.
 
 ================================================================== 
 
 Abner Campanha lives in Bauru, Sao Paulo. With more than 10 years of
-development software experience, worked with c, delphi, java and c#.
-Currently works with java. ruby and flex on industrial automation
+experience in software development, he has worked with C, Delphi, Java and C#.
+Currently works with Java, Ruby and Flex on industrial automation
 area.
 
 
