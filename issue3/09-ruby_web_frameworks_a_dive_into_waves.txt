@@ -37,28 +37,28 @@ ele é um protocolo que chama métodos em recursos.
 Recursos: "coisas" identificadas e acessadas através de
 uma URI.
 
-So, the most interesting things about this framework can 
-be summarized here: 
-- Embrace of resources approach: the key of Waves are 
-resource, and the routing features heavily work with 
-that. 
-- The application behaves like a proxy of resources: we 
-can have multiple request paths invoking the same set 
-of resources. 
-- It’s based, like Rails (at least with 2.3 version) and Merb, 
-on Rack. 
-- It runs on JRuby. 
+Logo, as coisas mais interessantes desse framework podem
+ser resumidas em:
 
-In Waves we can see an application basically as a com- 
-posed stack of functionalities: 
+- Adoção do uso de recursos: o ponto chave do Waves é o
+uso de recursos, e o sistema de rotas é fortemente baseado
+em recursos.
+- A aplicação se funciona como um proxy de recursos: nós
+podemos ter vários paths invocando os mesmos recursos.
+- É compatível, assim como o Rails (pelo menos até a versão
+2.3) e o Merb, com o Rack.
+- Roda no JRuby. 
 
-* Image: Application, Layer(s), Foundation *
+No Waves podemos enxergar uma aplicação como uma pilha de
+funcionalidades:
 
-- Application: is built on Layers 
-- Layers: mix-in features to help build your application 
-(eg: MVC support) 
-- Foundation: is a Layer that provides at least the mini- 
-mal features set required for an application. 
+* Imagem: Application, Layer(s), Foundation *
+
+- Aplicação: é construída em camadas
+- Camadas: componentes que te ajudam a construir a
+aplicação (ex.: MVC)
+- Fundação: é uma camada que fornece os componentes mínimos
+necessários para construir a aplicação.
 
 In fact, Waves authors speak in terms of Layers and Foun- 
 dation. Of course there aren’t any magical approaches on 
