@@ -49,44 +49,53 @@ como "pra que você precisa desse servidor...", "nós não temos o que você est
 "nós não podemos aprovar um projeto não realionado a empresa nesses servidores...", "precisa ser
 aprovado pelos diretores...", "se você está fazendo isso significa que você tem muito tempo livre...",
 eu decidi não entrar na burocracia da empresa e tocar o projeto sozinho.
+Eu iria falar com o pessoal técnico da empresa mais tarde, quando o projeto estivesse rodando.
+Olhando pra trás, eu percebo que tornar o projeto open source foi uma das melhores
+decisões da minha vida. O próximo passo é descobrir como rodar o projeto sem gastar muito 
+dinheiro do meu bolso. Nós vivemos em tempos estranhos onde você consegue muita coisa de graça.
+Não é mais do tipo "você tem o que você pagou" - de graça não significa ruim, normalmente é o contrário,
+"grátis" significa o melhor. E é claro, não é o melhor porque é grátis, mas porque é open source.
+Quanto a tecnologia, Ruby on Rails foi minha primeira escolha, grátis, elegante, suporte
+de uma comunidade incrível - e há algo que preciso dizer mesmo com o risco de chover no molhado.
+Como todo bom profissional, eu não poderia deixar de colocar o código em algum controlador de versão.
+Existem milhares de opções. Git vem fazendo cada vez mais barulho. Existem diversos sites que oferecem 
+hospedagem em repositórios git. Mas há algo que deve ser dito sobre o http://github.com.
+Primeiro de tudo ele te oferece 100M para repositórios públicos de graça(o que significa muitos
+projetos open source). Mas essa não é a parte mais importante. O que faz o github ser diferente 
+dos outros é o aspecto de rede social. É essencial que seu projeto open source seja visualizado por outros.
+O projeto que comecei esta hospedado em http://github.com/dmitryame/echowaves/ e no momento
+que escrevo, ele tem 18 seguidores - não muito, mas mais do que eu poderia esperar em um projeto de 
+um mês. E a parte legal é que você não está apenas limitado a desenvolver na sua empresa ou país.
+É realmente globalizado. Um dos melhores contribuidores e líder técnico mora na Espanha - 
+acredite ou não ele encontrou o projeto no github e gostou o suficiente pra participar.
+Através do github eu fui apresentado a um programador da Inglaterra que também era inspirado 
+pela 37signals e começou outros projetos muito bons - railscollab e rucksack, ele fez uma
+série de sugestões muito boas que influenciaram muito no projeto.
+Eu não consigo expressar inteiramente o quanto eu me empolguei em trabalhar num projeto
+com pessoas diferentes que eu nunca havia conhecido pessoalmente antes, e que estavam ao redor do mundo.
 
 
 
+                      — but I’m 
+											preaching to the choir here.
+											
+                  
 
-
-
-                           
-								I was going to approach the corp tech again later, when the 
-								project is off the ground and kicking. 
-								Looking back, I think the decision to opensource the proj- 
-								ect was one of the best decisions of my life. 
-								The next step was to figure out how to run the project and 
-								not to spend too much money out of my pocket. We live in a 
-								weird time when you can get a lot for free. And it is not like 
-								“you get what you pay for” any more — free does not mean 
-								bad at all, usually the opposite, “free” reads the best. And of 
-								course it is the best not because it is free, but because it is 
-								opensource. 
-								ing lately has drawn a lot of scepticism, but in my experience 
-								if there is a benefit from the Internet and Social Networking, 
-								then that’s it. 
-								As great as it sounds, it does not come for free–, there are 
-								few simple things to keep in mind. Here is what I had to do 
-								make things moving. 
-								Make sure to write reasonable 
-								•	 README in you rails 
-								project. It will appear on the  repo’s home page for your 
-								project on github and most often people will judge your 
-								project based on the first impression they get from that 
-								Dmitry Amelchenko specializes in 
-								web applications development for financial 
-								companies in New York City and Boston 
-								area. Throughout his career he worked on 
-								a number of highly visible mission critical 
-								web sites as a software engineer, mentor 
-								and architect. Experienced in C++, Java and 
-								Ruby languages. Witnessed first hand the evolution of web 
-								applications development from CGI, to J2EE, to Ruby on Rails. 
-								Currently works on number of open source projects hosted on 
-								github at http://github.com/dmitryame/. 
-								
+ I can not stress enough the excitement I get from work- 
+										ing on the project with all different people I’ve never even met 
+										in person before, located all over the world. Social network- 
+										ing lately has drawn a lot of scepticism, but in my experience 
+										if there is a benefit from the Internet and Social Networking, 
+										then that’s it. 
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
