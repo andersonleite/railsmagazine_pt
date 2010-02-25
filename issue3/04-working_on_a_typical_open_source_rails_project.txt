@@ -1,2 +1,61 @@
 Trabalhando em um projeto Rails de código aberto
-por Dmitry Amelchenko
+por Dmitry Amelchenko                    
+
+                                                       
+Há muito o que dizer a respeito do modelo de desenvolvimento open source(OS).
+Um projeto open source tradicional em Rails tem características específicas
+comparado ao resto dos projetos open source. Um projeto opensource
+tradicional normalmente tem um build que você pode fazer o download e instalar -
+um arquivo tar, jar, lib ou mesmo um exe, enquanto no Rails isso é um Web Site.    
+A complexidade de um deploy de uma aplicação web é talvez uma das razões
+para que o projetos de web aplication open source não estejam no mainstream ainda. 
+Rails por outro lado oferece uma oportunidade aos desenvolvedores de aplicações web que
+pode ser facilmente instalada em diversos ambientes ou quantos hosts desejar.
+Alguém pode perguntar: quando estamos desenvolvendo uma aplicação web, nós não queremos
+rodá-la em um único host? Uma das razões para desenvolvimento de aplicações web open source
+seria o fato de que algumas indústrias ainda tem regras rígidas e não aceitariam compartilhar 
+e enviar dados através de algum serviço web 2.0, mas se o código fonte para tal serviço
+é disponibilizado gratuítamente e pode ser instalado dentro do firewall da empresa, 
+todos estaríam felizes. Outra razão para as pessoas escolherem criar uma aplicação web 
+open source é a disponibilidade de ferramentas avançadas que são distribuídas gratuitamente
+caso seu código seja open source.  Nesse artigo vou falar sobre alguns desses serviços.
+E por fim, mas não menos importante é a disponibilidade de talentos - 
+se você está trabalhando em um projeto open source realmente interessante usufruindo dos poderes da Web,
+a chance de você estar trabalhando junto com os melhores programadores é muito grande. 
+Seja qual for a razão para fazer um projeto Rails open source, é possível
+encontrar uma lista deles em duas fontes:
+— http://wiki.rubyonrails.com/rails/pages/OpenSourceProjects 
+e http://www.opensourcerails.com/. 
+Para mim tudo começou lendo o livro  “Getting real” da 37Signals — 
+ele está disponível gratuítamente em  https:// 
+gettingreal.37signals.com/ ou http://gettingreal.37signals.com/GR_por.php. 
+Pra resumir; a 37Signals 
+é a melhor no que faz. Eles estão fora dos padrões da industria mundial, 
+afinal de contas eles são os criadores do Rails. o livro fala principalmente sobre o senso comum
+quando o assunto é desenvolvimento de software. Eu fiquei muito empolgado em descobrir mais sobre os 
+produtos web 2.0 que a 37Signals oferece. Um dos projetos simples mas muito útil que eu quis começar
+a usar foi o "Campfire" -
+
+One of the simplest but yet useful projects that I wanted 
+to start using right away was “Campfire” — 
+
+
+
+a group chat web application. But as soon I was ready to start promoting 
+“Campfire” in the office, I realized that  it’s not going to work 
+for my company. I work for one of those firms that are very 
+concerned about sending potentially sensitive information 
+across the wire outside of a corporate firewall. But I was stub- 
+born and  felt that the group chat software was exactly what 
+my company needs to improve openness and collaboration. 
+So I decided to start hacking my own group chat web applica- 
+tion. 
+truly world wide. One of the best contributors and the techni- 
+cal lead on the project is located in Spain — believe it or not 
+he found the project on github and liked it enough to join. 
+Through github I got introduced to a guy from Britain who 
+was also inspired by the 37Signals and started few other great 
+projects — railscollab and rucksack, he has made a lot of very 
+useful suggestions and had influenced the project in a big 
+way. I can not stress enough the excitement I get from work- 
+
