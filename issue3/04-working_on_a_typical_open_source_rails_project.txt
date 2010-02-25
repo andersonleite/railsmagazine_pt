@@ -90,35 +90,33 @@ Os desenvolvedores que trabalham na aplicação utilizam pra colaborar com proje
 Algumas pessoas(e eu me incluo nessa) tem começado blogs de fotos por lá. Nós temos recebido feedbacks
 muito positivos da comunidade através disso, e também utilizamos para comunicar as novidades e updates
 para a comunidade. 
-                  
+Graças a natureza do projeto, nós podemos tomar nossas próprias decisões (então sinta-se livre para 
+baixar o projeto e rodar no seu próprio servidor, ou mesmo sinta-se a vontade para criar uma conversa
+("convo") no http://echowaves.com/).
+
+Outro ponto importante é deixar os link claros entre seu projeto e o github.
+Eu coloquei um link para o github na página inicial tornando bem explícito. E o primeiro
+link no meu arquivo README aponta de volta para o site do http://echowaves.com/. 
+
+Sites como o github são essenciais para ajudar a fazer com que seu projeto receba atenção.
+A razão que você está colocando o projeto no github é provavelmente porque você quer achar colaboradores.
+Esteja aberto a qualquer tipo de ajuda - escritores de conteúdo, desenvolvedores,
+pessoas que encontram erros, designers(os mais difíceis de encontrar), pessoas que dão sugestões.
+Mas lembre-se: você está no comando. Se você realmente quer ter sucesso nesse projeto, você
+precisa ter visão. Tenha certeza de comunicar suas pretenções sempre que tiver chance,     
+coloque-a na home page, faça isso ser a primeira coisa no README, fala sobre isso no blog.
+Não comece a trabalhar em toda e qualquer funcionalidade sugerida na mesma hora. Não aceite
+toda linha de contribuição de código, a menos que você tenha trabalhado com essa pessoa antes 
+e desenvolvido um bom relacionamento. Leia mais sobre isso no livro "Getting in Real".
 
 
-
-
-Thanks to the nature of the project, 
-											we could eat our own dog food (so feel free to checkout 
-											echowaves and run it on your own domain , or even 
-											feel free to create a conversation (“convo”) on http:// 
-											echowaves.com/). 
-											Another very important thing is to make the links 
-											•	 
-											between your project and the github obvious. I placed  
-											a link to the github location on the default landing page 
-											and made it very explicit, And the very first link in my 
-											README file points back to the http://echowaves.com/ site. 
-											Sites like github are crucial in helping to get attention 
-											•	 
-											to your project. The reason you are putting it on github 
-											is probably because you want to find contributors. Be 
-											open to any type of help — content writers, developers, 
-											spelling errors catchers, designers (the most difficult 
-											to find), suggestion makers. But remember: you are in 
-											charge. If you really want for your project to success, 
-											you need to have a vision. Make sure you communi- 
-											cate this vision whenever you get a chance, put it in on 
-											your home page, make it the first thing in your README 
-											file, talk about it in your blog. Do not start working on 
-											every little feature suggested right away. Do not accept 
-											every line of code people contribute, unless you have 
-											worked with that person before and developed a trust 
-											relationship. Real” book. 
+                                                                                      
+											
+											
+											
+											
+											
+											
+											
+											
+											
