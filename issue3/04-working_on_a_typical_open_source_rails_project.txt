@@ -1,4 +1,4 @@
-Trabalhando em um projeto Rails de código aberto
+Trabalhando em um projeto Rails Open Source
 por Dmitry Amelchenko                    
 
                                                        
@@ -181,3 +181,22 @@ aparecerá. Seja apaixonado e honesto, mesmo se você não for o desenvolvedor R
 mas ame o que você está fazendo, esse é com certeza o caminho para o sucesso.
                               
         
+
+
+EchoWaves Overview 
+por Khaled Al-Habache 
+
+Echowaves é um prjeto ambicioso com muitas funcionalidades interessantes.
+Você pode utilizá-lo como um tipo de Campfire gratuito para chat.
+Nós, da equipe da RailsMagazine, utilizamos para organizar nossa reuniões
+numa conversa privada(Convo). Entretanto isso é apenas uma parte. Echowaves 
+acrescenta a característica de rede social ao chat.
+Você pode criar uma nova conversa ou compartilhar seus pensamentos, 
+ver conversas de outros, segui-los e descobrir as conversas mais interessantes 
+pra eles. Echowaves também pode ser utilizado como um fórum web2.0,
+onde tópicos e respostas aparecem instantâneamente. Outra coisa legal é
+a possibilidade de utilizar fotos e vídeos e anexar arquivos.
+isso torna a conversa mais interativa. Echowaves atua como um provedor OpenAuth
+e exporta dados em vários formatos para ajudar os desenvolvedores a tornar
+seus dados públicos. Se você gosta de chat, blog, fotos e compartilhar coisas
+com amigos ou apenas se socializar - experimente o EchoWaves.
