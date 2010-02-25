@@ -73,29 +73,52 @@ pela 37signals e começou outros projetos muito bons - railscollab e rucksack, e
 série de sugestões muito boas que influenciaram muito no projeto.
 Eu não consigo expressar inteiramente o quanto eu me empolguei em trabalhar num projeto
 com pessoas diferentes que eu nunca havia conhecido pessoalmente antes, e que estavam ao redor do mundo.
-
-
-
-                      — but I’m 
-											preaching to the choir here.
-											
+Redes sociais tem sido usadas pra diversos fins, mas na minha experiência se existe um benefício nelas, é esse.
+Tão bom quanto parece, isso tudo não vem de graça-, existem algumas coisas pra se ter em mente.
+Aqui está o que precisei fazer pras coisas acontecerem.
+Certifique-se de escrever um ótimo README no seu projeto. Ele aparecerá no home page do seu 
+projeto no github e é muito comum as pessoas julgarem seu projeto baseado nas primeiras impressões
+que tiveram pelo README. Portanto garanta que existe um bom sumário para rodar seu projeto
+assim como detalhes de instalação. Na minha opnião, isso é tudo que deve aparcer no arquivo README.
+Se você começar a colocar mais coisas nele e ele ficar grande, ele vai distrai a atenção e as pessoas
+o abandonarão.
+Próximo, garante uma instalação demo do seu projeto para que as pessoas possam testar antes de 
+tomar a decisão de instalar o projeto em suas máquinas locais. De preferência isso deveria 
+ter um servidor dedicado com o nome do seu peojeto no github. Minha referência de instalação 
+por exemplo é o http://echowaves.com/. Aualmente ele é mais que uma referência de instalação.
+Os desenvolvedores que trabalham na aplicação utilizam pra colaborar com projetos relacionados.
+Algumas pessoas(e eu me incluo nessa) tem começado blogs de fotos por lá. Nós temos recebido feedbacks
+muito positivos da comunidade através disso, e também utilizamos para comunicar as novidades e updates
+para a comunidade. 
                   
 
- I can not stress enough the excitement I get from work- 
-										ing on the project with all different people I’ve never even met 
-										in person before, located all over the world. Social network- 
-										ing lately has drawn a lot of scepticism, but in my experience 
-										if there is a benefit from the Internet and Social Networking, 
-										then that’s it. 
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
+
+
+
+Thanks to the nature of the project, 
+											we could eat our own dog food (so feel free to checkout 
+											echowaves and run it on your own domain , or even 
+											feel free to create a conversation (“convo”) on http:// 
+											echowaves.com/). 
+											Another very important thing is to make the links 
+											•	 
+											between your project and the github obvious. I placed  
+											a link to the github location on the default landing page 
+											and made it very explicit, And the very first link in my 
+											README file points back to the http://echowaves.com/ site. 
+											Sites like github are crucial in helping to get attention 
+											•	 
+											to your project. The reason you are putting it on github 
+											is probably because you want to find contributors. Be 
+											open to any type of help — content writers, developers, 
+											spelling errors catchers, designers (the most difficult 
+											to find), suggestion makers. But remember: you are in 
+											charge. If you really want for your project to success, 
+											you need to have a vision. Make sure you communi- 
+											cate this vision whenever you get a chance, put it in on 
+											your home page, make it the first thing in your README 
+											file, talk about it in your blog. Do not start working on 
+											every little feature suggested right away. Do not accept 
+											every line of code people contribute, unless you have 
+											worked with that person before and developed a trust 
+											relationship. Real” book. 
