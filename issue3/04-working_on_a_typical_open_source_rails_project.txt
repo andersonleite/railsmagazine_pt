@@ -108,15 +108,24 @@ coloque-a na home page, faça isso ser a primeira coisa no README, fala sobre is
 Não comece a trabalhar em toda e qualquer funcionalidade sugerida na mesma hora. Não aceite
 toda linha de contribuição de código, a menos que você tenha trabalhado com essa pessoa antes 
 e desenvolvido um bom relacionamento. Leia mais sobre isso no livro "Getting in Real".
+                                                    
+É essencial manter a comunidade informada sobre funcionalidades que estão sendo desenvolvidas
+e outras que estão panejadas para serem implementadas. inicialmente eu tinha uma conta gratuita
+no http://lighthouseapp.com/, mas ela só dava suporte a 2 usuários por projeto (pra mais eu teria que pagar
+e eu sou pão duro quando o assunto é desenvolvimento open source ;-)). Então eu achei o Google Code como alternativa.
+Ele inclui todo o suporte necessário para o desenvolvimento open source,
+incluindo SVN, mas como eu já tinha começado a usar o github, eu estava apenas interessado nas
+características de "issue tracking" do Google Code. Se você se sente mais confortável com o SVN,
+você pode usar o Google Code para versionamento, mas para mim os pontos positivos do Google Code
+não superavam o github. A boa nova é que graças a competição sadia entre as hospedagens de projetos
+open source, você pode escolher em cada um o que é melhor pra você. Aqui está um exemplo
+de como os usuários acompanam a lista de atividades http://code.google.com/p/echowaves/issues/list/.
 
 
-                                                                                      
-											
-											
-											
-											
-											
-											
-											
-											
-											
+
+
+                             
+                            
+
+
+
