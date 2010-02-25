@@ -34,28 +34,59 @@ Pra resumir; a 37Signals
 afinal de contas eles são os criadores do Rails. o livro fala principalmente sobre o senso comum
 quando o assunto é desenvolvimento de software. Eu fiquei muito empolgado em descobrir mais sobre os 
 produtos web 2.0 que a 37Signals oferece. Um dos projetos simples mas muito útil que eu quis começar
-a usar foi o "Campfire" -
+a usar foi o "Campfire" -  uma aplicação web de chat. Mas tão logo eu comecei a promover 
+o Campfire na empresa, eu percebi que não iria funcionar prá nós. Eu trabalho para uma dessas
+empresas que so extremamente preocupadas em perder informações sigilosas na web.
+Mas eu estava perplexo e sentindo que a ferramenta de chat era exatamente o que minha 
+empresa necessitava pra melhorar a colaboração entre todos. Então eu decidi começar minha 
+própria aplicação web de chat. 
+Primeiramente eu apenas queria escrever algo muito próximo ao "Campfire". Foi depois,
+baseado no feedback dos usuários, que percebi que chat agregados de redes sociais 
+eram muito mais úteis e poderosos. Minha intenção também era ter o maior número de 
+desenvolvedores do meu escritório interessados. Então, tornar o projeto open source
+não era um requerimento inicial. Mas pra facilitar minha vida e evitar questões da gerência,
+como "pra que você precisa desse servidor...", "nós não temos o que você está procurando aqui...",
+"nós não podemos aprovar um projeto não realionado a empresa nesses servidores...", "precisa ser
+aprovado pelos diretores...", "se você está fazendo isso significa que você tem muito tempo livre...",
+eu decidi não entrar na burocracia da empresa e tocar o projeto sozinho.
 
-One of the simplest but yet useful projects that I wanted 
-to start using right away was “Campfire” — 
 
 
 
-a group chat web application. But as soon I was ready to start promoting 
-“Campfire” in the office, I realized that  it’s not going to work 
-for my company. I work for one of those firms that are very 
-concerned about sending potentially sensitive information 
-across the wire outside of a corporate firewall. But I was stub- 
-born and  felt that the group chat software was exactly what 
-my company needs to improve openness and collaboration. 
-So I decided to start hacking my own group chat web applica- 
-tion. 
-truly world wide. One of the best contributors and the techni- 
-cal lead on the project is located in Spain — believe it or not 
-he found the project on github and liked it enough to join. 
-Through github I got introduced to a guy from Britain who 
-was also inspired by the 37Signals and started few other great 
-projects — railscollab and rucksack, he has made a lot of very 
-useful suggestions and had influenced the project in a big 
-way. I can not stress enough the excitement I get from work- 
 
+
+                           
+								I was going to approach the corp tech again later, when the 
+								project is off the ground and kicking. 
+								Looking back, I think the decision to opensource the proj- 
+								ect was one of the best decisions of my life. 
+								The next step was to figure out how to run the project and 
+								not to spend too much money out of my pocket. We live in a 
+								weird time when you can get a lot for free. And it is not like 
+								“you get what you pay for” any more — free does not mean 
+								bad at all, usually the opposite, “free” reads the best. And of 
+								course it is the best not because it is free, but because it is 
+								opensource. 
+								ing lately has drawn a lot of scepticism, but in my experience 
+								if there is a benefit from the Internet and Social Networking, 
+								then that’s it. 
+								As great as it sounds, it does not come for free–, there are 
+								few simple things to keep in mind. Here is what I had to do 
+								make things moving. 
+								Make sure to write reasonable 
+								•	 README in you rails 
+								project. It will appear on the  repo’s home page for your 
+								project on github and most often people will judge your 
+								project based on the first impression they get from that 
+								Dmitry Amelchenko specializes in 
+								web applications development for financial 
+								companies in New York City and Boston 
+								area. Throughout his career he worked on 
+								a number of highly visible mission critical 
+								web sites as a software engineer, mentor 
+								and architect. Experienced in C++, Java and 
+								Ruby languages. Witnessed first hand the evolution of web 
+								applications development from CGI, to J2EE, to Ruby on Rails. 
+								Currently works on number of open source projects hosted on 
+								github at http://github.com/dmitryame/. 
+								
