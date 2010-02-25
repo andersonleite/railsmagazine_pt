@@ -19,6 +19,7 @@ e enviar dados através de algum serviço web 2.0, mas se o código fonte para t
 todos estaríam felizes. Outra razão para as pessoas escolherem criar uma aplicação web 
 open source é a disponibilidade de ferramentas avançadas que são distribuídas gratuitamente
 caso seu código seja open source.  Nesse artigo vou falar sobre alguns desses serviços.
+
 E por fim, mas não menos importante é a disponibilidade de talentos - 
 se você está trabalhando em um projeto open source realmente interessante usufruindo dos poderes da Web,
 a chance de você estar trabalhando junto com os melhores programadores é muito grande. 
@@ -39,7 +40,8 @@ o Campfire na empresa, eu percebi que não iria funcionar prá nós. Eu trabalho
 empresas que so extremamente preocupadas em perder informações sigilosas na web.
 Mas eu estava perplexo e sentindo que a ferramenta de chat era exatamente o que minha 
 empresa necessitava pra melhorar a colaboração entre todos. Então eu decidi começar minha 
-própria aplicação web de chat. 
+própria aplicação web de chat.        
+
 Primeiramente eu apenas queria escrever algo muito próximo ao "Campfire". Foi depois,
 baseado no feedback dos usuários, que percebi que chat agregados de redes sociais 
 eram muito mais úteis e poderosos. Minha intenção também era ter o maior número de 
@@ -53,6 +55,7 @@ Eu iria falar com o pessoal técnico da empresa mais tarde, quando o projeto est
 Olhando pra trás, eu percebo que tornar o projeto open source foi uma das melhores
 decisões da minha vida. O próximo passo é descobrir como rodar o projeto sem gastar muito 
 dinheiro do meu bolso. Nós vivemos em tempos estranhos onde você consegue muita coisa de graça.
+
 Não é mais do tipo "você tem o que você pagou" - de graça não significa ruim, normalmente é o contrário,
 "grátis" significa o melhor. E é claro, não é o melhor porque é grátis, mas porque é open source.
 Quanto a tecnologia, Ruby on Rails foi minha primeira escolha, grátis, elegante, suporte
@@ -70,7 +73,8 @@ um mês. E a parte legal é que você não está apenas limitado a desenvolver n
 acredite ou não ele encontrou o projeto no github e gostou o suficiente pra participar.
 Através do github eu fui apresentado a um programador da Inglaterra que também era inspirado 
 pela 37signals e começou outros projetos muito bons - railscollab e rucksack, ele fez uma
-série de sugestões muito boas que influenciaram muito no projeto.
+série de sugestões muito boas que influenciaram muito no projeto.     
+
 Eu não consigo expressar inteiramente o quanto eu me empolguei em trabalhar num projeto
 com pessoas diferentes que eu nunca havia conhecido pessoalmente antes, e que estavam ao redor do mundo.
 Redes sociais tem sido usadas pra diversos fins, mas na minha experiência se existe um benefício nelas, é esse.
@@ -81,7 +85,8 @@ projeto no github e é muito comum as pessoas julgarem seu projeto baseado nas p
 que tiveram pelo README. Portanto garanta que existe um bom sumário para rodar seu projeto
 assim como detalhes de instalação. Na minha opnião, isso é tudo que deve aparcer no arquivo README.
 Se você começar a colocar mais coisas nele e ele ficar grande, ele vai distrai a atenção e as pessoas
-o abandonarão.
+o abandonarão.        
+
 Próximo, garante uma instalação demo do seu projeto para que as pessoas possam testar antes de 
 tomar a decisão de instalar o projeto em suas máquinas locais. De preferência isso deveria 
 ter um servidor dedicado com o nome do seu peojeto no github. Minha referência de instalação 
@@ -90,6 +95,7 @@ Os desenvolvedores que trabalham na aplicação utilizam pra colaborar com proje
 Algumas pessoas(e eu me incluo nessa) tem começado blogs de fotos por lá. Nós temos recebido feedbacks
 muito positivos da comunidade através disso, e também utilizamos para comunicar as novidades e updates
 para a comunidade. 
+
 Graças a natureza do projeto, nós podemos tomar nossas próprias decisões (então sinta-se livre para 
 baixar o projeto e rodar no seu próprio servidor, ou mesmo sinta-se a vontade para criar uma conversa
 ("convo") no http://echowaves.com/).
@@ -121,9 +127,27 @@ não superavam o github. A boa nova é que graças a competição sadia entre as
 open source, você pode escolher em cada um o que é melhor pra você. Aqui está um exemplo
 de como os usuários acompanam a lista de atividades http://code.google.com/p/echowaves/issues/list/.
 
+A próxima preocupação ao organizar um projeto Rails open source é a questo da infraestrutura em que ele 
+irá rodar. Existem algumas opções disponíveis. Eu inicialmente hospedava meu site em um computador 
+em baixo da minha mesa de trabalho. Mas rapidamente percebi que tercerizar a infraestrutura era uma
+a melhor coisa a se fazer. Se você está pensando seriamente em fazer que seu projeto 
+aparece e seja falada pelas pessoas, você deve garantir que ele esteja rodando 24/7 e a banda deve ser 
+boa suficiente para causar uma boa impressão nos visitantes - os internautas tem expectativas muito 
+altas hoje em dia. Essa é a única coisa que você deve esperar ter que pagar, nada muito alto, 
+mas vai sair do seu bolso, portanto faça a decisão com calma. Existe muitos hosts que suportam hospedagens 
+Rails como http://www.engineyard.com/ e http://www.slicehost.com/.
+Eu pessoalmente prefiro a força e flexibilidade dos web services da Amazon. Leia mais sobre eles
+aqui http://aws.amazon.com/. EC2 é fácil de configurar e usar. Ele adicionam novas funcionalidades constantemente.
+  
+Eles oferecem um IP estático - algo essencial em um host sério. E eles suportam persistência de arquivos
+em massa no S3. Escalar é fácil, a banda é excelente, a taxa é justa, sem custos de contrato ou custos
+escondidos - apenas use o que você pode pagar no momento e pague apenas pelo que usar. No futuro quando 
+seu site crescer e atingir milhões de usuários e os investidores começarem a te fazer propostas, você
+será capaz de escalar de olhos fechados. Mas essa é uma história para um outro artigo.           
 
 
 
+                                                                                      
                              
                             
 
