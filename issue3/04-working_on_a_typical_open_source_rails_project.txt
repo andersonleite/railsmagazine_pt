@@ -151,21 +151,15 @@ seu projeto. Pra mim o lugar mais natural para isso é no trabalho. Afinal, o pr
 como uma ferramenta de colaboração para a empresa. Eu instalei a aplicação no meu sandbox pessoal e fiz uma 
 apresentação aos desenvolvedores. Durante a apresentação, não esqueça de citar que você está procurando colaboradores. Depois, procure sua comunidade Ruby on Rails, apresentando nos encontros e reuniões dos grupos,
 enviando emails, explicando sobre você e sobre o projeto, citando que você está aberto a sugestões e 
-voluntários. Um comentário sobre
+voluntários. Tenho que fazer um comentário sobre o suporte da comunidade: se você se deparar com dificuldades
+técnicas no projeto, a lista de discussão é uma ótima fonte - não deixe de usar. 
 
-
+Por exemplo, quando eu estava procurando por uma biblioteca que suportasse chat no browser, antes de perder
+muito tempo com pesquisas, eu perguntei na lista de usuários Ruby de Boston. Eu recebi sugestões para
+usar o Orbited, e essa acabou sendo uma das melhores decisões arquiteturais que fiz no projeto.
+orbited é fácil de instalar e configurar além de ser muito estável. Eu chego a esquecer que estou usando-o -
+ele funciona como uma máquina bem calibrada, e e você nunca precisa reiniciar (talvez alguma vez em alguns meses 
+quando um novo release aparece)
 
             
-munity support I have to make: if you run into a technical 
-issues on the project, then the local community mailing list is 
-the great resource — so do not hesitate to use it. For example, 
-when I was looking for a library that supports chats in the 
-browser, before spending much time on research, I asked the 
-question on a Boston Ruby group mailing list. I’ve received 
-a suggestion to use Orbited, and that ended up being one of  
-the best architectural decision I had made on the project. Or- 
-bited is easy to install and configure and is rock solid. I actu- 
-ally sometimes forget that I use it at all — it works like a well 
-oiled machine, and  you never have to worry about restarting 
-it (maybe once every few months when a new release comes 
-out and I want to upgrade). 
+                              
