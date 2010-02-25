@@ -49,3 +49,109 @@ Outra consideração na determinação seus objetivos de teste é o ambiente, cu
 Se muitas mãos estão tocando na base de código (como em um projeto open source), então você pode precisar de mais testes. Desenvolvedores neste ambiente querem fazer a sua mudança, executar alguns testes e se sentirem razoavelmente confiante de que eles não quebraram nada.
 
 Por outro lado, se alguém (ou um grupo pequeno de pessoas) vai assumir a responsabilidade pelo código, então eles vão ficar mais familiarizado com o aplicativo. Assim, seus testes podem ser um pouco mais leve.
+
+O que você testa?
+
+Quando você chegar até o código real, como você sabe a melhor maneira de testar? Desde que testes automatizados são tão dependentes de seus objetivos, regras gerais são difíceis de definir. A seguir são representas algumas situações comuns em que eu descobri ser útil implementa testes automatizados.
+
+Quebrando um problema
+
+Testes automatizados podem ajudá-lo a quebrar o problema em pequenos métodos que são facilmente testáveis. Por exemplo, suponha que você deseja exibir uma lista de itens em uma tabela de quatro colunas. Seu código modelo pode ser algo como:
+
+<table> 
+  <% for group in @objs.in_groups_of(4, false) %>
+    <tr> 
+      <% for obj in group %>
+        <td><%= obj %></td> 
+      <% end %>
+    </tr> 
+  <% end %>
+</table>
+
+Vamos dizer que você estava desenvolvendo o código antes da adição do método Array#in_groups_of para ActiveSupport (antes do Rails 1.2). Então, você precisa desenvolver sua própria implementação de Array#in_groups_of.
+
+Agora, se você quer desenvolver este código modelo e do método Array#in_groups_of ao mesmo tempo e tentar testar tudo de uma vez, você está realmente depuração duas coisas ao mesmo tempo. Isso irá te atrasar.
+
+A alternativa é desenvolver Array#in_groups_of primeiro e escrever uma série de testes para ele.
+
+Uma vez que você tiver o Array#in_groups_of funcionando, você pode começar a escrever o código modelo real. Você não precisa se preocupar se o método recém-criado vai lhe causar problemas durante a execução do código do modelo porque ele está pronto e testado.
+
+Portanto, você deve escrever um teste quando ele for ajudá-lo a quebrar um problema em pedaços menores. Será mais fácil de depurar que tentar depurar o bolo inteiro.
+
+Lidar com Casos de Limite
+
+Outro bom momento para escrever código de teste é quando você lida com casos de limite, como situação off-by-one (erro de lógica que normalmente ocorre em looping itera uma vez além ou abaixo do desejado). Mesmo quando você pensa que escreveu o código corretamente, é muito fácil de calcular errado um caso limite. Então, para estar confiante, aplicar um rápido teste automatizado para ver se você está pegando nesse caso borda corretamente.
+
+Projetando uma API
+
+Os testes também são úteis quando você está projetando uma interface de objeto. A melhor maneira de determinar uma interface ideal é pensar sobre isso, na perspectiva do código da chamada. Se você estava interagindo com outro objeto como você gostaria que a ele se mostrasse para você?
+
+Os testes são um meio ideal para o desenvolvimento dessas idéias. Você pode escrever código que utiliza o API hipotético antes da API ter sido desenvolvida. Ao pensar nisso a partir da perspectiva do código de chamada, muitas vezes você é capaz de criar uma interface mais limpa e útil.
+
+Além disso, uma vez que a API é efectivamente aplicado você já terá alguns dos testes necessários para verificar o seu funcionamento!
+
+Usar testes automatizados como forma de projetar o software é o que muitas pessoas têm chamado test-driven design/development (TDD). Esta pode ser uma prática muito útil.
+
+O Que Você Deveria Estar Cansado De Testar
+
+Nós todos sabemos que o teste é uma coisa boa. Mas há momentos em que os testes podem realmente prejudicar o projeto.
+
+Código de Terceiros
+
+Um lugar grande muitas vezes eu vejo as pessoas testando demais código de terceiros. Uma biblioteca de terceiros está sendo usada e desenvolvedores  implementam testes automatizados para assegurar que esta biblioteca funciona como anunciado.
+
+Por exemplo, eu tenho visto código que irá testar para se certificar de ActiveRecord#save realmente salva o registro para o banco de dados (eles usam SQL puro para fazer essa determinação).
+
+Esta é a abordagem errada. Se você não tem confiança no código de terceiros, não o adicione à sua apliação. E se você sentir que você precisa para testar certas interações com uma biblioteca de terceiros, é melhor separá-lo de seus próprios testes.
+
+Agora, para um exemplo menos óbvio. Considere o seguinte código:
+
+class User < ActiveRecord::Base 
+  has_many :projects 
+  belongs_to :manager, :class_name => ‘User’
+end
+
+Você precisa de testes automatizados para o código acima? Não mais do que provavelmente você faz. Tenho visto casos aonde os testadores mais entusiastas vão configurar fixtures e garantir que os projetos certos sejam retornados e que o gerente correto é retornado para um determinado registro. Mas em que ponto você está realmente testando a sua aplicação? Ou você está testando o DSL has_many fornecidas pelo Rails?
+
+Código Declarativo
+
+Outro abuso de testes que vejo frequentemente, relacionado com a questão código de terceiros, é testar o código declarativo. O exemplo de código anterior foi muito declarativo, mas deixe-me dar um exemplo mais sutil.
+
+
+class Notifier < ActiveMailer::Base 
+  def refer_a_friend(to, sender, url)
+    recipients to 
+    from sender 
+    subject ‘A referal from a friend’ 
+    body :url => url
+  end 
+end
+
+Será que o código acima precisa de testes automatizados? Provavelmente não. No entanto, se adicionarmos um pouco de lógica para o nosso método ou modelo de e-mail, o código torna-se menos declarativo e mais procedural. Como o código faz isso, começa a se tornar uma boa idéia de acrescentar alguns testes automatizados para garantir o seu código procedural está se comportando corretamente.
+
+Teste de Marcação
+
+Muitas vezes, os desenvolvedores irão testar demais a saída de uma aplicação. Isso pode tornar a manutenção muito custosa para atualizar sem trazer muito benefício em troca.
+
+Um exemplo perfeito disso é a marcação em seus templates.
+
+Testes para determinar bits chaves de marcação em seus templates gerados podem ser úteis para determinar automaticamente se os templates estão sendo gerados corretamente. Mas é um erro para começar a testar marcações demais, pois é muito provável ocorram mudanças enquanto design do aplicativo evolui.
+
+Seu teste automatizado nunca será capaz de ver se a página "parece" certa. Assim, por mais testes de marcação que você faça, tudo o que você está fazendo é aumentando os custos de manutenção quando alguém quer fazer alterações de marcação.
+
+Teste para Mensagens de Erro
+
+Outra área onde os desenvolvedores de exageram nos testes são nas mensagens de erro. É um erro testar uma mensagem de erro específica. As mensagens de erro são muito susceptíveis de serem reformuladas, logo escrever teste para um texto exato irá tornar seus testes frágeis.
+
+Em vez disso, tente encontrar uma maneira de testar que ocorreu um erro e talvez o tipo de erro sem fazer comparação de caracter por caracter das mensagens de erro. Talvez você pode verificar um código de erro ou verificar se exceção lançada era um certo tipo de exceção.
+
+Por exemplo, em um teste funcional de um controller, você pode querer certificar-se de que o flash[Warning:] foi definido e não flash[:notice] quando estiver testando para garantir que um erro é processado corretamente. O texto da mensagem flash é menos importante. O que é mais importante é que o tipo correto de mensagem flash foi definida.
+
+Palavras Finais
+
+É importante não ser indusido a pensar que pelo fato dos testes passarem, que sua aplicação é livre de bugs. Ausência de insucesso não é uma prova da perfeição.
+
+Os testes automáticos deve ser considerada um primeiro passo. Certifique-se de usar o aplicativo em um navegador real e usá-lo frequentemente. Configure a sua aplicação para reportar erros à você. Ferramentas como o plugin exception_notifier são extremamente valiosas, porque o seu teste automatizado é só irá testar as coisas que você pode imaginar que poderia dar errado. Mas isso é realmente apenas uma pequena fração do que pode dar errado.
+
+Em conclusão, o teste automatizado é uma excelente ferramenta para acelerar o desenvolvimento e integração, evitar a regressão e ganhar confiança no bom funcionamento da sua aplicação. Mas não caia na armadilha de implementar cegamente milhares de testes, apenas porque alguém diz que você é um programador ruim se você não o fizer. Muitas vezes, uma cobertura de 100% é um exagero e que por vezes pode até ser um empecilho à sua aplicação. Em vez disso, sempre considere seus objetivos finais, quando estiver desenvolvendo um conjunto de testes.
+
