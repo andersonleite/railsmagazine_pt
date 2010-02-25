@@ -159,7 +159,25 @@ muito tempo com pesquisas, eu perguntei na lista de usuários Ruby de Boston. Eu
 usar o Orbited, e essa acabou sendo uma das melhores decisões arquiteturais que fiz no projeto.
 orbited é fácil de instalar e configurar além de ser muito estável. Eu chego a esquecer que estou usando-o -
 ele funciona como uma máquina bem calibrada, e e você nunca precisa reiniciar (talvez alguma vez em alguns meses 
-quando um novo release aparece)
+quando um novo release aparece).
 
+Em um projeto open source você tem que fazer de tudo um pouco. Ninguém vai fazer nada pra você se 
+você não quiser. Fique atento as estatísticas e tente entender as metricas que estão disponíveis pra você.
+Um simples número de hits por dia é importante mas não suficiente pra saber o que realmente está acontecendo.
+use algum serviço de monitoramento grátis. Eu uso o http://pingability.com. 
+Também é crucial seguir alguns guias de posicionamento em sites de busca. Ítens como deixar corretamente
+o título da página, metadados, etc... Existem ferramentas ótimas como o Google webmaster para isso (https://www.google.com/webmasters/tools). 
+
+Se suas estatísticas não forem tão altas inicialmente, não espere que elas crescam rapidamente,
+demanda muita paciência e atenção diária (pode levar meses). Ainda, tenha certeza de analizar as 
+sugestões da ferramenta Google webmaster e tente colocá-las no ar o quanto antes.
             
+Existem provavelmente mais uma série de coisas que você pode fazer pra que seu projeto open source
+seja um sucesso. basicamente tente atingir o senso comum - é tudo sobre senso comum como dito no "Getting Real"
+da 37signals. Seu trabalho como criador do projeto é encontrar as melhores alternativas que funcionem para você.
+Apenas lembre-se, quando você está criando um projeto open source, a coisa mais difícil é fazer com que
+outras pessoas se importem com ele da mesma forma que você se importa -se você atingir esse objetivo, o sucesso
+aparecerá. Seja apaixonado e honesto, mesmo se você não for o desenvolvedor Rails mais experiente do mundo
+mas ame o que você está fazendo, esse é com certeza o caminho para o sucesso.
                               
+        
