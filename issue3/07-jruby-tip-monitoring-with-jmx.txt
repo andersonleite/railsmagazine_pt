@@ -1,2 +1,124 @@
 Dica de JRuby: Monitoramento com JMX
 por Joshua Moore
+
+JRuby Tip: Monitoring with JMX
+by Joshua Moore
+    What is JMX?
+    JMX (Java Management Extensions) is a JavaTM tool used
+to monitor and control a JavaTM process. Since JRuby is a
+JavaTM process, it can also be monitored using JMX. The great
+thing about JMX is that it is not just one way communication.
+You can also use JMX to change settings within the JRuby/
+JavaTM process and within your own application. This article
+will only cover the briefest of introductions about JMX. The
+goal is to help you get started using it.
+    JConsole
+    JConsole is the default JMX client provided with the JDK
+(JavaTM Development Kit). Unfortunately, it is not part of the
+JRE (JavaTM Runtime Environment) so if you do not have it
+you will need to download and install the JDK. JConsole is a
+simple application that connects to a JavaTM process and then
+displays the collected information to the user. It can also be
+used to set variables within the JavaTM process. To get started
+with JConsole simply execute one of these commands (de-
+pending on your OS type):
+     •	 Windows: c:\path\to\java\bin\jconsole.exe
+     •	 Linux: jconsole (it should be added to the path with the
+        JavaTM command) or /path/to/java/bin/jconsole
+     •	 Mac: Sorry, I cannot afford a Mac right now but I guess
+        it would be similar to Linux (currently the Josh Moore
+        Mac fund is accepting donations).
+     * One bug with JMX on Linux is that JMX uses the IP
+address found in the /etc/hosts file to connect to the JavaTM
+process. So if you execute hostname -i on the machine running
+the JRuby process you want to monitor, and the output is not
+your IP address, then you will need to modify the /etc/hosts
+file and then restart your network process or restart your
+computer.
+     * You should be aware that the information gathered by
+JConsole is session based, so when the connection is closed
+all the gathered information will be lost.
+     Setup the Jruby/JavaTM process
+     Now that JConsole is running, you will need to connect
+to a process so that you can monitor it. With JMX you can
+connect to any local process without any change to it*. Simply
+click on the process and click connect (see image). Once con-
+nected you will be shown information that is being collected
+in real time. The overview tab gives several top level graphs of
+the current system resource usage (Memory, CPU, etc). The
+Memory, Threads, Classes, and VM Summary tabs all provide
+more information about each respective topic. The MBeans
+tab is special as it shows you the raw output received from
+the JMX connection. In addition, if you want to change any
+of the Java settings, use this tab. It depends on the version of
+JConsole that comes with JDK .
+    * If you are using JConsole from versions earlier than 6
+then you will need to set this variable in Java:
+    -Dcom.sun.management.jmxremote (java -Dcom.sun.management.
+jmxremote)
+
+  or for JRuby use:
+   jruby -J-Dcom.sun.management.jmxremote
+  Monitoring local processes is not all that exciting. Much
+more interesting and useful is monitoring processes on re-
+mote servers. Because of security reasons if you want to use
+JMX to monitor a remote JRuby process you will need to pass
+in some variables to the JavaTM process when it starts. To be
+simplistic, simply start the JavaTM process like this (you can
+choose any port number you want):
+
+    java -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.
+management.jmxremote.authenticate=false -Dcom.sun.management.
+jmxremote.ssl=false
+
+    These options are used with JavaTM or a JavaTM applica-
+tion server like Glassfish, Tomcat, Jetty, etc. In order to moni-
+tor a process started with JRuby you will need to prepend the
+variables with -J :
+
+    -J-Dcom.sun.management.jmxremote.port=9999 -J-Dcom.sun.
+management.jmxremote.authenticate=false -J-Dcom.sun.management.
+jmxremote.ssl=false
+                                                                     Josh is a
+    Once the process is started with these variables you are
+ready to go.
+    * You should be aware that when starting a JavaTM process
+with these options you will be opening a huge security hole
+in your server. Unfortunately, I do not have time to cover the
+secure setup. Please see the resource section for an article on
+this topic.
+     Once the process is up and running in the JConsole con-
+nection box, click the “Remote Process” radio box and then
+enter in the host name or IP address followed by the port
+number (i.e. localhost:8004). Once the connection is estab-
+lished you can use JConsole in the same manner that you
+would for a local process.
+
+Joshua Moore grew up on a farm in Pennsylvania,
+USA. On the farm he learned that hard
+work is not easy and that he did not like to
+get dirty. So he started down the path of computer
+programming (less dirt, but still hard work).
+He liked Java and worked mostly with
+desktop application development until
+about a year ago, when he decided he could not ignore web
+development any longer (he ignored it before because he did
+not want to fight different browsers to get his applications
+to work right). But, different browser rendering or not, here
+he is using Ruby on Rails, mostly JRuby on Rails, and loving
+it. He chose Rails because it was simple, powerful, and no
+configuration needed.
+Check out his blog: http://www.codingforrent.com/,
+Twitter: @kaiping, email: josh@codingforrent.com.
+Josh is a columnist with Rails Magazine, where he publishes
+regularly on JRuby.
+
+
+Conclusion
+This is a quick introduction to JMX. This article has barely scratched
+the surface of what JMX can really do. The real power of JMX
+can be leveraged in many different ways. Some of these 
+ways include: writing your own MBeans to collect or set custom
+information and writing your own JMX client to log the
+performance of you application. For further information on
+these advanced topics, checkout the resource section
