@@ -1,42 +1,31 @@
 Criando um sistema de trechos de código com Rails
 por Michelangelo Altamore
 
+Neste artigo você vai ver como criar uma aplicação de trechos de
+código básico. Vou usar testes para impulsionar o desenvolvimento passo a passo e dar um exemplo prático.
 
-In this article you will see how to create a basic source 
-code snippet application. I will use tests to drive development 
-step by step and provide a practical example. 
+Eu suponho que você esteja familiarizado com os conceitos básicos de Ruby on Rails. Você deve ter um ambiente de trabalho com a versão do Ruby recente (> = 1.8.7), RubyGems (> = 1.3.0) e, naturalmente, o Rails (> = 2,1).
 
-I assume that you are familiar with Ruby on Rails basic 
-concepts . You should have a working environment with a 
-recent version of Ruby (>= 1.8.7), RubyGems (>=1.3.0) and, 
-of course, Rails (>=2.1). 
+- Esboço Inicial
 
-- Initial Sketching 
+Criamos uma nova aplicação Rails chamada Trecho:
+  $ rails trecho; cd trecho
 
-We create a new rails application called Snippety: 
-$ rails snippety; cd snippety 
+e instalar nifty_generators por Ryan Bates é um plugin para execução
+  $ script/plugin install git://github.com/ryanb/nifty-generators.git
 
-and install nifty_generators by Ryan Bates as a plugin by 
-running: 
-$ script/plugin install git://github.com/ryanb/nifty- 
-generators.git 
+para que possamos gerar rapidamente um layout simples com o comando:
+  $ script/generate nifty_layout
 
-so that we can quickly generate a simple layout with the 
-command: 
-$ script/generate nifty_layout 
+Um trecho de código vai ter os seguintes atributos:
+  - Nome
+  - linguagem
+  - Corpo
 
-A code snippet will have the following attributes: 
-- name 
-- language 
-- body 
-	 
-Let’s scaffold a basic model: 
-$ script/generate nifty_scaffold snippet name:string 
-language:string body:text 
+Vamos ao scaffold de um modelo básico:
+  $ script/generate nifty_scaffold trecho nome:string linguagem:string corpo:text
 
-Migrate the database with rake	db:migrate, start your 
-web server with script/server and point your browser to local- 
-host:3000/snippets to see a functional snippet view. 
+Migrar o banco de dados com rake db:migrate, inicie o seu servidor web com o script/server e aponte o seu navegador para localhost:3000/trechos para ver a view de trecho funcionando. 
 
 Soon after playing with the web interface we realize that 
 our fresh Snippety is lacking a few things: 
