@@ -27,41 +27,28 @@ Vamos ao scaffold de um modelo básico:
 
 Migrar o banco de dados com rake db:migrate, inicie o seu servidor web com o script/server e aponte o seu navegador para localhost:3000/trechos para ver a view de trecho funcionando. 
 
-Soon after playing with the web interface we realize that 
-our fresh Snippety is lacking a few things: 
-1. language is in a free text field instead of a selectable list of 
-available languages 
-2. snippet name, language and body are not required nei- 
-ther on create nor on update 
-3. snippet body is not highlighted according to the snippet 
-language 
-4. two different snippets can have the same name 
-5. the list of snippet show a tabular list instead of a list of 
-snippets 
+[New Snippet]
 
-These functionalities represent Snippety’s business value. 
-We can start by constraining a snippet to have a unique name, 
-a language and a body; after that we will try to get syntax 
-highlighting. 
+Logo após brincar com a interface web percebemos que faltam algumas coisas na nossa Aplicação fresquinha:
+1. linguagem está em um campo de texto livre, em vez de uma lista de idiomas selecionáveis.
+2. Não é obrigatório nome, linguagem e corpo na criação e na atualização de trecho.
+3. Corpo não está com realce de acordo com a linguagem.
+4. 2 diferentes trechos podem ter o mesmo nome.
+5. a lista de trechos não mostra uma lista tabular de trechos.
 
-In general you should not care too much about the order 
-of activities when the sequence is not critical, and this is the 
-case since we can’t ship a unit of work missing either syntax 
-highlighting or with a potentially inconsistent snippet collec- 
-tion. 
+Estas funcionalidades representam um valor de negócio para Trecho.
+Podemos começar por restringir o trecho de ter um único nome, para linguagem e corpo, depois vamos tentar obter a sintaxe do corpo com realce.
 
-Before start, I rearrange our previous list according to 
-their priority and express each as an expectation: 
-1. each snippet should have a mandatory unique name, 
-language and body 
-2. each snippet body should be rendered highlighted ac- 
-cording to its language 
-3. index action should list snippets in a blog-style way 
-4. snippet language should be chosen from a selectable list 
-of languages instead of free text 
+Em geral, você não deve se importar muito com a ordem das atividades quando não são críticas, e este é o caso, pois não depende do outro, tanto o realce do corpo quanto a coleção de trechos potêncialmente inconsistentes.
 
-Now that we know where to head for, we can start our first 
-iteration. 
+Antes de começar, vou reorganizar nossa lista anterior segundo o que nossas prioridades expressam, cada uma com sua expectativa:
+1. Cada trecho deve ter único e obrigatório nome, linguagem e corpo.
+2. Cada corpo de trecho deve ser processado com realce de acordo com sua
+linguagem.
+3. A Action index deve listar trechos em estilo de blog.
+4. trecho deve ter lista selecionável de línguas, em vez de texto livre.
+
+Agora que sabemos aonde é o ínicio, podemos ir para nossa primeira iteração. 
 
 - Task 1: Snippet Validation 
 
