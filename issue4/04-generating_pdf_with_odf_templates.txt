@@ -216,11 +216,10 @@ Gerar PDFs a partir de templates se provou uma tarefa simples. Aproveite seu tem
 bastante tempo não tendo que preparar a geração de PDFs! Ou use ele para gerar um bom plugin para geração de PDF usando
 esta técnica. :)
 
-Recentemente um novo plugin para geração de ODF escrito em RUby, está disponível em http://github.com/sandrods/odf-report/tree/
+Recentemente um novo plugin para geração de ODF escrito em Ruby, está disponível em http://github.com/sandrods/odf-report/tree/
 master. Este plugin usa a idea apresentada nesse arquivo para geração de ODF, usando o gem rubyzpi para compactar/descompactar,
 ao invés de executar um programa externo para essa tarefa. Para leitores interessados em implementar um plugin para a geração
-de PDF em Ruby, eu recomendaria dar uma olhada nosse gerador de ODF e adaptá-lo para a integração com o OpenOffice.org e
-com o PyODFConverter como demonstrado nesse artigo.
+de PDF em Ruby, eu recomendaria dar uma olhada nesse gerador de ODF e adaptá-lo para a integração com o OpenOffice.org e com o PyODFConverter como demonstrado nesse artigo.
 
 Recursos
 [1] Latex - http://www.latex-project.org
